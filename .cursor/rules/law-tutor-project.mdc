@@ -1,0 +1,62 @@
+---
+description: Law AI Tutor project rules from AGENTS.md — usage access, sources, architecture, and critical constraints
+alwaysApply: true
+---
+
+# Law AI Tutor — Project Rules
+
+Socratic law tutor. Rules change by user group. Full requirements are in `spec.md`. If code and spec disagree, the spec wins.
+
+## User groups and access
+
+| Group | Inside classroom | Outside classroom |
+|---|---|---|
+| Year 1–2 | Not allowed (paused) | Recitation + problem drills |
+| Year 3–4 | In-class Quick Check | Recitation + problem drills |
+| Bar reviewees | Anytime | Anytime |
+
+Features: Recitation drill (facts → issue → rule → reasoning → application); Quick Check (Year 3–4 only, student answers first); Problem drill (scored Answer / Legal basis / Application / Conclusion, weak-spot coaching).
+
+## Tech and commands
+
+Next.js App Router + TypeScript, Tailwind, Anthropic Claude API, Vitest, Vercel.
+
+- Dev: `npm run dev` → http://localhost:3000
+- Tests: `npm test`
+- Lint: `npm run lint`
+
+## Where things live
+
+- `/app/page.tsx` — home; only allowed features for group + time
+- `/app/onboarding/page.tsx` — group choice + usage notice
+- `/app/recitation/[topicId]/page.tsx` — recitation drill
+- `/app/quick-check/[topicId]/page.tsx` — Quick Check (Year 3–4 only)
+- `/app/problem/[topicId]/page.tsx` — problem drill
+- `/app/progress/page.tsx` — practice scores and weak spots
+- `/app/settings/page.tsx` — group and class schedule
+- `/app/api/tutor/route.ts` — only place that calls Claude / uses API key
+- `/lib/access.ts` — **single place for usage rules**
+- `/lib/prompts/` — tutor instructions per feature
+- `/lib/sources.ts` — loads `sources/*.md`, hides unreviewed, filters by year
+- `/lib/storage.ts` — browser-only group, schedule, progress, scores
+- `/sources/` — reviewed legal sources (do not edit)
+- `/tests/` — one test group per acceptance criterion in spec.md
+
+## Conventions
+
+- Small, focused changes. Explain what and why in plain English (user is not a developer).
+- Every acceptance criterion in spec.md gets at least one test. `/lib/access.ts` needs tests for every group at class time and outside class time.
+- Check layouts at 360px (phone) and laptop.
+- If the spec is unclear, ask — do not guess.
+
+## Critical constraints (never weaken)
+
+- Usage rules live only in `/lib/access.ts`. Year 1–2 always paused in class hours. Quick Check never shown to Year 1–2.
+- NEVER edit `/sources/`. Only a law-trained reviewer changes legal content.
+- NEVER write legal content (case names, G.R. numbers, articles, quotes) into code or prompts. All legal content comes from `/sources/`.
+- Tutor must never invent citations; if not in sources, say so.
+- Quick Check: student answers first; no script to read aloud.
+- Label scores "Practice score" only — never official bar grading or pass predictions.
+- NEVER put API key in code. Use `process.env.ANTHROPIC_API_KEY`. Never commit `.env.local` (keep in `.gitignore`).
+- No login, database, voice, payments, or dashboards in v1.
+- Do not change `spec.md` without asking the user.
