@@ -226,3 +226,35 @@ Each step scores 0 (missing or wrong), 1 (partly right) or 2 (complete and accur
 26. Given a Year 3–4 user with the default schedule, when they open the app on Sunday at 2:00 PM (Manila time),
     then In-class Quick Check is the first option on the home screen.
 27. Given a bar reviewee, then no class schedule is shown or applied.
+
+## 6. Planned improvements (not built yet)
+Requested after the first test run (10 Nov 2026). Build these in a later round; they are not part of v1's
+release checks until moved into Section 5.
+
+### UI-1: Questions look different from feedback
+In every drill and Quick Check, a reader must tell at a glance what is the tutor's **question** and what is
+**feedback** on their answer.
+- **Tutor question:** its own card with a distinct background colour (e.g. soft blue), a slightly larger,
+  bolder font, and a small label "Question".
+- **Feedback:** a separate card with a different background (e.g. warm grey or cream), regular-weight text,
+  and a label showing the verdict ("Correct", "Partly correct", "Not yet"), each verdict with its own
+  accent colour.
+- **Source citation:** shown under the feedback in small text with the link, never mixed into the question.
+- **Readability:** text and background colours meet WCAG AA contrast (4.5:1 for body text); readable at
+  360 pixels wide; colour is never the only signal (labels stay).
+
+### UI-2: Key words highlighted
+- Legal key terms (e.g. "juridical necessity", "prestation") are highlighted wherever they appear in the
+  question, feedback, model answer or source text.
+- The terms come **only** from a reviewer-approved `keyTerms` list in each topic's source file. The AI
+  doesn't choose which words to highlight, so highlighting can't introduce unreviewed legal content.
+- Highlight style: bold with a light background tint, readable on both the question and feedback cards.
+- Article numbers and case citations from the source file (e.g. "Article 1156") are also highlighted.
+
+### Acceptance criteria to add when built
+28. Given any drill turn, then the question and the feedback appear in visually different cards
+    (different background colour, font weight and label), with WCAG AA contrast.
+29. Given a topic whose `keyTerms` lists "prestation", when that word appears in a question or feedback,
+    then it is highlighted; words not in `keyTerms` are not.
+30. Given a 360-pixel-wide screen, then the question and feedback cards and highlights remain readable
+    without sideways scrolling.

@@ -4,6 +4,7 @@ title: "Civil Code, Article 1156: Definition of an obligation"
 subject: Obligations and Contracts
 yearLevels: [year-1-2, bar]   # who sees this topic: year-1-2, year-3-4, bar
 syllabusWeek: 1               # optional: matches the class syllabus
+keyTerms: ["juridical necessity", "prestation", "to give", "to do", "not to do"]   # reviewer-approved words to highlight (planned UI-2)
 citation: "Civil Code of the Philippines (Republic Act No. 386), Article 1156"
 link: "https://lawphil.net/statutes/repacts/ra1949/ra_386_1949.html"   # reviewer confirms the link opens the right text
 reviewedBy: ""        # REQUIRED: name of the law-trained reviewer. Topic stays hidden until filled.

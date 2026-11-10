@@ -22,8 +22,11 @@ import type {
 
 export const runtime = "nodejs";
 
-const FAST_MODEL = "claude-haiku-4-5-20251001";
-const STRONG_MODEL = "claude-sonnet-4-5-20250929";
+const FAST_MODEL = "claude-haiku-5-5";
+const STRONG_MODEL = "claude-sonnet-5-5";
+
+const TUTOR_UNAVAILABLE_MESSAGE =
+  "The tutor is unavailable right now. Your answer is saved, so try again in a minute.";
 
 type Body = {
   feature: Feature;
@@ -85,10 +88,14 @@ async function askClaude(args: {
   const client = new Anthropic({ apiKey });
   const message = await client.messages.create({
     model: args.model,
-    max_tokens: 1024,
+    max_tokens: 8000,
     system: args.system,
     messages: [{ role: "user", content: args.user }],
   });
+
+  if (message.stop_reason === "refusal" || message.stop_reason === "max_tokens") {
+    throw new Error("tutor_unavailable");
+  }
 
   const text = message.content
     .filter((block) => block.type === "text")
@@ -168,7 +175,7 @@ export async function POST(request: Request) {
 
     if (!feature || !topicId || !userGroup) {
       return NextResponse.json(
-        { feedback: "The tutor is unavailable right now. Your answer is saved, so try again in a minute." },
+        { feedback: TUTOR_UNAVAILABLE_MESSAGE },
         { status: 400 },
       );
     }
@@ -407,8 +414,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         verdict: "not yet",
-        feedback:
-          "The tutor is unavailable right now. Your answer is saved, so try again in a minute.",
+        feedback: TUTOR_UNAVAILABLE_MESSAGE,
       } satisfies TutorTurnResponse,
       { status: 503 },
     );
