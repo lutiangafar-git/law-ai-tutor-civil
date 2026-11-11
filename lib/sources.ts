@@ -2,17 +2,13 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import type { SourceTopic, StudentYear, UserGroup, YearLevelTag } from "./types";
+import { SUBJECT } from "./subject";
 
 /** Shown wherever a reviewer name would appear, for topics marked `status: demo`. */
 export const DEMO_REVIEW_LABEL = "Demo content: pending lawyer review";
 
-/** Civil Law subjects in the order law schools teach them; unknown subjects go last. */
-export const SUBJECT_ORDER = [
-  "Persons and Family Relations",
-  "Obligations and Contracts",
-  "Sales",
-  "Succession",
-];
+/** Subject areas in the order law schools teach them (from /lib/subject.ts); unknown ones go last. */
+export const SUBJECT_ORDER = SUBJECT.areas;
 
 function subjectRank(subject: string): number {
   const i = SUBJECT_ORDER.indexOf(subject);

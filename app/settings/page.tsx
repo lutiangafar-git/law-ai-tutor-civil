@@ -51,7 +51,7 @@ function SettingsInner() {
     setProfileKey(option.key);
     setBlocks(updated.classSchedule.blocks);
     setMessage("Group updated. You’ll see the usage notice again.");
-    window.location.href = "/onboarding?notice=1";
+    window.location.href = "/?notice=1";
   }
 
   function addBlock() {

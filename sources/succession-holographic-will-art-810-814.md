@@ -2,7 +2,7 @@
 topicId: succession-holographic-will-art-810-814
 title: "Civil Code, Arts. 810 and 814: Holographic wills and unsigned alterations"
 subject: Succession
-yearLevels: [year-3, year-4, bar]
+yearLevels: [year-2, year-3, year-4, bar]
 status: demo
 keyTerms: ["holographic will", "entirely written, dated, and signed", "full signature", "alteration", "authenticate"]
 citation: "Civil Code of the Philippines (Republic Act No. 386), Articles 810 and 814"

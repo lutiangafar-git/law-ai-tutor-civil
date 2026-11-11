@@ -42,7 +42,7 @@ function QuickCheckInner() {
     if (!state.userGroup) return;
 
     if (state.userGroup !== "year-3-4") {
-      router.replace("/");
+      router.replace("/drills");
       return;
     }
 

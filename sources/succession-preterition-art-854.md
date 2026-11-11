@@ -2,7 +2,7 @@
 topicId: succession-preterition-art-854
 title: "Civil Code, Art. 854: Preterition of compulsory heirs"
 subject: Succession
-yearLevels: [year-3, year-4, bar]
+yearLevels: [year-2, year-3, year-4, bar]
 status: demo
 keyTerms: ["preterition", "compulsory heirs", "direct line", "institution of heir", "devises and legacies", "inofficious", "intestate succession"]
 citation: "Civil Code of the Philippines (Republic Act No. 386), Article 854"

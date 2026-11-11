@@ -13,6 +13,8 @@ lastReviewed: ""
 ---
 
 <!--
+  Note: the LawPhil copy of Art. 4 omits the sentence on voidable marriages (checked 12 Nov 2026);
+  confirm against the Official Gazette text.
   DEMO TOPIC. Drafted with AI assistance for the Week 4 graded project and NOT yet signed off by a
   law-trained reviewer. Reviewer: confirm the article text word for word, the Republic v. Castro
   citation, and the statement on licenses issued by the wrong local civil registrar.

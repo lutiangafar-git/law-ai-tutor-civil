@@ -1,10 +1,11 @@
-import { Suspense } from "react";
-import { OnboardingClient } from "./OnboardingClient";
+import { redirect } from "next/navigation";
 
-export default function OnboardingPage() {
-  return (
-    <Suspense fallback={<p className="text-muted">Loading…</p>}>
-      <OnboardingClient />
-    </Suspense>
-  );
+/** Old address kept so saved links still work: identification now happens on the landing page. */
+export default async function OnboardingPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ notice?: string }>;
+}) {
+  const { notice } = await searchParams;
+  redirect(notice === "1" ? "/?notice=1" : "/");
 }

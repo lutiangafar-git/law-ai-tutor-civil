@@ -192,13 +192,13 @@ describe("saving the student's year", () => {
 
   it("each profile option maps to the right usage group", async () => {
     const { PROFILE_OPTIONS, findProfileKey } = await import("@/lib/profiles");
-    const map = Object.fromEntries(PROFILE_OPTIONS.map((p) => [p.key, p.group]));
-    expect(map["year-1"]).toBe("year-1-2");
-    expect(map["year-2"]).toBe("year-1-2");
-    expect(map["year-3"]).toBe("year-3-4");
-    expect(map["year-4"]).toBe("year-3-4");
+    for (const p of PROFILE_OPTIONS) {
+      if (p.year === null) expect(p.group).toMatch(/^bar-/);
+      else expect(p.group).toBe(p.year <= 2 ? "year-1-2" : "year-3-4");
+    }
     expect(findProfileKey("year-3-4", 4)).toBe("year-4");
-    expect(findProfileKey("year-1-2", null)).toBe("year-1");
+    const firstEarly = PROFILE_OPTIONS.find((p) => p.group === "year-1-2");
+    if (firstEarly) expect(findProfileKey("year-1-2", null)).toBe(firstEarly.key);
   });
 });
 

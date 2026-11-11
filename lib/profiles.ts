@@ -1,9 +1,11 @@
 import type { StudentYear, UserGroup } from "./types";
+import { SUBJECT, areasForYear, listAreas, offeredYears } from "./subject";
 
 /**
- * The choices shown on "Who are you practicing as?" and in Settings.
+ * The choices shown on the landing page ("Who are you practicing as?") and in Settings.
  * Each student year maps to the usage-rule group in /lib/access.ts
  * (Year 1–2 or Year 3–4), so usage rules stay in one place.
+ * Years with no topics for this subject (see /lib/subject.ts) are not offered.
  */
 export interface ProfileOption {
   key: string;
@@ -13,48 +15,37 @@ export interface ProfileOption {
   blurb: string;
 }
 
+function studentOption(year: StudentYear): ProfileOption {
+  const early = year <= 2;
+  const rule = early
+    ? "After class only."
+    : "Quick Check in class; drills outside class.";
+  const topics =
+    year === 4 ? `All ${SUBJECT.subjectName} topics.` : `${listAreas(areasForYear(year))}.`;
+  return {
+    key: `year-${year}`,
+    group: early ? "year-1-2" : "year-3-4",
+    year,
+    label: `Year ${year} student`,
+    blurb: `${topics} ${rule}`,
+  };
+}
+
 export const PROFILE_OPTIONS: ProfileOption[] = [
-  {
-    key: "year-1",
-    group: "year-1-2",
-    year: 1,
-    label: "Year 1 student",
-    blurb: "Persons & Family Relations and Obligations. After class only.",
-  },
-  {
-    key: "year-2",
-    group: "year-1-2",
-    year: 2,
-    label: "Year 2 student",
-    blurb: "Sales. After class only.",
-  },
-  {
-    key: "year-3",
-    group: "year-3-4",
-    year: 3,
-    label: "Year 3 student",
-    blurb: "Succession. Quick Check in class; drills outside class.",
-  },
-  {
-    key: "year-4",
-    group: "year-3-4",
-    year: 4,
-    label: "Year 4 student",
-    blurb: "All Civil Law topics. Quick Check in class; drills outside class.",
-  },
+  ...offeredYears().map(studentOption),
   {
     key: "bar-first-time",
     group: "bar-first-time",
     year: null,
     label: "Bar reviewee (first-time)",
-    blurb: "All Civil Law topics, anytime. Optional diagnostic.",
+    blurb: `All ${SUBJECT.subjectName} topics, anytime. Optional diagnostic.`,
   },
   {
     key: "bar-repeater",
     group: "bar-repeater",
     year: null,
     label: "Bar reviewee (repeater)",
-    blurb: "All Civil Law topics, anytime. A short diagnostic finds weak spots first.",
+    blurb: `All ${SUBJECT.subjectName} topics, anytime. A short diagnostic finds weak spots first.`,
   },
 ];
 
@@ -67,6 +58,15 @@ export function findProfileKey(
   const exact = PROFILE_OPTIONS.find((p) => p.group === group && p.year === year);
   if (exact) return exact.key;
   return PROFILE_OPTIONS.find((p) => p.group === group)?.key ?? null;
+}
+
+/** The option for a saved profile, e.g. to show "Continue as Year 2 student". */
+export function findProfile(
+  group: UserGroup | null,
+  year: StudentYear | null,
+): ProfileOption | null {
+  const key = findProfileKey(group, year);
+  return PROFILE_OPTIONS.find((p) => p.key === key) ?? null;
 }
 
 /** Query-string suffix for /api/topics, e.g. "&year=2". Empty for bar reviewees. */
