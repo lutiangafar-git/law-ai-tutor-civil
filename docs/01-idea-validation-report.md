@@ -1,8 +1,8 @@
 # Idea Validation Report: Law AI Tutor
 
-**Project:** Law AI Tutor, a Socratic Civil Law practice tutor for Philippine law students and bar reviewees
-**Author:** Gafar Lutian · **Course:** Week 4 Graded Mini Project 4.2 · **Date:** 11 November 2026
-**Method:** the 7-step validation framework from the Week 4A deck (Quick prompt with Claude, then Deep Research with Perplexity and web search). Raw research notes are kept outside this repo; the evidence and links are reproduced below.
+**Project:** Law AI Tutor, a Socratic Civil Law practice tutor for Philippine law students and bar reviewees  
+**Author:** Gafar Lutian · **Course:** Week 4 Graded Mini Project 4.2 · **Date:** 11 November 2026  
+**Method:** the 7-step validation framework from the Week 4A deck (Quick prompt with Claude, then Deep Research with Perplexity and web search). Raw research notes are kept outside this repo; the evidence and links are reproduced below.  
 
 > **One-line idea:** A text-based Socratic tutor that makes Philippine law students and bar reviewees *answer first*, scores their bar-style answers on Answer, Legal basis, Application and Conclusion (ALAC), coaches the weakest part, and grounds every statement in a reviewed Philippine source, with usage rules that match each school year's AI policy.
 

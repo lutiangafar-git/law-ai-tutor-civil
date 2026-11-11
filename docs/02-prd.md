@@ -1,9 +1,10 @@
 # PRD: Law AI Tutor v1 (Civil Law Socratic Practice)
 
-**Owner:** Gafar Lutian · **Status:** v1 live (demo content) · **Updated:** 11 Nov 2026 · **Live:** https://law-tutor-drill.vercel.app · **Detailed spec:** [`spec.md`](../spec.md)
+**Owner:** Gafar Lutian · **Status:** v1 live (demo content) · **Updated:** 11 Nov 2026  
+**Live:** https://law-tutor-drill.vercel.app · **Detailed spec:** [`spec.md`](../spec.md)
 
 ## 1. Problem statement
-Philippine law students are relying on AI shortcuts, and faculty report weaker reasoning; UP Law banned AI in first-year core subjects in August 2026. Bar reviewees, about 54% of them repeaters or refreshers, study alone and cannot tell *why* their essay answers fail (2025 pass rate: 48.98%). General chatbots hand out answers and can invent Philippine citations. Learners need practice that makes them **answer first**, shows exactly which part of their answer is weak, and uses only **reviewed Philippine sources**.
+Law students lean on AI shortcuts and faculty report weaker reasoning (UP Law banned AI in first-year core subjects, Aug 2026). Bar reviewees, about 54% repeaters or refreshers, can't tell *why* their essay answers fail (2025 pass rate 48.98%). Chatbots hand out answers and can invent PH citations. Learners need practice that makes them **answer first**, pinpoints the weak part of an answer, and uses only **reviewed Philippine sources**.
 
 ## 2. Target users
 | User | Need | Usage rule |
@@ -35,8 +36,6 @@ Accounts and logins, a database, payments, voice, lawyers and paralegals, subjec
 | **Reliability** | Tutor reply in under 10 s (Quick Check under 5 s); ≥99% non-error responses | `tutor_call` logs in Vercel |
 
 ## 6. Open questions
-1. Who is the law-trained reviewer for the six demo topics, and by when? (They stay labelled "demo" until signed off.)
-2. Is an e-mailed authority "in writing" for Art. 1874, and should a reviewer cite the E-Commerce Act in the Sales topic?
-3. Will a school allow the Year 3–4 in-class Quick Check, and which professor will be the champion?
-4. Does the pilot need a server-side rate limit, given the 30/hour limit is per device today?
-5. Which review center would co-run Experiment 1, and on what revenue share?
+1. Who signs off the six demo topics, and by when? (They stay labelled "demo" until then; see Issue #1.)
+2. Will a pilot school allow the Year 3–4 in-class Quick Check, and which professor will champion it?
+3. Which review center would co-run Experiment 1 (paid pass, ₱199–499), and on what revenue share?
