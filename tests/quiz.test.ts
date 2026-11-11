@@ -97,7 +97,17 @@ describe("quiz content in /sources", () => {
   const topics = loadAllReviewedTopics();
   const early = topics.filter((t) => t.yearLevels.includes("year-1") || t.yearLevels.includes("year-2"));
 
-  it.each(early.map((t) => [t.topicId, t] as const))(
+  it("if this subject has no Year 1–2 topics, Year 1–2 are not offered (so no quiz is needed)", async () => {
+    const { offeredYears } = await import("@/lib/subject");
+    if (early.length === 0) {
+      expect(offeredYears()).not.toContain(1);
+      expect(offeredYears()).not.toContain(2);
+    } else {
+      expect(early.length).toBeGreaterThan(0);
+    }
+  });
+
+  it.skipIf(early.length === 0).each(early.map((t) => [t.topicId, t] as const))(
     "%s (a Year 1–2 topic) has a complete quiz",
     (_id, topic) => {
       const mcs = topic.quiz.filter((q) => q.kind === "multiple-choice");
