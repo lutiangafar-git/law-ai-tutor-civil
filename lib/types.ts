@@ -165,6 +165,13 @@ export interface StoredUserState {
   diagnosticOffered: boolean;
   diagnosticCompleted: boolean;
   diagnosticTopicIds: string[];
+  /** The 20-question diagnostic in progress or finished (see /lib/diagnostic.ts). */
+  diagnosticRun: {
+    items: { id: string; area: string; askedIn: string; question: string }[];
+    results: { itemId: string; area: string; verdict: "correct" | "partly correct" | "not yet" }[];
+    startedAt: string;
+    finishedAt?: string;
+  } | null;
   activeDrill: DrillProgress | null;
   problemScores: ProblemScoreRecord[];
   /** Finished Year 1–2 objective quizzes. */

@@ -33,7 +33,6 @@ import {
   nextInSyllabus,
   pickRandomTopic,
   diagnosticRequired,
-  remainingDiagnostic,
   topicSteps,
 } from "@/lib/topicOrder";
 
@@ -61,12 +60,10 @@ function HomeInner({ category }: { category: Category }) {
   const [selectedTopic, setSelectedTopic] = useState("");
   const [resumeHref, setResumeHref] = useState<string | null>(null);
   const [showDiagnostic, setShowDiagnostic] = useState(false);
-  const [diagnosticTopics, setDiagnosticTopics] = useState<TopicSummary[]>([]);
   const [profileLabel, setProfileLabel] = useState("");
   const [finished, setFinished] = useState<Set<string>>(new Set());
   const [progress, setProgress] = useState<ReturnType<typeof loadState> | null>(null);
   const [mustDiagnose, setMustDiagnose] = useState(false);
-  const [diagnosticLeft, setDiagnosticLeft] = useState<string[]>([]);
 
   useEffect(() => {
     const state = loadState();
@@ -104,9 +101,6 @@ function HomeInner({ category }: { category: Category }) {
         setProgress(state);
         const required = diagnosticRequired(state.userGroup, state.diagnosticCompleted);
         setMustDiagnose(required);
-        if (required && state.diagnosticOffered) {
-          setDiagnosticLeft(remainingDiagnostic(state.diagnosticTopicIds, state.problemScores));
-        }
         setFinished(done);
         // Year 1–2: next unfinished topic in syllabus order. Others: a random topic.
         const start = isSequentialGroup(state.userGroup)
@@ -120,12 +114,7 @@ function HomeInner({ category }: { category: Category }) {
           (isRepeater && !state.diagnosticCompleted && !state.diagnosticOffered) ||
           (isFirstTime && !state.diagnosticOffered && !state.diagnosticCompleted)
         ) {
-          // Diagnostic: one problem from each of up to three different subjects.
-          const seen = new Set<string>();
-          const pick = (data.topics ?? [])
-            .filter((t) => (seen.has(t.subject) ? false : (seen.add(t.subject), true)))
-            .slice(0, 3);
-          setDiagnosticTopics(pick);
+          // The 20-question diagnostic lives at /diagnostic (see lib/diagnostic.ts).
           setShowDiagnostic(isRepeater || isFirstTime);
         }
       })
@@ -147,12 +136,9 @@ function HomeInner({ category }: { category: Category }) {
   }, [topics]);
 
   function startDiagnostic() {
-    const ids = diagnosticTopics.map((t) => t.topicId);
-    markDiagnosticOffered(ids);
+    markDiagnosticOffered([]);
     setShowDiagnostic(false);
-    if (ids[0]) {
-      window.location.href = `/problem/${ids[0]}?diagnostic=1`;
-    }
+    window.location.href = "/diagnostic";
   }
 
   function skipDiagnostic() {
@@ -199,15 +185,14 @@ function HomeInner({ category }: { category: Category }) {
                 Start with a short diagnostic
               </h2>
               <p className="mt-2 text-sm text-muted">
-                Three short problem drills across the subject to find weak spots
-                before regular practice.
+                20 short questions picked at random across the subject (about 30–40 minutes). Answer each
+                in a few lines; you get a map of areas to improve that sets your first drills.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <button
                   type="button"
                   onClick={startDiagnostic}
                   className="rounded-md bg-accent px-4 py-2 text-white"
-                  disabled={diagnosticTopics.length === 0}
                 >
                   Start diagnostic
                 </button>
@@ -224,14 +209,14 @@ function HomeInner({ category }: { category: Category }) {
             </div>
           )}
 
-          {mustDiagnose && !showDiagnostic && diagnosticLeft.length > 0 && (
+          {mustDiagnose && !showDiagnostic && (
             <div className="rounded-lg border border-line bg-white/80 p-4">
               <h2 className="font-display text-xl">Continue your diagnostic</h2>
               <p className="mt-2 text-sm text-muted">
                 Finish the diagnostic first; your regular drills open right after.
               </p>
               <Link
-                href={`/problem/${diagnosticLeft[0]}?diagnostic=1`}
+                href="/diagnostic"
                 className="mt-3 inline-block rounded-md bg-accent px-4 py-2 text-white"
               >
                 Continue diagnostic

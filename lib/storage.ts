@@ -23,6 +23,7 @@ export const DEFAULT_STATE: StoredUserState = {
   diagnosticOffered: false,
   diagnosticCompleted: false,
   diagnosticTopicIds: [],
+  diagnosticRun: null,
   activeDrill: null,
   problemScores: [],
   quizResults: [],
@@ -48,6 +49,7 @@ export function loadState(): StoredUserState {
       recitationScores: parsed.recitationScores ?? [],
       quizResults: parsed.quizResults ?? [],
       diagnosticTopicIds: parsed.diagnosticTopicIds ?? [],
+      diagnosticRun: parsed.diagnosticRun ?? null,
       rateLimit: parsed.rateLimit ?? { windowStart: 0, count: 0 },
     };
   } catch {
