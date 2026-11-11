@@ -6,6 +6,19 @@ import type { SourceTopic, StudentYear, UserGroup, YearLevelTag } from "./types"
 /** Shown wherever a reviewer name would appear, for topics marked `status: demo`. */
 export const DEMO_REVIEW_LABEL = "Demo content: pending lawyer review";
 
+/** Civil Law subjects in the order law schools teach them; unknown subjects go last. */
+export const SUBJECT_ORDER = [
+  "Persons and Family Relations",
+  "Obligations and Contracts",
+  "Sales",
+  "Succession",
+];
+
+function subjectRank(subject: string): number {
+  const i = SUBJECT_ORDER.indexOf(subject);
+  return i === -1 ? SUBJECT_ORDER.length : i;
+}
+
 function sourcesDir(): string {
   return path.join(process.cwd(), "sources");
 }
@@ -125,7 +138,10 @@ export function loadAllReviewedTopics(): SourceTopic[] {
     .filter((name) => name.endsWith(".md") && !name.startsWith("_"))
     .map((name) => parseTopicFile(path.join(dir, name)))
     .filter((topic): topic is SourceTopic => topic !== null)
-    .sort((a, b) => a.title.localeCompare(b.title));
+    .sort(
+      (a, b) =>
+        subjectRank(a.subject) - subjectRank(b.subject) || a.title.localeCompare(b.title),
+    );
 }
 
 /**

@@ -68,7 +68,11 @@ function HomeInner() {
           (isRepeater && !state.diagnosticOffered) ||
           (isFirstTime && !state.diagnosticOffered && !state.diagnosticCompleted)
         ) {
-          const pick = (data.topics ?? []).slice(0, 3);
+          // Diagnostic: one problem from each of up to three different subjects.
+          const seen = new Set<string>();
+          const pick = (data.topics ?? [])
+            .filter((t) => (seen.has(t.subject) ? false : (seen.add(t.subject), true)))
+            .slice(0, 3);
           setDiagnosticTopics(pick);
           setShowDiagnostic(isRepeater || isFirstTime);
         }

@@ -97,7 +97,9 @@ function ProblemInner() {
         action: "start",
       });
       if (result.ok) {
-        setQuestion(result.data.nextQuestion || "Write your full ALAC answer.");
+        // The problem itself is already shown in its own card above, so the opening
+        // prompt only says what to do (avoids printing the problem twice).
+        setQuestion("Read the problem above, then write your full answer below.");
         setFeedback(result.data.feedback);
         saveActiveDrill({
           feature: "problem-drill",

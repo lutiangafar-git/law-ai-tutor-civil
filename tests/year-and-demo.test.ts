@@ -201,3 +201,14 @@ describe("saving the student's year", () => {
     expect(findProfileKey("year-1-2", null)).toBe("year-1");
   });
 });
+
+describe("topic order", () => {
+  it("follows the law school order: Persons, then Sales, then Succession", async () => {
+    const { loadAllReviewedTopics } = await loadWith(civilLawFiles);
+    expect(loadAllReviewedTopics().map((t) => t.subject)).toEqual([
+      "Persons and Family Relations",
+      "Sales",
+      "Succession",
+    ]);
+  });
+});
