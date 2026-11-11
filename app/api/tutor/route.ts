@@ -11,6 +11,7 @@ import {
   buildRecitationSystemPrompt,
 } from "@/lib/prompts/recitation";
 import { OUTSIDE_MATERIALS_MESSAGE } from "@/lib/prompts/shared";
+import { logTutorEvent } from "@/lib/monitoring";
 import { getTopicById } from "@/lib/sources";
 import type {
   AlacElement,
@@ -86,11 +87,19 @@ async function askClaude(args: {
   }
 
   const client = new Anthropic({ apiKey });
+  const started = Date.now();
   const message = await client.messages.create({
     model: args.model,
     max_tokens: 8000,
     system: args.system,
     messages: [{ role: "user", content: args.user }],
+  });
+
+  logTutorEvent({
+    event: "tutor_call",
+    model: args.model,
+    ms: Date.now() - started,
+    outcome: message.stop_reason ?? "unknown",
   });
 
   if (message.stop_reason === "refusal" || message.stop_reason === "max_tokens") {
@@ -410,7 +419,11 @@ export async function POST(request: Request) {
       sources: sourceRefs(topic),
       declined: Boolean(raw.declined),
     } satisfies TutorTurnResponse);
-  } catch {
+  } catch (error) {
+    logTutorEvent({
+      event: "tutor_error",
+      outcome: error instanceof Error ? error.message.slice(0, 80) : "unknown",
+    });
     return NextResponse.json(
       {
         verdict: "not yet",
