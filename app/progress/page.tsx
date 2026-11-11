@@ -5,6 +5,11 @@ import { GroupGuard } from "@/components/GroupGuard";
 import { getWeakSpots, loadState } from "@/lib/storage";
 import type { ProblemScoreRecord, StoredUserState } from "@/lib/types";
 
+const ELEMENTS = ["Answer", "Legal basis", "Application", "Conclusion"] as const;
+
+/** Weak-spot values: 2 = correct, 1 = stated but incorrect, 0 = not stated. */
+const SCORE_SYMBOL: Record<number, string> = { 2: "✓", 1: "✗", 0: "–" };
+
 function ProgressInner() {
   const [state, setState] = useState<StoredUserState | null>(null);
 
@@ -40,8 +45,8 @@ function ProgressInner() {
             <p>
               Lowest-scoring element across your last{" "}
               {Math.min(10, state.problemScores.length)} drills:{" "}
-              <strong>{weak[0].element}</strong> (average Practice score{" "}
-              {weak[0].average.toFixed(1)}/2).
+              <strong>{weak[0].element}</strong> (average {weak[0].average.toFixed(1)}/2,
+              where 2 = correct, 1 = stated but incorrect, 0 = not stated).
             </p>
             <ul className="space-y-1 text-muted">
               {weak.map((item) => (
@@ -72,8 +77,12 @@ function ProgressInner() {
                   {item.isDiagnostic ? " · Diagnostic" : ""}
                 </p>
                 <p className="mt-1 text-muted">
-                  A {item.scores.Answer} · LB {item.scores["Legal basis"]} · App{" "}
-                  {item.scores.Application} · C {item.scores.Conclusion}
+                  {typeof item.points === "number" && (
+                    <strong className="text-ink">Practice score {item.points}/5 · </strong>
+                  )}
+                  {ELEMENTS.map(
+                    (el) => `${el} ${SCORE_SYMBOL[item.scores[el]] ?? "–"}`,
+                  ).join(" · ")}
                 </p>
               </li>
             ))}

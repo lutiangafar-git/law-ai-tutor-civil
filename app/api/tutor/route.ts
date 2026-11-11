@@ -12,6 +12,8 @@ import {
 } from "@/lib/prompts/recitation";
 import { OUTSIDE_MATERIALS_MESSAGE } from "@/lib/prompts/shared";
 import { logTutorEvent } from "@/lib/monitoring";
+import { rescoreAfterRetry, scoreFromClaude, scoreHeadline } from "@/lib/problemScoring";
+import { parseAlacStatus } from "@/lib/rubric";
 import { getTopicById } from "@/lib/sources";
 import type {
   AlacElement,
@@ -40,6 +42,9 @@ type Body = {
   phase?: string;
   weakElement?: AlacElement;
   alacScores?: AlacScores;
+  /** Labels from the first scoring, sent back on retry so the score can be recomputed. */
+  alacStatus?: unknown;
+  responsive?: boolean;
   action?: "start" | "answer" | "retry";
   classSchedule?: { blocks: { dayOfWeek: number; startMinutes: number; endMinutes: number }[] };
 };
@@ -365,21 +370,26 @@ export async function POST(request: Request) {
       const showModel =
         mode === "rescore" || Boolean(raw.showModelAnswer) || attemptCount + 1 >= 2;
 
+      const retried = rescoreAfterRetry({
+        previous: parseAlacStatus(body.alacStatus),
+        previousResponsive: body.responsive !== false,
+        element,
+        raw,
+      });
+
       return NextResponse.json({
         verdict: (raw.verdict as TutorTurnResponse["verdict"]) || "partly correct",
-        feedback: String(raw.feedback ?? ""),
+        feedback: `${scoreHeadline(retried.rubricScore)} ${String(raw.feedback ?? "")} (Practice score — not official bar grading.)`,
         nextQuestion: String(raw.nextQuestion ?? ""),
         oneThingToFix: raw.oneThingToFix ? String(raw.oneThingToFix) : undefined,
         weakElement: element,
         modelAnswer: showModel
           ? String(raw.modelAnswer ?? formatFullModel(topic))
           : undefined,
-        rubric: body.alacScores
-          ? {
-              ...body.alacScores,
-              [element]: Number(raw.elementScore ?? body.alacScores[element]),
-            }
-          : undefined,
+        rubric: retried.alacScores,
+        rubricScore: retried.rubricScore,
+        alacStatus: retried.status,
+        responsive: retried.responsive,
         sources: sourceRefs(topic),
       } satisfies TutorTurnResponse);
     }
@@ -402,20 +412,26 @@ export async function POST(request: Request) {
       user: `Student full answer:\n${trimmed}\nRespond with JSON only. Do not reveal the model answer yet.`,
     });
 
-    const rubric = (raw.rubric as AlacScores) || {
-      Answer: 0,
-      "Legal basis": 0,
-      Application: 0,
-      Conclusion: 0,
-    };
+    const scored = scoreFromClaude(raw);
+    const allCorrect = scored.focus === null;
 
     return NextResponse.json({
-      verdict: (raw.verdict as TutorTurnResponse["verdict"]) || "partly correct",
-      feedback: `${String(raw.feedback ?? "")} (Practice score — not official bar grading.)`,
-      nextQuestion: String(raw.nextQuestion ?? ""),
-      rubric,
-      weakElement: (raw.weakElement as AlacElement) || "Legal basis",
-      oneThingToFix: String(raw.oneThingToFix ?? "Strengthen your weakest ALAC element."),
+      verdict: allCorrect ? "correct" : scored.rubricScore.points >= 3 ? "partly correct" : "not yet",
+      feedback: `${scoreHeadline(scored.rubricScore)} ${String(raw.feedback ?? "")} (Practice score — not official bar grading.)`,
+      // Nothing to coach on a perfect answer: show the model answer straight away.
+      nextQuestion: allCorrect ? "" : String(raw.nextQuestion ?? ""),
+      modelAnswer: allCorrect ? formatFullModel(topic) : undefined,
+      rubric: scored.alacScores,
+      rubricScore: scored.rubricScore,
+      alacStatus: scored.status,
+      responsive: scored.responsive,
+      elementNotes: scored.elementNotes,
+      strengths: scored.strengths,
+      gaps: scored.gaps,
+      weakElement: scored.focus ?? undefined,
+      oneThingToFix: allCorrect
+        ? undefined
+        : String(raw.oneThingToFix ?? `Strengthen your ${scored.focus}.`),
       sources: sourceRefs(topic),
       declined: Boolean(raw.declined),
     } satisfies TutorTurnResponse);

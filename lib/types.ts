@@ -86,6 +86,15 @@ export interface AlacScores {
   Conclusion: number;
 }
 
+/** Per-part label from the 5-point rubric (see /lib/rubric.ts). */
+export type AlacElementStatus = "correct" | "incorrect" | "missing";
+
+export interface RubricScore {
+  points: number;
+  band: string;
+  explanation: string;
+}
+
 export interface TutorTurnResponse {
   verdict: Verdict;
   feedback: string;
@@ -96,6 +105,15 @@ export interface TutorTurnResponse {
   weakElement?: AlacElement;
   modelAnswer?: string;
   declined?: boolean;
+  /** Problem drills: 0–5 Practice score computed in code from the ALAC labels. */
+  rubricScore?: RubricScore;
+  alacStatus?: Record<AlacElement, AlacElementStatus>;
+  /** One-line reason per ALAC part. */
+  elementNotes?: Partial<Record<AlacElement, string>>;
+  /** False when the answer addresses a different legal issue from the one asked. */
+  responsive?: boolean;
+  strengths?: string[];
+  gaps?: string[];
 }
 
 export interface DrillProgress {
@@ -106,6 +124,9 @@ export interface DrillProgress {
   answers: string[];
   scores: number[];
   alacScores?: AlacScores;
+  alacStatus?: Record<AlacElement, AlacElementStatus>;
+  rubricScore?: RubricScore;
+  responsive?: boolean;
   weakElement?: AlacElement;
   phase?:
     | "answering"
@@ -122,6 +143,8 @@ export interface DrillProgress {
 export interface ProblemScoreRecord {
   topicId: string;
   scores: AlacScores;
+  /** 0–5 Practice score (absent on records saved before the 5-point rubric). */
+  points?: number;
   finishedAt: string;
   isDiagnostic?: boolean;
 }

@@ -18,7 +18,17 @@ import {
   saveActiveDrill,
 } from "@/lib/storage";
 import { callTutor, validateAnswerLength } from "@/lib/tutorClient";
-import type { AlacElement, AlacScores, UserGroup } from "@/lib/types";
+import { STATUS_LABEL, STATUS_SYMBOL } from "@/lib/rubric";
+import type {
+  AlacElement,
+  AlacElementStatus,
+  AlacScores,
+  RubricScore,
+  TutorTurnResponse,
+  UserGroup,
+} from "@/lib/types";
+
+type AlacStatusMap = Record<AlacElement, AlacElementStatus>;
 
 const ELEMENTS: AlacElement[] = [
   "Answer",
@@ -46,6 +56,12 @@ function ProblemInner() {
   const [question, setQuestion] = useState("Loading problem…");
   const [scores, setScores] = useState<AlacScores | null>(null);
   const [weakElement, setWeakElement] = useState<AlacElement | null>(null);
+  const [rubricScore, setRubricScore] = useState<RubricScore | null>(null);
+  const [alacStatus, setAlacStatus] = useState<AlacStatusMap | null>(null);
+  const [responsive, setResponsive] = useState(true);
+  const [notes, setNotes] = useState<Partial<Record<AlacElement, string>>>({});
+  const [strengths, setStrengths] = useState<string[]>([]);
+  const [gaps, setGaps] = useState<string[]>([]);
   const [modelAnswer, setModelAnswer] = useState<string | null>(null);
   const [attemptCount, setAttemptCount] = useState(0);
   const [busy, setBusy] = useState(false);
@@ -84,6 +100,9 @@ function ProblemInner() {
       setAnswer(existing.answers[0] ?? "");
       setScores(existing.alacScores ?? null);
       setWeakElement(existing.weakElement ?? null);
+      setRubricScore(existing.rubricScore ?? null);
+      setAlacStatus(existing.alacStatus ?? null);
+      setResponsive(existing.responsive !== false);
       setQuestion("Continue where you left off.");
       return;
     }
@@ -145,15 +164,32 @@ function ProblemInner() {
       return;
     }
 
-    const rubric = result.data.rubric as AlacScores;
-    const weak =
-      (result.data.weakElement as AlacElement) || lowestAlacElement(rubric);
+    const data: TutorTurnResponse = result.data;
+    const rubric = data.rubric as AlacScores;
+    const status = (data.alacStatus ?? null) as AlacStatusMap | null;
     setScores(rubric);
+    setRubricScore(data.rubricScore ?? null);
+    setAlacStatus(status);
+    setResponsive(data.responsive !== false);
+    setNotes(data.elementNotes ?? {});
+    setStrengths(data.strengths ?? []);
+    setGaps(data.gaps ?? []);
+    setFeedback(data.feedback);
+
+    // Every part correct: nothing to coach, so finish and show the model answer.
+    if (data.modelAnswer && !data.weakElement) {
+      setWeakElement(null);
+      setModelAnswer(data.modelAnswer);
+      setQuestion("Every part of your answer is correct. Compare it with the model answer below.");
+      setPhase("complete");
+      recordFinished(rubric, data.rubricScore?.points);
+      return;
+    }
+
+    const weak = (data.weakElement as AlacElement) || lowestAlacElement(rubric);
     setWeakElement(weak);
-    setFeedback(result.data.feedback);
     setQuestion(
-      result.data.nextQuestion ||
-        `Let's strengthen ${weak} only. Try that element again.`,
+      data.nextQuestion || `Let's strengthen your ${weak}. Rewrite that part only.`,
     );
     setPhase("coaching");
     setAttemptCount(0);
@@ -165,10 +201,28 @@ function ProblemInner() {
       answers: [answer],
       scores: [],
       alacScores: rubric,
+      alacStatus: status ?? undefined,
+      rubricScore: data.rubricScore,
+      responsive: data.responsive !== false,
       weakElement: weak,
       phase: "coaching",
       updatedAt: new Date().toISOString(),
     });
+  }
+
+  function recordFinished(finalScores: AlacScores, points?: number) {
+    addProblemScore({
+      topicId,
+      scores: finalScores,
+      points,
+      finishedAt: new Date().toISOString(),
+      isDiagnostic,
+    });
+    const state = loadState();
+    if (isDiagnostic && state.problemScores.filter((x) => x.isDiagnostic).length >= 3) {
+      markDiagnosticCompleted();
+    }
+    clearActiveDrill();
   }
 
   async function submitRetry() {
@@ -193,6 +247,8 @@ function ProblemInner() {
       action: "retry",
       weakElement,
       alacScores: scores,
+      alacStatus: alacStatus ?? undefined,
+      responsive,
       attemptCount,
     });
     setBusy(false);
@@ -202,27 +258,20 @@ function ProblemInner() {
       return;
     }
 
-    const updated = (result.data.rubric as AlacScores) || scores;
+    const data: TutorTurnResponse = result.data;
+    const updated = (data.rubric as AlacScores) || scores;
     setScores(updated);
-    setFeedback(result.data.feedback);
-    if (result.data.modelAnswer) setModelAnswer(result.data.modelAnswer);
-    setPhase("complete");
-    addProblemScore({
-      topicId,
-      scores: updated,
-      finishedAt: new Date().toISOString(),
-      isDiagnostic,
-    });
-
-    const state = loadState();
-    if (
-      isDiagnostic &&
-      state.problemScores.filter((s) => s.isDiagnostic).length >= 3
-    ) {
-      markDiagnosticCompleted();
+    if (data.rubricScore) setRubricScore(data.rubricScore);
+    if (data.alacStatus) setAlacStatus(data.alacStatus as AlacStatusMap);
+    // The first attempt's note no longer fits the rewritten part.
+    if (weakElement) {
+      setNotes((prev) => ({ ...prev, [weakElement]: "Re-checked after your rewrite." }));
     }
-
-    clearActiveDrill();
+    setResponsive(data.responsive !== false);
+    setFeedback(data.feedback);
+    if (data.modelAnswer) setModelAnswer(data.modelAnswer);
+    setPhase("complete");
+    recordFinished(updated, data.rubricScore?.points ?? rubricScore?.points);
   }
 
   if (paused) return <ClassPauseBanner />;
@@ -253,20 +302,72 @@ function ProblemInner() {
         )}
       </div>
 
-      {scores && (
-        <div className="rounded-lg border border-line bg-white/70 p-4 text-sm">
-          <p className="font-medium">Practice score (ALAC)</p>
+      {rubricScore && (
+        <div className="rounded-lg border border-line bg-white/80 p-4 text-sm">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <p className="font-medium">Practice score</p>
+            <p className="font-display text-3xl text-ink">
+              {rubricScore.points}
+              <span className="text-lg text-muted">/5</span>
+            </p>
+          </div>
+          <p className="mt-1">{rubricScore.explanation}</p>
           <p className="mt-1 text-xs text-muted">
-            Not official bar grading. Not a pass prediction.
+            5-point bar-coach rubric: conclusion, rule and application. Not official bar
+            grading. Not a pass prediction.
           </p>
-          <ul className="mt-2 grid grid-cols-2 gap-2">
-            {ELEMENTS.map((el) => (
-              <li key={el}>
-                {el}: {scores[el]}/2
-                {weakElement === el ? " · focus" : ""}
-              </li>
-            ))}
-          </ul>
+          {!responsive && (
+            <p className="mt-2 rounded-md bg-amber-50 px-2 py-1 text-amber-900">
+              Your answer addresses a different issue from the one asked.
+            </p>
+          )}
+          {alacStatus && (
+            <ul className="mt-3 space-y-2">
+              {ELEMENTS.map((el) => (
+                <li
+                  key={el}
+                  className={`rounded-md border px-3 py-2 ${
+                    weakElement === el && phase !== "complete"
+                      ? "border-accent bg-accent-soft/30"
+                      : "border-line"
+                  }`}
+                >
+                  <span className="font-medium">
+                    <span aria-hidden="true">{STATUS_SYMBOL[alacStatus[el]]}</span> {el}:{" "}
+                    {STATUS_LABEL[alacStatus[el]]}
+                  </span>
+                  {weakElement === el && phase !== "complete" ? (
+                    <span className="text-accent"> · focus</span>
+                  ) : null}
+                  {notes[el] && <span className="block text-muted">{notes[el]}</span>}
+                </li>
+              ))}
+            </ul>
+          )}
+          {(strengths.length > 0 || gaps.length > 0) && (
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              {strengths.length > 0 && (
+                <div>
+                  <p className="font-medium">Strengths</p>
+                  <ul className="mt-1 list-disc pl-5 text-muted">
+                    {strengths.map((x) => (
+                      <li key={x}>{x}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {gaps.length > 0 && (
+                <div>
+                  <p className="font-medium">Needs improvement</p>
+                  <ul className="mt-1 list-disc pl-5 text-muted">
+                    {gaps.map((x) => (
+                      <li key={x}>{x}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 
@@ -280,7 +381,7 @@ function ProblemInner() {
             label={
               phase === "answering"
                 ? "Your full ALAC answer"
-                : `Retry: ${weakElement ?? "weakest element"} only`
+                : `Rewrite your ${weakElement ?? "weakest part"} only`
             }
           />
           <button
@@ -300,7 +401,7 @@ function ProblemInner() {
 
       {phase === "complete" && modelAnswer && (
         <div className="rounded-lg border border-line bg-white/80 p-4">
-          <p className="font-medium">Model answer (after retry)</p>
+          <p className="font-medium">Model answer</p>
           <pre className="mt-2 whitespace-pre-wrap font-sans text-sm leading-relaxed">
             {modelAnswer}
           </pre>

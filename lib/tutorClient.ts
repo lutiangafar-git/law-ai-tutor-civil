@@ -17,6 +17,9 @@ export type TutorRequestBody = {
   phase?: string;
   weakElement?: string;
   alacScores?: AlacScores;
+  /** Problem-drill retry: labels from the first scoring, so the 0–5 score can be recomputed. */
+  alacStatus?: Record<string, string>;
+  responsive?: boolean;
   action?: "start" | "answer" | "retry";
 };
 
