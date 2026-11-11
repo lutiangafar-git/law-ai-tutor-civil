@@ -3,6 +3,7 @@ topicId: agency-revocation-art-1920-1927
 title: "Civil Code, Arts. 1868, 1920 and 1927: Revoking an agency, and when it cannot be revoked"
 subject: Agency
 syllabusRef: "IX.C.3"
+syllabusYear: 2027
 yearLevels: [year-2, year-4, bar]
 status: demo
 keyTerms: ["agency", "revoke", "revocation", "at will", "agency coupled with an interest", "bilateral contract", "common benefit"]

@@ -3,6 +3,7 @@ topicId: sales-double-sale-art-1544
 title: "Civil Code, Arts. 1544 and 1874: Double sale and selling land through an agent"
 subject: Sales
 syllabusRef: "IX.A.6"
+syllabusYear: 2027
 yearLevels: [year-2, year-4, bar]
 status: demo
 keyTerms: ["double sale", "good faith", "Registry of Property", "possession", "oldest title", "authority in writing"]

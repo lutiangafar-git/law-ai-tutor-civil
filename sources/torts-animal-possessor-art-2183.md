@@ -3,6 +3,7 @@ topicId: torts-animal-possessor-art-2183
 title: "Civil Code, Arts. 2176 and 2183: Liability of the possessor of an animal"
 subject: Torts and Quasi-Delicts
 syllabusRef: "XI.A.4"
+syllabusYear: 2027
 yearLevels: [year-2, year-4, bar]
 status: demo
 keyTerms: ["quasi-delict", "possessor of an animal", "force majeure", "fault of the person who has suffered damage", "escape"]

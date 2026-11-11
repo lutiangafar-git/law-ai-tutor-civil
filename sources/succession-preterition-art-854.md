@@ -3,6 +3,7 @@ topicId: succession-preterition-art-854
 title: "Civil Code, Art. 854: Preterition of compulsory heirs"
 subject: Succession
 syllabusRef: "VII.B.2"
+syllabusYear: 2027
 yearLevels: [year-2, year-3, year-4, bar]
 status: demo
 keyTerms: ["preterition", "compulsory heirs", "direct line", "institution of heir", "devises and legacies", "inofficious", "intestate succession"]

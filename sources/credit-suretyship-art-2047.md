@@ -3,6 +3,7 @@ topicId: credit-suretyship-art-2047
 title: "Civil Code, Arts. 2047, 2058, 2059 and 1216: Guaranty versus suretyship"
 subject: Credit Transactions
 syllabusRef: "IX.D.3"
+syllabusYear: 2027
 yearLevels: [year-2, year-4, bar]
 status: demo
 keyTerms: ["guaranty", "suretyship", "surety", "guarantor", "benefit of excussion", "solidarily", "solidary debtors"]

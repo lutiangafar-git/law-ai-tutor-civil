@@ -3,6 +3,7 @@ topicId: family-fc-arts-2-4
 title: "Family Code, Arts. 2–4: Requisites of marriage and a missing marriage license"
 subject: Persons and Family Relations
 syllabusRef: "III.A.1.b"
+syllabusYear: 2027
 yearLevels: [year-1, year-4, bar]
 status: demo
 keyTerms: ["essential requisites", "formal requisites", "marriage license", "void ab initio", "voidable", "irregularity"]

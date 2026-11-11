@@ -3,6 +3,7 @@ topicId: property-accretion-art-457
 title: "Civil Code, Arts. 440 and 457: Accession and alluvion (accretion along rivers)"
 subject: Property
 syllabusRef: "V.C"
+syllabusYear: 2027
 yearLevels: [year-2, year-4, bar]
 status: demo
 keyTerms: ["accession", "accretion", "alluvion", "riparian owner", "current of the waters", "gradually"]

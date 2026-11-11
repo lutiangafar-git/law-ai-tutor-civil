@@ -3,6 +3,7 @@ topicId: trusts-implied-trust-art-1456
 title: "Civil Code, Arts. 1441, 1456 and 1144: Implied trust and reconveyance"
 subject: Trusts
 syllabusRef: "VIII.A.7"
+syllabusYear: 2027
 yearLevels: [year-2, year-4, bar]
 status: demo
 keyTerms: ["implied trust", "constructive trust", "express trust", "reconveyance", "prescription", "quieting of title", "actual possession"]

@@ -3,6 +3,7 @@ topicId: oblicon-art-1156
 title: "Civil Code, Article 1156: Definition of an obligation"
 subject: Obligations and Contracts            # must be one of the areas in lib/subject.ts
 syllabusRef: "VIII.A.1.a"           # REQUIRED: place in the 2027 Bar syllabus outline; sets the topic order
+syllabusYear: 2027                 # REQUIRED: Bar syllabus year this topic was checked against
 yearLevels: [year-1, year-4, bar]   # must match the year plan in lib/subject.ts (tests check this)
                                   # (Year 4 and bar reviewees cover all of Civil Law)
 status: demo                      # optional: shows the topic with a 'pending lawyer review' banner.

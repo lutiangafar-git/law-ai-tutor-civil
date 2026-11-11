@@ -3,6 +3,7 @@ topicId: persons-art-40-41
 title: "Civil Code, Arts. 40–41: When a conceived child is considered born"
 subject: Persons and Family Relations
 syllabusRef: "II.A.1"
+syllabusYear: 2027
 yearLevels: [year-1, year-4, bar]
 status: demo
 keyTerms: ["civil personality", "conceived child", "intra-uterine life", "complete delivery", "twenty-four hours"]

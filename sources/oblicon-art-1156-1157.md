@@ -3,6 +3,7 @@ topicId: oblicon-art-1156-1157
 title: "Civil Code, Arts. 1156–1157: What an obligation is and where it comes from"
 subject: Obligations and Contracts
 syllabusRef: "VIII.A.1.a"
+syllabusYear: 2027
 yearLevels: [year-1, year-4, bar]
 status: demo
 keyTerms: ["juridical necessity", "prestation", "to give", "to do", "not to do", "quasi-contracts", "quasi-delicts"]
