@@ -3,7 +3,7 @@
 **Gafar Lutian · Week 4 Graded Mini Project 4.2 · November 2026**
 
 ## What I built
-Law AI Tutor is a live web app (https://law-tutor-drill.vercel.app) that helps Philippine law students and bar
+Law AI Tutor is a live web app (https://law-ai-tutor-civil.vercel.app) that helps Philippine law students and bar
 reviewees practice Civil Law by answering first. It scores bar-style answers on Answer, Legal basis,
 Application and Conclusion, coaches the weakest part, and uses only reviewed source files. It pauses itself
 for Year 1–2 students during class, which matches the direction schools like UP Law are taking on AI.

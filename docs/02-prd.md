@@ -1,7 +1,7 @@
 # PRD: Law AI Tutor - Civil v1 (Civil Law Socratic Practice)
 
 **Owner:** Gafar Lutian · **Status:** v1 live (demo content) · **Updated:** 12 Nov 2026  
-**Live:** https://law-tutor-drill.vercel.app · **Detailed spec:** [`spec.md`](../spec.md)
+**Live:** https://law-ai-tutor-civil.vercel.app · **Detailed spec:** [`spec.md`](../spec.md)
 
 ## 1. Problem statement
 Law students lean on AI shortcuts and faculty report weaker reasoning (UP Law banned AI in first-year core subjects, Aug 2026). Bar reviewees, about 54% repeaters or refreshers, can't tell *why* their essay answers fail (2025 pass rate 48.98%). Chatbots hand out answers and can invent PH citations. Learners need practice that makes them **answer first**, pinpoints the weak part of an answer, and uses only **reviewed Philippine sources**.

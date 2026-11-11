@@ -2,7 +2,7 @@
 
 **Before recording**
 - Use a **Chrome Incognito** window (proves the live URL works for anyone, with no saved data).
-- Open https://law-tutor-drill.vercel.app. Close other tabs and turn notifications off.
+- Open https://law-ai-tutor-civil.vercel.app. Close other tabs and turn notifications off.
 - Record with **Windows + Alt + R** (Xbox Game Bar) or Loom (loom.com, free). Upload to YouTube as **Unlisted** or keep the Loom link, and check that it opens in Incognito.
 - Have this answer ready to paste (it is deliberately weak):
   `Answer: B1 has the better right. Legal basis: Art. 1544 on double sale. Application: B1 bought first and paid in full, B2 only pays in installments. Conclusion: B1 owns the land.`

@@ -1,8 +1,8 @@
 # Law AI Tutor - Civil: Socratic Civil Law Practice
 
-[![CI](https://github.com/lutiangafar-git/law-tutor-drill/actions/workflows/test.yml/badge.svg)](https://github.com/lutiangafar-git/law-tutor-drill/actions/workflows/test.yml)
+[![CI](https://github.com/lutiangafar-git/law-ai-tutor-civil/actions/workflows/test.yml/badge.svg)](https://github.com/lutiangafar-git/law-ai-tutor-civil/actions/workflows/test.yml)
 
-**Live app:** https://law-tutor-drill.vercel.app
+**Live app:** https://law-ai-tutor-civil.vercel.app
 **Demo video (2 min):** _link added at submission_
 **Course:** Week 4 Graded Mini Project 4.2, AI-Powered Web Application
 
@@ -25,9 +25,12 @@ policies: Year 1–2 students are paused during class hours, and Year 3–4 stud
 | Year 4 student | All Civil Law topics in the 2027 Bar syllabus | In class (Quick Check) and after |
 | Bar reviewee (first-time or repeater) | All Civil Law topics in the 2027 Bar syllabus | Anytime; repeaters start with a diagnostic |
 
-**Landing page first.** Every visit starts with *"Who are you practicing as?"*. The student picks their law
-school year or bar review status, and only then goes to the drills page for that year's topics. Years with
-no Civil Law topics are not offered. Topics are limited to the **Syllabus for the 2027 Bar Examinations
+**Register first.** Page 1 shows one **Register** button (or **Continue** for a returning user). Registering asks
+*"Which describes you?"* (Law student Year 1–2, Law student Year 3–4, or Bar reviewee), then the exact year, or, for
+bar reviewees, *"Have you taken the Bar exam before?"* (No = first-time taker, Yes = repeater). The user then lands on
+their category's own page: `/year-1-2`, `/year-3-4` or `/bar`. **Repeater status is confidential:** it stays on the
+device, is never shown on screen (everyone sees "Bar reviewee") and never appears in a web address. There is no
+account or password in v1. Years with no Civil Law topics are not offered. Topics are limited to the **Syllabus for the 2027 Bar Examinations
 (Civil Law and Land Titles and Deeds)**, Bar Bulletin No. 1-2027. **Year 1–2** work through their topics in syllabus order (the drills
 page suggests the next unfinished one); **Year 3–4 and bar reviewees** get random topics to test general knowledge.
 
@@ -61,7 +64,7 @@ reviewed materials for this drill."* Every score is labelled **"Practice score"*
 > review"** in the app until a law-trained reviewer signs them off. Do not rely on them as legal advice.
 
 ## Sister apps
-- **Law AI Tutor - Civil** (this app): https://law-tutor-drill.vercel.app
+- **Law AI Tutor - Civil** (this app): https://law-ai-tutor-civil.vercel.app
 - **Law AI Tutor - Commercial**: https://law-ai-tutor-commercial.vercel.app
 - **Law AI Tutor - Taxation**: https://law-ai-tutor-taxation.vercel.app
 
@@ -74,8 +77,8 @@ No database and no login: progress stays in the user's browser.
 Requirements: Node.js 20+ and an Anthropic API key.
 
 ```bash
-git clone https://github.com/lutiangafar-git/law-tutor-drill.git
-cd law-tutor-drill
+git clone https://github.com/lutiangafar-git/law-ai-tutor-civil.git
+cd law-ai-tutor-civil
 npm install
 cp .env.example .env.local      # then paste your key after ANTHROPIC_API_KEY=
 npm run dev                     # open http://localhost:3000
@@ -100,15 +103,15 @@ template, and CI runs a **Gitleaks** scan over the full history on every push. T
 
 ## CI/CD
 - **GitHub Actions** ([`.github/workflows/test.yml`](.github/workflows/test.yml)), on every push and pull request: lint → typecheck → 75 tests → production build, plus a Gitleaks secret scan.
-- **Vercel** deploys `main` automatically to https://law-tutor-drill.vercel.app after each push.
-- **Monitoring:** Vercel Web Analytics (page views, no cookies); one JSON log line per Claude call (feature, model, latency, outcome; never student text) in Vercel → Logs; health check at [`/api/health`](https://law-tutor-drill.vercel.app/api/health).
+- **Vercel** deploys `main` automatically to https://law-ai-tutor-civil.vercel.app after each push.
+- **Monitoring:** Vercel Web Analytics (page views, no cookies); one JSON log line per Claude call (feature, model, latency, outcome; never student text) in Vercel → Logs; health check at [`/api/health`](https://law-ai-tutor-civil.vercel.app/api/health).
 
 ## Project documents
 | Document | What's in it |
 |---|---|
 | [docs/01-idea-validation-report.md](docs/01-idea-validation-report.md) | All 7 validation steps with evidence, "why now" and target user |
 | [docs/02-prd.md](docs/02-prd.md) | One-page PRD with acceptance criteria for each feature |
-| [spec.md](spec.md) | Full spec: context, inputs/outputs, behavior rules, constraints, 58 acceptance criteria, revision log |
+| [spec.md](spec.md) | Full spec: context, inputs/outputs, behavior rules, constraints, 62 acceptance criteria, revision log |
 | [docs/03-architecture.md](docs/03-architecture.md) | Architecture diagram, data flow, design decisions, security |
 | [CLAUDE.md](CLAUDE.md) · [agents.md](agents.md) · [.cursorrules](.cursorrules) | Rules for AI coding tools (Claude Code, other agents, Cursor) |
 | [docs/04-reflection.md](docs/04-reflection.md) | What I learned, challenges, v2 improvements |
@@ -135,7 +138,7 @@ and deletes `status: demo`. A file with neither is hidden. `npm test` checks tha
 - The user's group is self-declared (honor system); school-managed settings come later.
 - Progress doesn't sync across devices (no accounts, by design).
 
-v2 ideas are tracked in [GitHub Issues](https://github.com/lutiangafar-git/law-tutor-drill/issues).
+v2 ideas are tracked in [GitHub Issues](https://github.com/lutiangafar-git/law-ai-tutor-civil/issues).
 
 ## How AI was used to build this
 The spec, rules files and code were written with **Cursor** and **Claude Code**, following `CLAUDE.md`. All

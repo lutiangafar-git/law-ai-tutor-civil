@@ -31,6 +31,9 @@ import {
   isSequentialGroup,
   nextInSyllabus,
   pickRandomTopic,
+  diagnosticRequired,
+  remainingDiagnostic,
+  topicSteps,
 } from "@/lib/topicOrder";
 
 type TopicSummary = {
@@ -60,6 +63,9 @@ function HomeInner({ category }: { category: Category }) {
   const [diagnosticTopics, setDiagnosticTopics] = useState<TopicSummary[]>([]);
   const [profileLabel, setProfileLabel] = useState("");
   const [finished, setFinished] = useState<Set<string>>(new Set());
+  const [progress, setProgress] = useState<ReturnType<typeof loadState> | null>(null);
+  const [mustDiagnose, setMustDiagnose] = useState(false);
+  const [diagnosticLeft, setDiagnosticLeft] = useState<string[]>([]);
 
   useEffect(() => {
     const state = loadState();
@@ -94,6 +100,12 @@ function HomeInner({ category }: { category: Category }) {
         const list = data.topics ?? [];
         setTopics(list);
         const done = finishedTopicIds(state);
+        setProgress(state);
+        const required = diagnosticRequired(state.userGroup, state.diagnosticCompleted);
+        setMustDiagnose(required);
+        if (required && state.diagnosticOffered) {
+          setDiagnosticLeft(remainingDiagnostic(state.diagnosticTopicIds, state.problemScores));
+        }
         setFinished(done);
         // Year 1–2: next unfinished topic in syllabus order. Others: a random topic.
         const start = isSequentialGroup(state.userGroup)
@@ -104,7 +116,7 @@ function HomeInner({ category }: { category: Category }) {
         const isRepeater = state.userGroup === "bar-repeater";
         const isFirstTime = state.userGroup === "bar-first-time";
         if (
-          (isRepeater && !state.diagnosticOffered) ||
+          (isRepeater && !state.diagnosticCompleted && !state.diagnosticOffered) ||
           (isFirstTime && !state.diagnosticOffered && !state.diagnosticCompleted)
         ) {
           // Diagnostic: one problem from each of up to three different subjects.
@@ -198,17 +210,36 @@ function HomeInner({ category }: { category: Category }) {
                 >
                   Start diagnostic
                 </button>
-                                  <button
+                {!mustDiagnose && (
+                  <button
                     type="button"
                     onClick={skipDiagnostic}
                     className="rounded-md border border-line px-4 py-2"
                   >
                     Skip for now
                   </button>
+                )}
               </div>
             </div>
           )}
 
+          {mustDiagnose && !showDiagnostic && diagnosticLeft.length > 0 && (
+            <div className="rounded-lg border border-line bg-white/80 p-4">
+              <h2 className="font-display text-xl">Continue your diagnostic</h2>
+              <p className="mt-2 text-sm text-muted">
+                Finish the diagnostic first; your regular drills open right after.
+              </p>
+              <Link
+                href={`/problem/${diagnosticLeft[0]}?diagnostic=1`}
+                className="mt-3 inline-block rounded-md bg-accent px-4 py-2 text-white"
+              >
+                Continue diagnostic
+              </Link>
+            </div>
+          )}
+
+          {!mustDiagnose && (
+          <>
           <div className="space-y-3">
             <h2 className="font-display text-xl">Choose a topic</h2>
             {topics.length === 0 ? (
@@ -276,16 +307,27 @@ function HomeInner({ category }: { category: Category }) {
             <div className="space-y-3">
               <h2 className="font-display text-xl">Start a drill</h2>
               <div className="grid gap-3">
-                {features.map((feature, index) => (
-                  <FeatureCard
-                    key={feature}
-                    feature={feature}
-                    topicId={selectedTopic}
-                    lead={index === 0}
-                  />
-                ))}
+                {features.map((feature, index) => {
+                  const steps = progress ? topicSteps(group, selectedTopic, progress) : null;
+                  const st =
+                    steps && feature !== "in-class-quick-check" ? steps[feature] : undefined;
+                  return (
+                    <FeatureCard
+                      key={feature}
+                      feature={feature}
+                      topicId={selectedTopic}
+                      lead={index === 0}
+                      step={sequential && st ? index + 1 : undefined}
+                      done={st?.done}
+                      locked={st?.locked}
+                      lockReason={st?.lockReason}
+                    />
+                  );
+                })}
               </div>
             </div>
+          )}
+          </>
           )}
         </>
       )}
