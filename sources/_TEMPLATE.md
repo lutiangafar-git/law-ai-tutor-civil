@@ -2,7 +2,10 @@
 topicId: oblicon-art-1156
 title: "Civil Code, Article 1156: Definition of an obligation"
 subject: Obligations and Contracts
-yearLevels: [year-1-2, bar]   # who sees this topic: year-1-2, year-3-4, bar
+yearLevels: [year-1, year-4, bar]   # who sees this topic: year-1, year-2, year-3, year-4, bar
+                                  # (Year 4 and bar reviewees cover all of Civil Law)
+status: demo                      # optional: shows the topic with a 'pending lawyer review' banner.
+                                  # Delete this line once reviewedBy and lastReviewed are filled.
 syllabusWeek: 1               # optional: matches the class syllabus
 keyTerms: ["juridical necessity", "prestation", "to give", "to do", "not to do"]   # reviewer-approved words to highlight (planned UI-2)
 citation: "Civil Code of the Philippines (Republic Act No. 386), Article 1156"
