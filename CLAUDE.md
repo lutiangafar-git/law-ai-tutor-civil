@@ -1,8 +1,7 @@
-# agents.md: Law AI Tutor, Socratic Practice Drills
+# CLAUDE.md: Law AI Tutor, Socratic Practice Drills
 
-> Worked example for the Mini Project (deck page 60).
-> This is the "onboarding note" every AI coding tool reads before touching the project.
-> Save a copy named CLAUDE.md so Claude Code reads it too.
+> The "onboarding note" every AI coding tool reads before touching this project.
+> `CLAUDE.md` (Claude Code), `agents.md` (other agents) and `.cursorrules` (Cursor) hold the same rules. Keep them in sync.
 
 ## Project Overview
 One Socratic law tutor whose rules change by user group:
@@ -12,6 +11,10 @@ One Socratic law tutor whose rules change by user group:
 | Year 1–2 students | Not allowed (paused during class hours) | Drills to prepare for future recitations and exams |
 | Year 3–4 students | In-class Quick Check to aid recitations | Drills to prepare for exams |
 | Bar reviewees (first-time and repeaters) | Anytime | Anytime |
+
+Content is **Civil Law only**, mapped to the year it is taught: Year 1 Persons & Family Relations and
+Obligations; Year 2 Sales; Year 3 Succession; Year 4 and bar reviewees all Civil Law. Students pick their
+exact year (1–4); usage rules still work in pairs (Year 1–2, Year 3–4).
 
 There are three features:
 - **Recitation drill:** facts → issue → rule → reasoning → application.
@@ -33,6 +36,9 @@ Full requirements are in `spec.md`. Follow it. If the code and the spec disagree
 - Start on my computer: `npm run dev` (then open http://localhost:3000)
 - Run tests: `npm test`
 - Check code style: `npm run lint`
+- Check types: `npx tsc --noEmit`
+- Production build (what Vercel runs): `npm run build`
+- CI (GitHub Actions) runs all four plus a Gitleaks secret scan on every push. Keep it green.
 
 ## Architecture (where things live)
 - `/app/page.tsx`: home screen. Shows only the features allowed for the user's group and the current time.
@@ -43,13 +49,19 @@ Full requirements are in `spec.md`. Follow it. If the code and the spec disagree
 - `/app/progress/page.tsx`: practice scores and weak spots
 - `/app/settings/page.tsx`: group and class schedule
 - `/app/api/tutor/route.ts`: server code that calls Claude (the only place the API key is used)
+- `/app/api/topics/route.ts`: topic list for a group and year (never sends model answers)
+- `/app/api/health/route.ts`: health check for monitoring (never returns the key)
 - `/lib/access.ts`: **the single place for usage rules.** Given the group and the time, it decides which
   features are allowed.
+- `/lib/profiles.ts`: the Year 1–4 and bar choices, each mapped to a usage group
+- `/lib/monitoring.ts`: one JSON log line per Claude call (no student text)
+- `/components/DemoBanner.tsx`: "Demo content: pending lawyer review" banner
 - `/lib/prompts/`: tutor instructions for each feature
-- `/lib/sources.ts`: loads `sources/*.md`, hides unreviewed topics, filters by year level
+- `/lib/sources.ts`: loads `sources/*.md`, hides unreviewed non-demo topics, filters by year, orders by subject
 - `/lib/storage.ts`: saves group, schedule, progress and scores in the browser only
 - `/sources/`: reviewed legal source files, one per topic (see `_TEMPLATE.md`)
 - `/tests/`: automated tests, one group per acceptance criterion in spec.md
+- `/docs/`: idea validation report, PRD, architecture notes, reflection, demo script
 
 ## Conventions
 - Make small, focused changes. Explain what you changed and why, in plain English. I'm not a developer.
@@ -62,7 +74,9 @@ Full requirements are in `spec.md`. Follow it. If the code and the spec disagree
 - Usage rules live only in `/lib/access.ts`. Never weaken them:
   - Year 1–2 are always paused during class hours.
   - Quick Check is never shown to Year 1–2.
-- NEVER edit files in `/sources/`. Only a law-trained reviewer changes legal content.
+- NEVER edit a signed-off file in `/sources/` (one with `reviewedBy` and `lastReviewed`). Only a law-trained
+  reviewer changes legal content. An AI tool may draft a NEW topic file only when the owner asks, and it
+  must carry `status: demo` with `reviewedBy` and `lastReviewed` left empty, so the app shows the demo banner.
 - NEVER write legal content (case names, G.R. numbers, articles, quotes) into code or prompts.
   All legal content must come from `/sources/`.
 - The tutor must never invent citations. If information isn't in the sources, it says so.
@@ -70,5 +84,6 @@ Full requirements are in `spec.md`. Follow it. If the code and the spec disagree
 - Label all scores "Practice score". Never describe them as official bar grading or pass predictions.
 - NEVER put the API key in code. Read it from `process.env.ANTHROPIC_API_KEY`.
 - NEVER commit `.env.local`. It must stay listed in `.gitignore`.
+- Never log student answers. Monitoring logs may contain only feature, model, latency and outcome.
 - No login, database, voice, payments or dashboards in v1. Those are out of scope.
 - Do not change `spec.md` without asking me.

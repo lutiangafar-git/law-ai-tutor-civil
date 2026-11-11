@@ -2,7 +2,8 @@
 
 > Worked example for Lab 1 (deck page 15) and Mini Project Phase 1 (deck page 60).
 > Based on the Law AI Tutor research (problem statements, personas, VC critique).
-> v1 serves all law students and all bar reviewees, but keeps the content narrow: **two subjects, text only.**
+> v1 serves all law students and all bar reviewees, but keeps the content narrow: **Civil Law only, text only.**
+> Revised 11 Nov 2026 after review. See the **Revision log** at the end.
 
 ## ⭐ When each group may use the tutor
 
@@ -30,17 +31,33 @@ Law AI Tutor is one Socratic tutor that adjusts its rules to the user's stage:
 - **Bar reviewees, first-time takers and repeaters (persona: Carla):** practice bar-style answers anytime,
   get feedback on how each answer is built, and track weak spots. Repeaters start with a diagnostic.
 
-**Content for v1:** two subjects.
-- **Obligations and Contracts:** Year 1–2 students, and bar reviewees (Civil Law).
-- **One Year 3–4 subject chosen with the pilot school**, e.g. a Remedial Law course.
+**Content for v1: Civil Law, mapped to the year it is taught.**
 
-Y3–4 in-class use only helps if the subject is one students are currently taking, so pick it with the pilot school.
+| User | Civil Law topics shown | Topic tag in `sources/` |
+|---|---|---|
+| Year 1 | Persons and Family Relations; Obligations and Contracts | `year-1` |
+| Year 2 | Sales | `year-2` |
+| Year 3 | Succession | `year-3` |
+| Year 4 | All Civil Law topics (bar-oriented review) | `year-4` |
+| Bar reviewees (first-time and repeaters) | All Civil Law topics | `bar` |
+
+Usage rules still group years in pairs (Year 1–2, Year 3–4; see the table above). The exact year only
+decides which topics appear. Problems come from past Philippine Bar Examinations (Civil Law), with the
+year and question number shown. Model answers are written for this app in the ALAC format.
+
+**Demo topics.** Until a law-trained reviewer signs off a topic file, it may be published with
+`status: demo`. A demo topic appears with the banner "Demo content: pending lawyer review" on the home
+screen and on every drill screen, and its source reference reads "Demo content: pending lawyer review"
+instead of a reviewer's name. A file that is neither signed off nor marked demo stays hidden. All demo
+topics must be signed off, or removed, before any real student pilot.
 
 **Out of scope for v1:** lawyers, full timed mock bar exams, voice, logins, payments, school or coach dashboards.
 
 ## 2. Inputs & Outputs
 **Inputs**
 - `userGroup`: `year-1-2` | `year-3-4` | `bar-first-time` | `bar-repeater`. Chosen on first use and changeable in Settings.
+- `studentYear` (students only): `1` | `2` | `3` | `4`. Chosen together with the group ("Year 1 student"…
+  "Year 4 student"); decides which topics appear. Bar reviewees have no year.
 - `classSchedule` (students only): class days and times, saved on the device. All times are Philippine time.
   **Pre-filled with the typical law school schedule**, which the student can edit or clear in Settings:
   - **Monday to Friday:** 6:00 PM to 9:00 PM
@@ -136,7 +153,8 @@ Each step scores 0 (missing or wrong), 1 (partly right) or 2 (complete and accur
 - The tutor never invents case names, G.R. numbers, article numbers, dates or quotes.
 - If the user asks about something outside the topic's sources, reply:
   "That's outside the reviewed materials for this drill. Check the official source or ask your professor or coach."
-- Topics whose source file has no `reviewedBy` or `lastReviewed` are hidden.
+- Topics whose source file has no `reviewedBy` or `lastReviewed` are hidden, unless the file is marked
+  `status: demo`, in which case it is shown with the demo banner (see Section 1).
 
 ### 3.5 Private, judgment-free, resumable
 - Feedback stays encouraging and specific. Never compare a user with others.
@@ -227,6 +245,19 @@ Each step scores 0 (missing or wrong), 1 (partly right) or 2 (complete and accur
     then In-class Quick Check is the first option on the home screen.
 27. Given a bar reviewee, then no class schedule is shown or applied.
 
+**Year-based topics and demo content (added 11 Nov 2026)**
+
+31. Given a Year 1 student, then the topic list shows Persons and Family Relations and Obligations and
+    Contracts topics only; a Year 2 student sees Sales only; a Year 3 student sees Succession only.
+32. Given a Year 4 student or any bar reviewee, then every Civil Law topic is listed.
+33. Given a topic file marked `status: demo` without reviewer sign-off, then the topic is listed with
+    "(demo)" and the demo banner appears on the home screen and on every drill screen for that topic.
+34. Given a topic file with neither reviewer sign-off nor `status: demo`, then it does not appear (criterion 8 still holds).
+35. Given any topic file in `sources/`, then it contains a citation, an https link, the source text,
+    at least two key points, a recitation fact pattern and model answer, a problem, and all four ALAC parts.
+36. Given the topic list, then subjects appear in teaching order: Persons and Family Relations,
+    Obligations and Contracts, Sales, Succession.
+
 ## 6. Planned improvements (not built yet)
 Requested after the first test run (10 Nov 2026). Build these in a later round; they are not part of v1's
 release checks until moved into Section 5.
@@ -258,3 +289,14 @@ In every drill and Quick Check, a reader must tell at a glance what is the tutor
     then it is highlighted; words not in `keyTerms` are not.
 30. Given a 360-pixel-wide screen, then the question and feedback cards and highlights remain readable
     without sideways scrolling.
+
+## 7. Revision log
+| Date | Change | Why (review finding) |
+|---|---|---|
+| 6 Nov 2026 | First spec (Sections 1–5) from the validation research | Exercise 1 |
+| 6 Nov 2026 | Spec reviewed by Claude ("what's ambiguous, missing, or risky?"); agreed fixes merged. ALAC rubric confirmed by a bar coach | Exercise 1, Phase 4 review |
+| 10 Nov 2026 | Added the default Philippine class schedule (criteria 24–27) | The class-time pause should work before a student enters their own schedule |
+| 10 Nov 2026 | Added planned UI-1 and UI-2 (Section 6) | First test run: questions and feedback looked alike |
+| 11 Nov 2026 | Content narrowed to **Civil Law by year** (Y1 Persons and Family, Obligations; Y2 Sales; Y3 Succession; Y4 and bar: all); added `studentYear` | Founder review against the law-school curriculum and the bar Q&A compilation |
+| 11 Nov 2026 | Added **demo topics** with a visible banner (criteria 33–34) | Review of the live app: the topic list was empty until lawyer sign-off, so the core feature couldn't be shown |
+| 11 Nov 2026 | Added criteria 35–36 (topic-file completeness, subject order) | Local testing found topics in alphabetical, not teaching, order |
