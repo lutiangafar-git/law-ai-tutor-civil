@@ -1,6 +1,6 @@
 # Idea Validation Report: Law AI Tutor
 
-**Project:** Law AI Tutor, a Socratic Civil Law practice tutor for Philippine law students and bar reviewees  
+**Project:** Law AI Tutor - Civil, a Socratic Civil Law practice tutor for Philippine law students and bar reviewees  
 **Author:** Gafar Lutian · **Course:** Week 4 Graded Mini Project 4.2 · **Date:** 11 November 2026  
 **Method:** the 7-step validation framework from the Week 4A deck (Quick prompt with Claude, then Deep Research with Perplexity and web search). Raw research notes are kept outside this repo; the evidence and links are reproduced below.  
 
@@ -155,7 +155,7 @@ Three low-cost experiments. Each tests one assumption, has a cost and duration, 
 | **2. One bad citation kills trust; accuracy is expensive.** | An audit of 1,000 outputs with zero fabricated citations and <1% material errors | The AI may only use reviewed topic files; it refuses out-of-source questions (tested live: it declined a case not in the sources and gave no G.R. number); topics need lawyer sign-off; an accuracy gate is required before release |
 | **3. The market is too small for venture returns.** | Verified paid demand plus a credible second market | Stay narrow and capital-light (no database, no logins); the lawyer upgrade path is planned for v2+ |
 | **4. Schools and review centers control distribution.** | Two paying schools or one review-center deal | Policy-aligned design (class-time pause, no graded work) makes it easy to endorse; review centers are positioned as partners, not competitors |
-| **5. Three customer groups means three companies.** | One narrow segment with clear retention | v1 has one subject (Civil Law), text only; lawyers are out of scope; the beachhead is bar reviewees (Experiment 1) |
+| **5. Three customer groups means three companies.** | One narrow segment with clear retention | each app has one subject (Civil Law), text only; lawyers are out of scope; the beachhead is bar reviewees (Experiment 1) |
 
 Supporting research: AI bar-pass prediction is not validated for individuals, so the app labels every result "Practice score" and never predicts bar results. Revenue from bar prep is seasonal, so the Year 1–4 student path smooths demand across the year.
 
@@ -165,3 +165,10 @@ Supporting research: AI bar-pass prediction is not validated for individuals, so
 
 ### Research sources used
 Problem statements and evidence (6 Nov 2026) · User personas · Bar testimonials and market sizing · Competitors and unfair advantage · VC critique and biggest friction · Perplexity research thread · Market model spreadsheet · Week 4A deck, 7-Step Validation cheat sheet.
+
+## Addendum (12 Nov 2026): three subject apps and the 2027 Bar syllabus
+The owner split Law AI Tutor into three sister apps with the same code: **Civil**, **Commercial** and **Taxation**.
+Each app covers one bar subject, limited to the Syllabus for the 2027 Bar Examinations (Bar Bulletin No. 1-2027,
+16 September 2026), and uses only that subject's reviewer materials. This keeps every app narrow (critique 5 above)
+while letting a review center or school adopt one subject at a time. Year 1–2 get a hint-based objective quiz and
+work through topics in syllabus order; Year 3–4 and bar reviewees get random, essay-style practice.

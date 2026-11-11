@@ -1,4 +1,4 @@
-# .cursorrules: Law AI Tutor, Socratic Practice Drills
+# .cursorrules: Law AI Tutor - Civil, Socratic Practice Drills
 
 > The "onboarding note" every AI coding tool reads before touching this project.
 > `CLAUDE.md` (Claude Code), `agents.md` (other agents) and `.cursorrules` (Cursor) hold the same rules. Keep them in sync.
@@ -12,11 +12,14 @@ One Socratic law tutor whose rules change by user group:
 | Year 3–4 students | In-class Quick Check to aid recitations | Drills to prepare for exams |
 | Bar reviewees (first-time and repeaters) | Anytime | Anytime |
 
-Content is **Civil Law only**, mapped to the year it is taught: Year 1 Persons & Family Relations and
-Obligations; Year 2 Sales; Year 3 Succession; Year 4 and bar reviewees all Civil Law. Students pick their
-exact year (1–4); usage rules still work in pairs (Year 1–2, Year 3–4).
+Content is **Civil Law only**, limited to the Syllabus for the 2027 Bar Examinations (Civil Law and Land Titles and Deeds) and mapped to
+the year it is taught: Year 1 Persons & Family Relations and Obligations and Contracts; Year 2 Property, Succession, Trusts, Sales, Agency, Credit Transactions and Torts; Year 3 Succession; Year 4 and bar reviewees all Civil Law. The year plan lives in `/lib/subject.ts`; years with no topics
+are hidden. Usage rules still work in pairs (Year 1–2, Year 3–4). This app is one of three sister apps
+(Civil, Commercial, Taxation) with identical code; only `lib/subject.ts`, `sources/` and docs differ.
+Never put another subject's topics here.
 
-There are three features:
+There are four features:
+- **Objective and multiple-choice quiz:** Year 1–2 only. Checked in code; hints until correct.
 - **Recitation drill:** facts → issue → rule → reasoning → application.
 - **In-class Quick Check:** Year 3–4 only, 1–3 minutes, the student answers first.
 - **Problem drill:** scored on Answer, Legal basis, Application and Conclusion, with coaching on the weakest
@@ -41,8 +44,10 @@ Full requirements are in `spec.md`. Follow it. If the code and the spec disagree
 - CI (GitHub Actions) runs all four plus a Gitleaks secret scan on every push. Keep it green.
 
 ## Architecture (where things live)
-- `/app/page.tsx`: home screen. Shows only the features allowed for the user's group and the current time.
-- `/app/onboarding/page.tsx`: group choice and the group's usage notice
+- `/app/page.tsx` + `/components/LandingClient.tsx`: landing page. The user picks Year 1–4 or bar status, sees
+  the usage notice, then goes to `/drills`.
+- `/app/drills/page.tsx`: drills page. Shows only the features allowed for the user's group and the current time.
+- `/app/onboarding/page.tsx`: old address, redirects to the landing page
 - `/app/recitation/[topicId]/page.tsx`: recitation drill
 - `/app/quick-check/[topicId]/page.tsx`: In-class Quick Check (Year 3–4 only)
 - `/app/problem/[topicId]/page.tsx`: problem drill (exam prep and bar)
@@ -53,7 +58,11 @@ Full requirements are in `spec.md`. Follow it. If the code and the spec disagree
 - `/app/api/health/route.ts`: health check for monitoring (never returns the key)
 - `/lib/access.ts`: **the single place for usage rules.** Given the group and the time, it decides which
   features are allowed.
-- `/lib/profiles.ts`: the Year 1–4 and bar choices, each mapped to a usage group
+- `/lib/subject.ts`: **this app's subject**: name, subject areas in syllabus order, and which areas each year sees
+- `/lib/profiles.ts`: the Year 1–4 and bar choices (built from `subject.ts`), each mapped to a usage group
+- `/lib/quiz.ts` + `/app/api/quiz/route.ts` + `/app/quiz/[topicId]/page.tsx`: Year 1–2 objective and multiple-choice
+  quiz, checked in code (no AI call); hints, then narrowing, until the student is correct
+- `/lib/topicOrder.ts`: syllabus order (`syllabusRef`) for Year 1–2, random topics for Year 3–4 and bar reviewees
 - `/lib/monitoring.ts`: one JSON log line per Claude call (no student text)
 - `/components/DemoBanner.tsx`: "Demo content: pending lawyer review" banner
 - `/lib/rubric.ts`: 5-point bar-coach rubric (ALAC labels → 0–5 Practice score)
@@ -64,6 +73,13 @@ Full requirements are in `spec.md`. Follow it. If the code and the spec disagree
 - `/sources/`: reviewed legal source files, one per topic (see `_TEMPLATE.md`)
 - `/tests/`: automated tests, one group per acceptance criterion in spec.md
 - `/docs/`: idea validation report, PRD, architecture notes, reflection, demo script
+
+## Legal content rules
+- Problems are **original bar-style problems** written for this app from the law and the reviewers. Note the past
+  bar exam that raised the same issue. Never copy a reviewer's suggested answer; write model answers fresh.
+- Statutes (RA, CA, PD, EO) are checked against LawPhil (lawphil.net); Supreme Court decisions against the SC
+  website (sc.judiciary.gov.ph) or LawPhil. Never cite a case or G.R. number that hasn't been checked.
+- Topics must fall within the 2027 Bar syllabus (laws and jurisprudence as of June 30, 2026).
 
 ## Conventions
 - Make small, focused changes. Explain what you changed and why, in plain English. I'm not a developer.

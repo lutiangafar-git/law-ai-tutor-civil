@@ -1,4 +1,4 @@
-# Architecture Notes: Law AI Tutor v1
+# Architecture Notes: Law AI Tutor - Civil v1
 
 **AI capability:** a Socratic **chat** tutor with **classification and scoring** (verdict per turn; the AI labels each ALAC part and code computes a 0–5 Practice score with a 5-point bar-coach rubric), grounded in retrieved source files.
 
@@ -7,7 +7,7 @@
 ```mermaid
 flowchart LR
   subgraph Browser["Student's browser (phone or laptop)"]
-    UI["Next.js pages<br/>onboarding · home · drills · progress · settings"]
+    UI["Next.js pages<br/>landing · drills · progress · settings"]
     LS[("localStorage<br/>group, year, schedule,<br/>progress, scores")]
     UI <--> LS
   end
@@ -50,7 +50,7 @@ flowchart LR
 
 ## 2. Data flow: one problem-drill turn
 
-1. **Home screen:** `GET /api/topics?group=year-1-2&year=2` → `lib/sources.ts` reads `sources/*.md`, drops files that are neither reviewed nor demo, keeps topics tagged `year-2`, and returns titles only (never model answers).
+1. **Landing → drills page:** the landing page saves the chosen year or bar group on the device. On the drills page, `GET /api/topics?group=year-1-2&year=2` → `lib/sources.ts` reads `sources/*.md`, drops files that are neither reviewed nor demo, keeps topics tagged `year-2`, and returns titles only (never model answers).
 2. **Client guards:** an empty answer means no call ("Type your answer first"); length is capped at 4,000 characters; a device rate limit of 30 per hour applies; class hours are checked in **Asia/Manila** time.
 3. **`POST /api/tutor`** with `{feature, topicId, userGroup, studentAnswer, step, phase}`.
 4. **Server guards, in order:** required fields → `canUseFeature()` from `lib/access.ts` (a Year 1–2 user in class gets 403 and **no AI call**) → topic must be visible to that group → empty or over-length answer → a graded-work request ("write my case digest") is declined without calling the AI.
@@ -92,7 +92,8 @@ The Claude API is faked in tests, so CI needs no API key and costs nothing.
 app/               pages + API routes (api/tutor, api/topics, api/health)
 components/        DemoBanner, FeatureCard, AnswerBox, ClassPauseBanner, GroupGuard
 lib/access.ts      usage rules by group and Manila time
-lib/profiles.ts    Year 1–4 / bar choices → usage group
+lib/subject.ts     this app's subject: areas in teaching order and the year plan
+lib/profiles.ts    Year 1–4 / bar choices (from subject.ts) → usage group
 lib/sources.ts     topic loader, demo handling, year filtering, subject order
 lib/rubric.ts      5-point bar-coach rubric: ALAC labels → 0–5 Practice score
 lib/problemScoring.ts  Claude's labels → scorecard, coaching focus, retry re-score

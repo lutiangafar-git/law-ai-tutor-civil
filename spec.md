@@ -1,9 +1,9 @@
-# Spec: Law AI Tutor, Socratic Practice Drills (v1)
+# Spec: Law AI Tutor - Civil, Socratic Practice Drills (v1)
 
 > Worked example for Lab 1 (deck page 15) and Mini Project Phase 1 (deck page 60).
 > Based on the Law AI Tutor research (problem statements, personas, VC critique).
-> v1 serves all law students and all bar reviewees, but keeps the content narrow: **Civil Law only, text only.**
-> Revised 11 Nov 2026 after review. See the **Revision log** at the end.
+> v1 serves all law students and all bar reviewees, but keeps the content narrow: **Civil Law only, text only**, limited to the 2027 Bar syllabus.
+> Revised 12 Nov 2026 (split into Civil, Commercial and Taxation apps). See the **Revision log** at the end.
 
 ## ⭐ When each group may use the tutor
 
@@ -23,7 +23,7 @@ more than 13,000 bar applicants prepare for an all-essay exam, and about 54% of 
 or refreshers. General chatbots serve none of these groups well: they hand out answers and can get Philippine
 law wrong, including invented citations.
 
-Law AI Tutor is one Socratic tutor that adjusts its rules to the user's stage:
+Law AI Tutor - Civil is one Socratic tutor that adjusts its rules to the user's stage:
 - **Year 1–2 (persona: Miko):** build the basics after class through step-by-step questioning, so students
   can answer on their own when called in class or tested later.
 - **Year 3–4 (persona: Bea):** check their reasoning quickly during class before or after reciting, and
@@ -31,19 +31,25 @@ Law AI Tutor is one Socratic tutor that adjusts its rules to the user's stage:
 - **Bar reviewees, first-time takers and repeaters (persona: Carla):** practice bar-style answers anytime,
   get feedback on how each answer is built, and track weak spots. Repeaters start with a diagnostic.
 
-**Content for v1: Civil Law, mapped to the year it is taught.**
+**Content for v1: Civil Law, mapped to the year it is taught.** Scope is limited to the **Syllabus for the 2027 Bar
+Examinations, Civil Law and Land Titles and Deeds** (Bar Bulletin No. 1-2027, 16 September 2026; laws and jurisprudence as of June 30, 2026).
+The year plan is set in `lib/subject.ts`.
 
 | User | Civil Law topics shown | Topic tag in `sources/` |
 |---|---|---|
-| Year 1 | Persons and Family Relations; Obligations and Contracts | `year-1` |
-| Year 2 | Sales | `year-2` |
-| Year 3 | Succession | `year-3` |
-| Year 4 | All Civil Law topics (bar-oriented review) | `year-4` |
-| Bar reviewees (first-time and repeaters) | All Civil Law topics | `bar` |
+| Year 1 student | Persons & Family Relations; Obligations and Contracts | `year-1` |
+| Year 2 student | Property; Succession; Trusts; Sales; Agency; Credit Transactions; Torts and Quasi-Delicts | `year-2` |
+| Year 3 student | Succession | `year-3` |
+| Year 4 student | All Civil Law topics in the 2027 Bar syllabus | `year-4` |
+| Bar reviewee (first-time or repeater) | All Civil Law topics in the 2027 Bar syllabus | `bar` |
 
 Usage rules still group years in pairs (Year 1–2, Year 3–4; see the table above). The exact year only
-decides which topics appear. Problems come from past Philippine Bar Examinations (Civil Law), with the
-year and question number shown. Model answers are written for this app in the ALAC format.
+decides which topics appear. Every year from 1 to 4 has Civil Law topics. Partnership is taught in Year 2 in many schools but the 2027 Bar syllabus places it under Commercial Law, so it lives in the Commercial app. Problems are **original bar-style problems** written for this app from the law
+and the subject reviewers; each notes the past Bar Examination that raised the same issue. Model answers are
+written for this app in the ALAC format and never copied from a reviewer.
+
+**Landing page.** The first screen asks "Who are you practicing as?" and lists the offered years and both bar
+groups. Once the user picks one (and has seen that group's usage notice), they go to the drills page.
 
 **Demo topics.** Until a law-trained reviewer signs off a topic file, it may be published with
 `status: demo`. A demo topic appears with the banner "Demo content: pending lawyer review" on the home
@@ -55,14 +61,14 @@ topics must be signed off, or removed, before any real student pilot.
 
 ## 2. Inputs & Outputs
 **Inputs**
-- `userGroup`: `year-1-2` | `year-3-4` | `bar-first-time` | `bar-repeater`. Chosen on first use and changeable in Settings.
+- `userGroup`: `year-1-2` | `year-3-4` | `bar-first-time` | `bar-repeater`. Chosen on the landing page and changeable there or in Settings.
 - `studentYear` (students only): `1` | `2` | `3` | `4`. Chosen together with the group ("Year 1 student"…
   "Year 4 student"); decides which topics appear. Bar reviewees have no year.
 - `classSchedule` (students only): class days and times, saved on the device. All times are Philippine time.
   **Pre-filled with the typical law school schedule**, which the student can edit or clear in Settings:
   - **Monday to Friday:** 6:00 PM to 9:00 PM
   - **Saturday and Sunday:** 8:00 AM to 6:00 PM
-- `feature`: `recitation-drill` | `in-class-quick-check` | `problem-drill`. Only features allowed for the
+- `feature`: `objective-quiz` (Year 1–2 only) | `recitation-drill` | `in-class-quick-check` | `problem-drill`. Only features allowed for the
   user's group and the current time are offered.
 - `topicId`: from the topic list. Only reviewed topics tagged for the user's group appear.
 - `studentAnswer`: text in English, Filipino or Taglish.
@@ -100,6 +106,7 @@ topics must be signed off, or removed, before any real student pilot.
 - If a class schedule is entered, **all** features pause during those hours: "It's class time. Come back
   after class to review." No AI call is made.
 - The In-class Quick Check is never offered to this group.
+- The objective and multiple-choice quiz is offered only to this group.
 
 **Year 3–4: in the classroom and outside it**
 - On first use, show: "During class, use Quick Check to test your reasoning for recitation. Outside class,
@@ -120,6 +127,16 @@ topics must be signed off, or removed, before any real student pilot.
 - v1 relies on the user's self-declared group (honor system). School-managed settings come later.
 
 ### 3.2 Features
+**Objective and multiple-choice quiz (Year 1–2 only, outside class): 3–5 minutes**
+Four short questions per topic (at least two multiple choice, two objective), written for the topic from its source
+text. The app checks each answer itself; there is no AI call. Each wrong try shows the next hint. When the hints run
+out, wrong options are removed (multiple choice) or the answer's first letters are shown (objective), so the student
+keeps going until correct. The explanation appears once correct. Year 3–4 and bar reviewees don't get this quiz:
+they practise essay-style answers only.
+
+**Topic order.** Year 1–2 follow the 2027 Bar syllabus in order, one topic after another. Year 3–4 and bar reviewees
+get random topics to test general knowledge.
+
 **Recitation drill (Year 1–4 and bar reviewees, outside class): 5–10 minutes**
 Steps: 1. Facts or provision → 2. Issue → 3. Rule or ruling → 4. Reasoning → 5. Apply it to a short new fact pattern.
 Each step scores 0 (missing or wrong), 1 (partly right) or 2 (complete and accurate).
@@ -263,16 +280,16 @@ Each step scores 0 (missing or wrong), 1 (partly right) or 2 (complete and accur
 
 **Year-based topics and demo content (added 11 Nov 2026)**
 
-31. Given a Year 1 student, then the topic list shows Persons and Family Relations and Obligations and
-    Contracts topics only; a Year 2 student sees Sales only; a Year 3 student sees Succession only.
+31. Given a Year 1 student, then the topic list shows Persons and Family Relations and Obligations and Contracts topics only;
+    a Year 2 student sees Property, Succession, Trusts, Sales, Agency, Credit Transactions and Torts and Quasi-Delicts only;
+    a Year 3 student sees Succession only.
 32. Given a Year 4 student or any bar reviewee, then every Civil Law topic is listed.
 33. Given a topic file marked `status: demo` without reviewer sign-off, then the topic is listed with
     "(demo)" and the demo banner appears on the home screen and on every drill screen for that topic.
 34. Given a topic file with neither reviewer sign-off nor `status: demo`, then it does not appear (criterion 8 still holds).
 35. Given any topic file in `sources/`, then it contains a citation, an https link, the source text,
     at least two key points, a recitation fact pattern and model answer, a problem, and all four ALAC parts.
-36. Given the topic list, then subjects appear in teaching order: Persons and Family Relations,
-    Obligations and Contracts, Sales, Succession.
+36. Given the topic list, then subject areas appear in the teaching order set in `lib/subject.ts`.
 
 **5-point bar-coach rubric (added 11 Nov 2026)**
 
@@ -284,6 +301,40 @@ Each step scores 0 (missing or wrong), 1 (partly right) or 2 (complete and accur
     with the Answer.
 40. Given the AI's reply also contains a number, then the score is still computed from the labels only.
 41. Given a retry that fixes the coached part, then the score is recomputed from the updated labels (e.g. 2/5 → 3/5).
+
+**Landing page, subject scope and original problems (added 12 Nov 2026)**
+
+42. Given a first visit, then the landing page asks "Who are you practicing as?" and lists only the years that have
+    Civil Law topics plus both bar groups; after the user picks one and accepts the usage notice, the drills page opens.
+43. Given a returning user who has seen the notice, then the landing page offers "Continue as …" for their saved choice,
+    and choosing the same option goes straight to the drills page.
+44. Given a year with no Civil Law topics in the year plan, then that year is not offered.
+45. Given any topic file, then its subject is one of this app's subject areas (no topics from another bar subject) and its
+    `year-1`/`year-2`/`year-3` tags match the year plan in `lib/subject.ts` exactly.
+46. Given any problem drill, then the problem is an original bar-style problem (or, for older topics, a past bar question
+    shown with its year and number), and the model answer was written for this app.
+47. Given any topic, then it falls within the 2027 Bar syllabus for Civil Law and Land Titles and Deeds.
+
+**Year 1–2 objective and multiple-choice quiz (added 12 Nov 2026)**
+
+48. Given a Year 1–2 user outside class hours, then the drills page offers "Objective & multiple-choice quiz" first;
+    given a Year 3–4 user or any bar reviewee, then it is never offered and `/api/quiz` refuses them.
+49. Given a quiz question, then the browser receives the question and options only: no answer, hint or explanation.
+50. Given a wrong try, then the next hint from the topic file is shown, in order, and the answer is not revealed.
+51. Given more wrong tries than hints, then a multiple-choice question removes one wrong option per try (never the
+    correct one, and at least two options stay) and an objective question shows one more letter of the answer per try.
+52. Given a correct try, then "Correct" and the explanation are shown; objective answers ignore case, punctuation and spacing.
+53. Given any Year 1–2 topic file, then its quiz has at least two multiple-choice and two objective questions, each with a
+    hint and an explanation. The quiz makes no AI call and pauses during class hours like every Year 1–2 feature.
+
+**Topic order (added 12 Nov 2026)**
+
+54. Given any topic file, then it has a `syllabusRef` (its place in the 2027 Bar syllabus outline, e.g. `VIII.A.7`), and the
+    topic list is sorted in syllabus order.
+55. Given a Year 1–2 user, then the drills page selects the first topic in syllabus order they haven't finished and says
+    "Next up: …"; a topic is finished once its quiz and at least one problem drill are done, and is marked ✓.
+56. Given a Year 3–4 user or a bar reviewee, then the drills page starts on a random topic and offers a "Random topic"
+    button that never picks the same topic twice in a row (when there is a choice).
 
 ## 6. Planned improvements (not built yet)
 Requested after the first test run (10 Nov 2026). Build these in a later round; they are not part of v1's
@@ -328,3 +379,4 @@ In every drill and Quick Check, a reader must tell at a glance what is the tutor
 | 11 Nov 2026 | Added **demo topics** with a visible banner (criteria 33–34) | Review of the live app: the topic list was empty until lawyer sign-off, so the core feature couldn't be shown |
 | 11 Nov 2026 | Added criteria 35–36 (topic-file completeness, subject order) | Local testing found topics in alphabetical, not teaching, order |
 | 11 Nov 2026 | Problem-drill scoring changed from 0–8 (four ALAC parts × 0–2) to the **5-point bar-coach rubric** organised by ALAC; the AI labels parts and code computes the score; off-topic answers score 0 (criteria 16–17 revised, 37–41 added) | Owner review against a bar-review center's AI rubric and sample feedback reports: one number students recognise, consistent scoring, and a check that the answer addresses the question asked |
+| 12 Nov 2026 | Split into three sister apps (Civil, Commercial, Taxation); this one renamed **Law AI Tutor - Civil**. Landing page asks year first; scope limited to the 2027 Bar syllabus; new year plan (Y2 adds Property, Succession, Trusts, Agency, Credit Transactions, Torts); original bar-style problems; Year 1–2 objective and multiple-choice quiz with hints; Year 1–2 in syllabus order, others random (criteria 31, 36 revised; 42–56 added) | Owner review against Bar Bulletin No. 1-2027 and the subject reviewers |

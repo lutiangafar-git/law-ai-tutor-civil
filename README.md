@@ -1,4 +1,4 @@
-# Law AI Tutor: Socratic Civil Law Practice
+# Law AI Tutor - Civil: Socratic Civil Law Practice
 
 [![CI](https://github.com/lutiangafar-git/law-tutor-drill/actions/workflows/test.yml/badge.svg)](https://github.com/lutiangafar-git/law-tutor-drill/actions/workflows/test.yml)
 
@@ -6,7 +6,7 @@
 **Demo video (2 min):** _link added at submission_
 **Course:** Week 4 Graded Mini Project 4.2, AI-Powered Web Application
 
-An AI tutor for **Philippine law students and bar reviewees** that makes you **answer first**, then scores your
+An AI tutor for **Philippine law students and bar reviewees** in **Civil Law** that makes you **answer first**, then scores your
 bar-style answer on **Answer, Legal basis, Application and Conclusion (ALAC)**, coaches the weakest part, and
 uses **only reviewed Philippine sources**. It never invents a citation. Its usage rules follow school AI
 policies: Year 1–2 students are paused during class hours, and Year 3–4 students get a quick in-class check.
@@ -19,16 +19,27 @@ policies: Year 1–2 students are paused during class hours, and Year 3–4 stud
 
 | Who | Civil Law topics | When |
 |---|---|---|
-| Year 1 student | Persons & Family Relations, Obligations | After class only (paused in class hours) |
-| Year 2 student | Sales | After class only |
+| Year 1 student | Persons & Family Relations; Obligations and Contracts | After class only (paused in class hours); quiz + drills |
+| Year 2 student | Property; Succession; Trusts; Sales; Agency; Credit Transactions; Torts and Quasi-Delicts | After class only; quiz + drills |
 | Year 3 student | Succession | In class (Quick Check) and after |
-| Year 4 student | All Civil Law | In class (Quick Check) and after |
-| Bar reviewee (first-time or repeater) | All Civil Law | Anytime; repeaters start with a diagnostic |
+| Year 4 student | All Civil Law topics in the 2027 Bar syllabus | In class (Quick Check) and after |
+| Bar reviewee (first-time or repeater) | All Civil Law topics in the 2027 Bar syllabus | Anytime; repeaters start with a diagnostic |
+
+**Landing page first.** Every visit starts with *"Who are you practicing as?"*. The student picks their law
+school year or bar review status, and only then goes to the drills page for that year's topics. Years with
+no Civil Law topics are not offered. Topics are limited to the **Syllabus for the 2027 Bar Examinations
+(Civil Law and Land Titles and Deeds)**, Bar Bulletin No. 1-2027. **Year 1–2** work through their topics in syllabus order (the drills
+page suggests the next unfinished one); **Year 3–4 and bar reviewees** get random topics to test general knowledge.
+
+**Year 1–2 only: objective and multiple-choice quiz.** Four short questions per topic, checked by the app
+itself (no AI call, so it is instant and free). Each wrong try brings the next hint; once the hints run out,
+wrong options are removed or the answer's first letters are shown, so every student reaches the right answer.
+Year 3–4 and bar reviewees don't get objective questions: they practise essay-style answers only.
 
 **Three AI features**
 1. **Recitation drill:** five Socratic steps (facts → issue → rule → reasoning → application), each scored 0–2. Asking "just tell me" gets you a hint, not the answer.
 2. **In-class Quick Check (Year 3–4 only):** type your recitation first, then get one reply with what's right, what's missing and the citation. It never writes a script to read aloud.
-3. **Problem drill:** a real past bar question (2010–2024) → **Practice score out of 5** → coaching on your first weak ALAC part → rewrite → re-score → model answer. Weak spots are tracked across drills.
+3. **Problem drill:** an **original bar-style problem** written for this app (the past bar exam that raised the same issue is noted) → **Practice score out of 5** → coaching on your first weak ALAC part → rewrite → re-score → model answer. Weak spots are tracked across drills.
 
 **How problem drills are scored (5-point bar-coach rubric, organised by ALAC).** Claude only *labels* each part
 of your answer (correct / incorrect / not stated) and checks that you answered the question actually asked. The
@@ -46,9 +57,13 @@ score is then computed in code (`lib/rubric.ts`), so the same labels always give
 **Trust rules:** the AI sees only the topic's source file. Questions outside it get *"That's outside the
 reviewed materials for this drill."* Every score is labelled **"Practice score"**, never official bar grading.
 
-> ⚠️ **Demo content.** The six current topics (Civil Code Arts. 40–41, 854, 810/814, 1156–1157, 1544/1874 and
-> Family Code Arts. 2–4) are marked **"Demo content: pending lawyer review"** in the app until a law-trained
-> reviewer signs them off. Do not rely on them as legal advice.
+> ⚠️ **Demo content.** The eleven current topics (Civil Code Arts. 40–41, 440/457, 810/814, 854, 1156–1157, 1441/1456, 1544/1874, 1920/1927, 2047/2058, 2176/2183 and Family Code Arts. 2–4) are marked **"Demo content: pending lawyer
+> review"** in the app until a law-trained reviewer signs them off. Do not rely on them as legal advice.
+
+## Sister apps
+- **Law AI Tutor - Civil** (this app): https://law-tutor-drill.vercel.app
+- **Law AI Tutor - Commercial**: https://law-ai-tutor-commercial.vercel.app
+- **Law AI Tutor - Taxation**: https://law-ai-tutor-taxation.vercel.app
 
 ## Tech stack
 Next.js 15 (App Router) · TypeScript · Tailwind CSS 4 · Anthropic Claude API (`claude-haiku-5-5` for fast turns,
@@ -93,7 +108,7 @@ template, and CI runs a **Gitleaks** scan over the full history on every push. T
 |---|---|
 | [docs/01-idea-validation-report.md](docs/01-idea-validation-report.md) | All 7 validation steps with evidence, "why now" and target user |
 | [docs/02-prd.md](docs/02-prd.md) | One-page PRD with acceptance criteria for each feature |
-| [spec.md](spec.md) | Full spec: context, inputs/outputs, behavior rules, constraints, 36 acceptance criteria, revision log |
+| [spec.md](spec.md) | Full spec: context, inputs/outputs, behavior rules, constraints, 58 acceptance criteria, revision log |
 | [docs/03-architecture.md](docs/03-architecture.md) | Architecture diagram, data flow, design decisions, security |
 | [CLAUDE.md](CLAUDE.md) · [agents.md](agents.md) · [.cursorrules](.cursorrules) | Rules for AI coding tools (Claude Code, other agents, Cursor) |
 | [docs/04-reflection.md](docs/04-reflection.md) | What I learned, challenges, v2 improvements |
@@ -101,21 +116,21 @@ template, and CI runs a **Gitleaks** scan over the full history on every push. T
 
 ## Project structure
 ```
-app/            pages (onboarding, home, drills, progress, settings) + API routes (tutor, topics, health)
+app/            pages (landing, drills, recitation, quick check, problem, progress, settings) + API routes (tutor, topics, health)
 components/     UI pieces (DemoBanner, FeatureCard, AnswerBox, ClassPauseBanner, GroupGuard)
-lib/            access rules, year profiles, topic loader, prompts, on-device storage, monitoring
-sources/        one Markdown file per topic: article text, key points, fact pattern, bar problem, model answer
+lib/            subject settings (subject.ts), access rules, year profiles, topic loader, prompts, on-device storage, monitoring
+sources/        one Markdown file per topic: legal text, key points, fact pattern, bar-style problem, model answer
 tests/          Vitest tests mapped to the spec's acceptance criteria
 docs/           validation, PRD, architecture, reflection, demo script
 ```
 
 ## Adding or reviewing a topic
-Copy `sources/_TEMPLATE.md`, fill in every section, and set `yearLevels` (e.g. `[year-2, year-4, bar]`).
+Copy `sources/_TEMPLATE.md`, fill in every section, and set `yearLevels` to match the year plan in `lib/subject.ts` (e.g. `[year-2, year-4, bar]`).
 While it is unreviewed, add `status: demo`. A law-trained reviewer then fills `reviewedBy` and `lastReviewed`
 and deletes `status: demo`. A file with neither is hidden. `npm test` checks that every topic file is complete.
 
 ## Known limitations (v1)
-- Content is six demo topics in Civil Law; lawyer sign-off is pending.
+- Content is eleven demo topics in Civil Law; lawyer sign-off is pending.
 - The 30-messages-per-hour limit is per device, not per server (to fix before a real pilot).
 - The user's group is self-declared (honor system); school-managed settings come later.
 - Progress doesn't sync across devices (no accounts, by design).
