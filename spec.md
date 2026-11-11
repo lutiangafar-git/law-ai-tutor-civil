@@ -176,6 +176,8 @@ Each step scores 0 (missing or wrong), 1 (partly right) or 2 (complete and accur
 6. Show the model answer and source only after the retry, or immediately if every part is already correct (5/5).
 
 ### 3.3 Socratic first (all features)
+- **Drill only.** The app asks and the student answers. There is no open chat where the student asks the app
+  questions; students have other apps for that, and this one specialises in drills.
 - Every drill opens with a question or problem, never an explanation.
 - The tutor never gives a full answer before the student has tried.
 - If the student asks "just tell me", the tutor gives a hint, not the answer.

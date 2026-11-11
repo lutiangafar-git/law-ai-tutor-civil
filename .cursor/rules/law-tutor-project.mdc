@@ -85,6 +85,8 @@ Full requirements are in `spec.md`. Follow it. If the code and the spec disagree
 - Statutes (RA, CA, PD, EO) are checked against LawPhil (lawphil.net); Supreme Court decisions against the SC
   website (sc.judiciary.gov.ph) or LawPhil. Never cite a case or G.R. number that hasn't been checked.
 - Topics must fall within the 2027 Bar syllabus (laws and jurisprudence as of June 30, 2026).
+- **Drill only, no open chat.** The app asks; the student answers. Never add a free-form "ask the tutor anything"
+  chat. A student's question during a drill gets a hint or a Socratic question, never a lecture or a full answer.
 
 ## Conventions
 - Make small, focused changes. Explain what you changed and why, in plain English. I'm not a developer.
