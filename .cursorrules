@@ -56,6 +56,8 @@ Full requirements are in `spec.md`. Follow it. If the code and the spec disagree
 - `/lib/profiles.ts`: the Year 1–4 and bar choices, each mapped to a usage group
 - `/lib/monitoring.ts`: one JSON log line per Claude call (no student text)
 - `/components/DemoBanner.tsx`: "Demo content: pending lawyer review" banner
+- `/lib/rubric.ts`: 5-point bar-coach rubric (ALAC labels → 0–5 Practice score)
+- `/lib/problemScoring.ts`: turns Claude's labels into the scorecard and re-scores retries
 - `/lib/prompts/`: tutor instructions for each feature
 - `/lib/sources.ts`: loads `sources/*.md`, hides unreviewed non-demo topics, filters by year, orders by subject
 - `/lib/storage.ts`: saves group, schedule, progress and scores in the browser only
@@ -82,6 +84,8 @@ Full requirements are in `spec.md`. Follow it. If the code and the spec disagree
 - The tutor must never invent citations. If information isn't in the sources, it says so.
 - Quick Check must require the student's answer first and must not produce a script to read aloud.
 - Label all scores "Practice score". Never describe them as official bar grading or pass predictions.
+- Problem-drill scores come only from `/lib/rubric.ts` (5-point bar-coach rubric). The AI labels ALAC parts;
+  it never sets the number. Every rubric row keeps a test in `tests/rubric.test.ts`.
 - NEVER put the API key in code. Read it from `process.env.ANTHROPIC_API_KEY`.
 - NEVER commit `.env.local`. It must stay listed in `.gitignore`.
 - Never log student answers. Monitoring logs may contain only feature, model, latency and outcome.

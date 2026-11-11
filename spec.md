@@ -77,7 +77,9 @@ topics must be signed off, or removed, before any real student pilot.
 - `nextQuestion`: the next Socratic question, or a hint if the student is stuck.
 
 **Output, at the end of a drill**
-- `rubric`: scores of 0–2 per step or element (see Section 3).
+- `rubric`: recitation drills score each step 0–2. Problem drills return a **0–5 Practice score** from the
+  5-point bar-coach rubric, plus each ALAC part labelled `correct` | `incorrect` | `missing` with a one-line note,
+  up to two strengths and two gaps (see Section 3.2).
 - `oneThingToFix`: one concrete improvement.
 - `sources`: a list of `{ title, citation, link, reviewedBy, lastReviewed }`.
 - Problem drills only, `weakSpots`: the answer elements that scored lowest across the last 10 drills.
@@ -132,15 +134,29 @@ Each step scores 0 (missing or wrong), 1 (partly right) or 2 (complete and accur
 **Problem drill (Year 1–4 exam prep and bar reviewees): 10–20 minutes**
 1. Show an exam or bar-style problem from the topic's source file.
 2. The student writes a full answer.
-3. Score four elements, each 0–2:
-   - **Answer:** a direct conclusion
-   - **Legal basis:** the correct provision or doctrine
-   - **Application:** the facts tied to the law
-   - **Conclusion**
+3. Score the answer with the **5-point bar-coach rubric**, organised by ALAC (adapted from a bar-review
+   coaching rubric; ALAC confirmed by a bar coach):
+   - **Answer** = the conclusion · **Legal basis** = the rule · **Application** = the rule applied to these facts ·
+     **Conclusion** = the closing statement (a structure check; it stands in for the Answer only if no opening Answer is given).
+   - The AI **only labels** each part `correct`, `incorrect` or `missing`, and says whether the answer addresses the
+     issue actually asked (`responsive`). A real rule that does not decide this issue is `incorrect`; stating only facts
+     as the basis means the rule is `missing`.
+   - The app turns the labels into points with fixed rules (`/lib/rubric.ts`). The AI never chooses the number.
 
-   This is the ALAC structure used in Philippine bar review. Rubric confirmed by a bar coach.
-4. Ask Socratic follow-ups on the lowest-scoring element only, then the student retries it and it's re-scored.
-5. Show the model answer and source only after the retry.
+   | Points | Conclusion (Answer) | Rule (Legal basis) | Application |
+   |---|---|---|---|
+   | 5 | correct | correct | correct |
+   | 4 | correct | correct | incorrect or not stated |
+   | 3 | (a) correct · (b) incorrect | (a) incorrect · (b) correct | (a) stated · (b) incorrect |
+   | 2 | (a) correct · (b) incorrect | (a) incorrect · (b) incorrect | (a) not stated · (b) stated |
+   | 1 | (a) incorrect · (b) correct or incorrect | (a) stated · (b) **not stated** (facts only) | (a) not stated · (b) any |
+   | 0 | **not stated**, or the answer addresses a different issue from the one asked | any | any |
+
+4. Show the score with its one-line reason, each ALAC part (✓ correct, ✗ incorrect, – not stated) with a short note,
+   and up to two strengths and two gaps.
+5. Coach the **first part, in ALAC order, that isn't correct**, with Socratic questions only. The student rewrites that
+   part, and the score is recomputed from the updated labels.
+6. Show the model answer and source only after the retry, or immediately if every part is already correct (5/5).
 
 ### 3.3 Socratic first (all features)
 - Every drill opens with a question or problem, never an explanation.
@@ -220,10 +236,10 @@ Each step scores 0 (missing or wrong), 1 (partly right) or 2 (complete and accur
 
 **Problem drills**
 
-16. Given a submitted answer, then the tutor scores Answer, Legal basis, Application and Conclusion (0–2
-    each) before showing any model answer.
-17. Given the lowest score is Legal basis, then the follow-up questions are about Legal basis only, and
-    the user is asked to retry it.
+16. Given a submitted answer, then the tutor shows a 0–5 Practice score and labels Answer, Legal basis,
+    Application and Conclusion before showing any model answer (unless the score is 5/5).
+17. Given the first part that isn't correct is Legal basis, then the follow-up questions are about Legal basis
+    only, and the user is asked to rewrite it.
 18. Given 3 or more finished problem drills, then the weak-spots summary names the lowest-scoring element.
 19. Given any score, then it is labelled "Practice score", and nothing mentions official bar grading or pass predictions.
 20. Given a bar repeater on first use, then the diagnostic is offered before regular drills.
@@ -257,6 +273,17 @@ Each step scores 0 (missing or wrong), 1 (partly right) or 2 (complete and accur
     at least two key points, a recitation fact pattern and model answer, a problem, and all four ALAC parts.
 36. Given the topic list, then subjects appear in teaching order: Persons and Family Relations,
     Obligations and Contracts, Sales, Succession.
+
+**5-point bar-coach rubric (added 11 Nov 2026)**
+
+37. Given the labels conclusion correct, rule correct, application correct, then the Practice score is 5/5; for every
+    other row of the rubric table in Section 3.2 the score matches that row (one automated test per row).
+38. Given an answer with a correct rule and application but no conclusion, then the score is 0/5 with the message that a
+    conclusion is indispensable.
+39. Given an answer that argues a different legal issue from the one asked, then the score is 0/5 and coaching starts
+    with the Answer.
+40. Given the AI's reply also contains a number, then the score is still computed from the labels only.
+41. Given a retry that fixes the coached part, then the score is recomputed from the updated labels (e.g. 2/5 → 3/5).
 
 ## 6. Planned improvements (not built yet)
 Requested after the first test run (10 Nov 2026). Build these in a later round; they are not part of v1's
@@ -300,3 +327,4 @@ In every drill and Quick Check, a reader must tell at a glance what is the tutor
 | 11 Nov 2026 | Content narrowed to **Civil Law by year** (Y1 Persons and Family, Obligations; Y2 Sales; Y3 Succession; Y4 and bar: all); added `studentYear` | Founder review against the law-school curriculum and the bar Q&A compilation |
 | 11 Nov 2026 | Added **demo topics** with a visible banner (criteria 33–34) | Review of the live app: the topic list was empty until lawyer sign-off, so the core feature couldn't be shown |
 | 11 Nov 2026 | Added criteria 35–36 (topic-file completeness, subject order) | Local testing found topics in alphabetical, not teaching, order |
+| 11 Nov 2026 | Problem-drill scoring changed from 0–8 (four ALAC parts × 0–2) to the **5-point bar-coach rubric** organised by ALAC; the AI labels parts and code computes the score; off-topic answers score 0 (criteria 16–17 revised, 37–41 added) | Owner review against a bar-review center's AI rubric and sample feedback reports: one number students recognise, consistent scoring, and a check that the answer addresses the question asked |

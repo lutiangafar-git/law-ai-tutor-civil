@@ -28,7 +28,20 @@ policies: Year 1–2 students are paused during class hours, and Year 3–4 stud
 **Three AI features**
 1. **Recitation drill:** five Socratic steps (facts → issue → rule → reasoning → application), each scored 0–2. Asking "just tell me" gets you a hint, not the answer.
 2. **In-class Quick Check (Year 3–4 only):** type your recitation first, then get one reply with what's right, what's missing and the citation. It never writes a script to read aloud.
-3. **Problem drill:** a real past bar question (2010–2024) → ALAC Practice score → coaching on your weakest element → retry → the model answer is revealed only after the retry. Weak spots are tracked across drills.
+3. **Problem drill:** a real past bar question (2010–2024) → **Practice score out of 5** → coaching on your first weak ALAC part → rewrite → re-score → model answer. Weak spots are tracked across drills.
+
+**How problem drills are scored (5-point bar-coach rubric, organised by ALAC).** Claude only *labels* each part
+of your answer (correct / incorrect / not stated) and checks that you answered the question actually asked. The
+score is then computed in code (`lib/rubric.ts`), so the same labels always give the same score:
+
+| Points | Answer (conclusion) | Legal basis (rule) | Application |
+|---|---|---|---|
+| 5 | correct | correct | correct |
+| 4 | correct | correct | incorrect or missing |
+| 3 | correct · or incorrect | incorrect (but applied) · or correct | stated · or misapplied |
+| 2 | correct · or incorrect | incorrect | not applied · or applied |
+| 1 | incorrect · or any | stated but not applied · or **no rule** (facts only) | missing · or any |
+| 0 | **no conclusion**, or an answer to a different issue | any | any |
 
 **Trust rules:** the AI sees only the topic's source file. Questions outside it get *"That's outside the
 reviewed materials for this drill."* Every score is labelled **"Practice score"**, never official bar grading.
@@ -39,7 +52,7 @@ reviewed materials for this drill."* Every score is labelled **"Practice score"*
 
 ## Tech stack
 Next.js 15 (App Router) · TypeScript · Tailwind CSS 4 · Anthropic Claude API (`claude-haiku-5-5` for fast turns,
-`claude-sonnet-5-5` for ALAC scoring) · Vitest · GitHub Actions · Vercel (hosting and Web Analytics).
+`claude-sonnet-5-5` for ALAC labelling) · Vitest · GitHub Actions · Vercel (hosting and Web Analytics).
 No database and no login: progress stays in the user's browser.
 
 ## Run it on your computer
@@ -56,7 +69,7 @@ npm run dev                     # open http://localhost:3000
 | Command | What it does |
 |---|---|
 | `npm run dev` | Start the app locally |
-| `npm test` | Run the 48 automated tests (the Claude API is faked; no key needed) |
+| `npm test` | Run the 75 automated tests (the Claude API is faked; no key needed) |
 | `npm run lint` | Check code style |
 | `npx tsc --noEmit` | Check types |
 | `npm run build` | Production build (what Vercel runs) |
@@ -71,7 +84,7 @@ There are no secrets in the code or the Git history. `.env*.local` is git-ignore
 template, and CI runs a **Gitleaks** scan over the full history on every push. The key is never sent to the browser.
 
 ## CI/CD
-- **GitHub Actions** ([`.github/workflows/test.yml`](.github/workflows/test.yml)), on every push and pull request: lint → typecheck → 48 tests → production build, plus a Gitleaks secret scan.
+- **GitHub Actions** ([`.github/workflows/test.yml`](.github/workflows/test.yml)), on every push and pull request: lint → typecheck → 75 tests → production build, plus a Gitleaks secret scan.
 - **Vercel** deploys `main` automatically to https://law-tutor-drill.vercel.app after each push.
 - **Monitoring:** Vercel Web Analytics (page views, no cookies); one JSON log line per Claude call (feature, model, latency, outcome; never student text) in Vercel → Logs; health check at [`/api/health`](https://law-tutor-drill.vercel.app/api/health).
 
