@@ -2,6 +2,7 @@
 topicId: succession-holographic-will-art-810-814
 title: "Civil Code, Arts. 810 and 814: Holographic wills and unsigned alterations"
 subject: Succession
+syllabusRef: "VII.B.1"
 yearLevels: [year-2, year-3, year-4, bar]
 status: demo
 keyTerms: ["holographic will", "entirely written, dated, and signed", "full signature", "alteration", "authenticate"]
@@ -39,3 +40,34 @@ Model answer:
 - Legal basis: Under Art. 814 of the Civil Code, any alteration in a holographic will must be authenticated by the testator's full signature. In Kalaw v. Relova (G.R. No. L-40207, September 28, 1984), the Court held that where a holographic will has only one substantial provision and it is altered without the required authentication, the will is void.
 - Application: The will's only substantial provision, the institution of the sole heir, was changed from Rosa to Gregorio without Natividad's full signature. Gregorio cannot rely on the change because it was not authenticated. Rosa cannot rely on the original wording because Natividad evidently changed her mind about it. With no other provision left, nothing in the will can be given effect.
 - Conclusion: The will cannot be probated as written or as altered, so neither Rosa's nor Gregorio's claim should be granted.
+
+# Objective and multiple-choice quiz (Year 1-2)
+Q (multiple choice): Under Art. 810, a holographic will must be:
+A) typed and notarized
+B) entirely written, dated and signed by the hand of the testator
+C) signed by the testator and three witnesses
+D) written by a lawyer and signed by the testator
+Correct: B
+Hint: "Holographic" means written in one's own hand.
+Hint: Art. 810 lists three things the testator must do personally.
+Why: Art. 810 requires a holographic will to be entirely written, dated and signed by the hand of the testator.
+
+Q (multiple choice): Does a holographic will need witnesses?
+A) Yes, at least three
+B) Yes, at least two
+C) Only if made outside the Philippines
+D) No
+Correct: D
+Hint: Compare it with a notarial will, which does need witnesses.
+Hint: Art. 810 says it "need not be witnessed".
+Why: Art. 810 states a holographic will is subject to no other form and need not be witnessed.
+
+Q (objective): Under Art. 814, the testator must authenticate any insertion, cancellation, erasure or alteration in a holographic will by his ______ signature. (One word.)
+Accept: full | full signature
+Hint: Initials are not enough.
+Why: Art. 814 requires the testator to authenticate changes by his full signature.
+
+Q (objective): What kind of will is entirely written, dated and signed by the hand of the testator?
+Accept: holographic | holographic will | holograph | holographic wills
+Hint: The word comes from Greek for "whole" and "writing".
+Why: Art. 810 describes the holographic will.

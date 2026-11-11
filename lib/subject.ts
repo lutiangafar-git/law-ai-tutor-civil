@@ -19,7 +19,7 @@ export interface SubjectConfig {
   areas: string[];
   /** Areas shown to each student year. Year 4 and bar reviewees always see every area. */
   yearAreas: Record<1 | 2 | 3, string[]>;
-  /** Used in the demo banner: "drafted from {demoSourceNote} and a past bar question". */
+  /** Used in the demo banner: "This topic was drafted from {demoSourceNote} for demonstration". */
   demoSourceNote: string;
 }
 
@@ -27,33 +27,34 @@ export const SUBJECT: SubjectConfig = {
   appName: "Law AI Tutor - Civil",
   subjectName: "Civil Law",
   barSyllabusTitle: "Civil Law and Land Titles and Deeds",
+  // In the order of the 2027 Bar syllabus outline (II–III, V, VI, VII, VIII, VIII.A.7, IX.A, IX.C, IX.D, XI, XII).
   areas: [
     "Persons and Family Relations",
+    "Property",
+    "Land Titles and Deeds",
+    "Succession",
     "Obligations and Contracts",
     "Trusts",
-    "Property",
     "Sales",
     "Agency",
     "Credit Transactions",
     "Torts and Quasi-Delicts",
-    "Succession",
-    "Land Titles and Deeds",
     "Damages",
   ],
   yearAreas: {
     1: ["Persons and Family Relations", "Obligations and Contracts"],
     2: [
-      "Credit Transactions",
-      "Agency",
-      "Trusts",
       "Property",
       "Succession",
-      "Torts and Quasi-Delicts",
+      "Trusts",
       "Sales",
+      "Agency",
+      "Credit Transactions",
+      "Torts and Quasi-Delicts",
     ],
     3: ["Succession"],
   },
-  demoSourceNote: "the Civil Code",
+  demoSourceNote: "the Civil Code and the Family Code",
 };
 
 /** Areas a student in this year sees. Year 4 sees every area. */

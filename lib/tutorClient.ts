@@ -34,6 +34,7 @@ export function validateAnswerLength(
   const trimmed = answer.trim();
   if (!trimmed) return EMPTY_ANSWER_MESSAGE;
   const limits: Record<Feature, number> = {
+    "objective-quiz": 200,
     "in-class-quick-check": 1000,
     "recitation-drill": 2000,
     "problem-drill": 4000,

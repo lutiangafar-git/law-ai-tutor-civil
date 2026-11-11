@@ -2,6 +2,7 @@
 topicId: credit-suretyship-art-2047
 title: "Civil Code, Arts. 2047, 2058, 2059 and 1216: Guaranty versus suretyship"
 subject: Credit Transactions
+syllabusRef: "IX.D.3"
 yearLevels: [year-2, year-4, bar]
 status: demo
 keyTerms: ["guaranty", "suretyship", "surety", "guarantor", "benefit of excussion", "solidarily", "solidary debtors"]
@@ -46,3 +47,34 @@ Model answer:
 - Legal basis: Under Art. 2047, a person who binds himself solidarily with the principal debtor is a surety, and the rules on solidary obligations apply. The creditor may proceed against any solidary debtor (Art. 1216). The benefit of excussion (Art. 2058) is not available when the guarantor has bound himself solidarily with the debtor (Art. 2059(2)).
 - Application: The document's title says "guaranty", but its terms control: Ramon bound himself "jointly and severally", that is, solidarily, with Tess. His undertaking is a suretyship. As a surety he has no benefit of excussion, so Bayani Lending may go after him directly.
 - Conclusion: The motion to dismiss should be denied; Ramon is liable as a surety upon Tess's default.
+
+# Objective and multiple-choice quiz (Year 1-2)
+Q (multiple choice): A person who binds himself SOLIDARILY with the principal debtor is a:
+A) guarantor
+B) surety
+C) pledgee
+D) depositary
+Correct: B
+Hint: Look at the second sentence of Art. 2047.
+Hint: The contract in that case "is called a suretyship".
+Why: Under Art. 2047, binding oneself solidarily with the principal debtor makes the contract a suretyship.
+
+Q (multiple choice): A guarantor who has NOT bound himself solidarily may ask the creditor to first:
+A) sue the guarantor's spouse
+B) exhaust all the property of the debtor and all legal remedies against him
+C) wait five years
+D) get a court order to sell the guarantor's house
+Correct: B
+Hint: This is the benefit described in Art. 2058.
+Hint: The creditor must go after the debtor first.
+Why: Under Art. 2058, the guarantor cannot be compelled to pay unless the creditor has exhausted the debtor's property and legal remedies.
+
+Q (objective): What is the name of the guarantor's right under Art. 2058 to require the creditor to go after the debtor first?
+Accept: benefit of excussion | excussion | benefit of exhaustion
+Hint: Art. 2059 begins "The ______ shall not take place".
+Why: Art. 2058 gives the guarantor the benefit of excussion; Art. 2059 lists when it does not apply.
+
+Q (objective): Under Art. 1216, the creditor may proceed against any one of the ______ debtors, or all of them at once. (One word.)
+Accept: solidary
+Hint: It is the kind of liability a surety has.
+Why: Art. 1216 lets the creditor proceed against any one of the solidary debtors or all of them simultaneously.

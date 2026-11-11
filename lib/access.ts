@@ -154,7 +154,8 @@ export function getAllowedFeatures(
   }
 
   if (group === "year-1-2") {
-    return ["recitation-drill", "problem-drill"];
+    // Objective and multiple-choice quiz is for Year 1–2 only (spec §3.2).
+    return ["objective-quiz", "recitation-drill", "problem-drill"];
   }
 
   if (group === "year-3-4") {

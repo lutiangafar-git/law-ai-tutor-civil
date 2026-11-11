@@ -2,6 +2,7 @@
 topicId: family-fc-arts-2-4
 title: "Family Code, Arts. 2–4: Requisites of marriage and a missing marriage license"
 subject: Persons and Family Relations
+syllabusRef: "III.A.1.b"
 yearLevels: [year-1, year-4, bar]
 status: demo
 keyTerms: ["essential requisites", "formal requisites", "marriage license", "void ab initio", "voidable", "irregularity"]
@@ -49,3 +50,34 @@ Model answer:
 - Legal basis: A valid marriage license is a formal requisite of marriage (Art. 3 (2), Family Code). The absence of any formal requisite renders the marriage void ab initio (Art. 4). A civil registrar's certification of due search and inability to find the license can prove its absence (Republic v. Court of Appeals and Castro, G.R. No. 103047, September 2, 1994).
 - Application: The marriage was celebrated in 1995, so the Family Code governs. The Civil Registrar of Manila, the official custodian of license records, certified after a diligent and exhaustive search that the license does not exist. This shows a total absence of the license, not a mere irregularity. No facts show an exemption from the license requirement, such as five years of cohabitation without legal impediment (Art. 34).
 - Conclusion: The court should declare the marriage void ab initio for lack of a marriage license.
+
+# Objective and multiple-choice quiz (Year 1-2)
+Q (multiple choice): Which of these is an ESSENTIAL requisite of marriage under Art. 2 of the Family Code?
+A) A valid marriage license
+B) Authority of the solemnizing officer
+C) Consent freely given in the presence of the solemnizing officer
+D) A marriage ceremony with two witnesses
+Correct: C
+Hint: Art. 2 lists only two essential requisites; the others in this list are in Art. 3.
+Hint: One essential requisite is legal capacity; the other is about the parties' will.
+Why: Art. 2 lists legal capacity of the contracting parties and consent freely given in the presence of the solemnizing officer.
+
+Q (multiple choice): Under Art. 4 of the Family Code, what is the effect of a DEFECT in an essential requisite?
+A) The marriage is void ab initio
+B) The marriage is voidable
+C) The marriage is valid, but the parties are liable
+D) The marriage is unenforceable
+Correct: B
+Hint: Art. 4 treats the absence of a requisite differently from a defect in one.
+Hint: The answer refers you to Art. 45 (annulment).
+Why: Under Art. 4, a defect in any essential requisite makes the marriage voidable as provided in Art. 45.
+
+Q (objective): Under Art. 4, the absence of any essential or formal requisite makes the marriage void ______. (Two Latin words.)
+Accept: ab initio | void ab initio
+Hint: It means "from the beginning".
+Why: Art. 4 says the absence of any essential or formal requisite renders the marriage void ab initio, except as stated in Art. 35(2).
+
+Q (objective): Under Art. 34, a man and a woman need no marriage license if they have lived together as husband and wife for at least how many years without any legal impediment? (Give the number.)
+Accept: 5 | five | five years | 5 years
+Hint: It is more than three and fewer than ten.
+Why: Art. 34 exempts from the license requirement a couple who lived together as husband and wife for at least five years without any legal impediment to marry each other.

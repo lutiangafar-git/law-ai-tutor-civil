@@ -2,6 +2,7 @@
 topicId: oblicon-art-1156-1157
 title: "Civil Code, Arts. 1156–1157: What an obligation is and where it comes from"
 subject: Obligations and Contracts
+syllabusRef: "VIII.A.1.a"
 yearLevels: [year-1, year-4, bar]
 status: demo
 keyTerms: ["juridical necessity", "prestation", "to give", "to do", "not to do", "quasi-contracts", "quasi-delicts"]
@@ -41,3 +42,34 @@ Model answer:
 - Legal basis: Article 1156 of the Civil Code defines an obligation as a juridical necessity to give, to do or not to do. Article 1157 lists contracts as a source of obligations.
 - Application: The sale made Carlo's delivery of the laptop a juridical, legally enforceable necessity, not a matter of his choice. Delivering a thing is a prestation "to give". The obligation comes from the contract of sale. Changing his mind does not remove a juridical necessity.
 - Conclusion: Carlo must deliver the laptop to Dana, and Dana can demand that he do so.
+
+# Objective and multiple-choice quiz (Year 1-2)
+Q (multiple choice): Under Art. 1156, an obligation is a juridical necessity to:
+A) give, to do or not to do
+B) pay, to deliver or to return
+C) sell, to lease or to lend
+D) act in good faith
+Correct: A
+Hint: Art. 1156 names three kinds of prestation.
+Hint: One of them is negative: refraining from an act.
+Why: Art. 1156 defines an obligation as a juridical necessity to give, to do or not to do.
+
+Q (multiple choice): Which of these is NOT a source of obligations under Art. 1157?
+A) Law
+B) Quasi-contracts
+C) Quasi-delicts
+D) Moral duty alone
+Correct: D
+Hint: Art. 1157 lists exactly five sources.
+Hint: Contracts and acts or omissions punished by law are the other two.
+Why: Art. 1157 lists law, contracts, quasi-contracts, acts or omissions punished by law, and quasi-delicts. A purely moral duty is not one of them.
+
+Q (objective): What legal term does Art. 1156 use to describe an obligation? A "juridical ______".
+Accept: necessity | juridical necessity
+Hint: It means the obligation can be enforced in court.
+Why: Art. 1156 calls an obligation a juridical necessity: the debtor can be compelled to comply.
+
+Q (objective): Name the source of obligation under Art. 1157 that arises from fault or negligence where there is no pre-existing contract.
+Accept: quasi-delict | quasi-delicts | quasi delict | quasi delicts | culpa aquiliana
+Hint: It is the last source listed in Art. 1157.
+Why: Quasi-delicts are a separate source of obligations under Art. 1157 (see also Art. 2176).

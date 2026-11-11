@@ -5,6 +5,11 @@ const COPY: Record<
   Feature,
   { title: string; blurb: string; href: (topicId: string) => string }
 > = {
+  "objective-quiz": {
+    title: "Objective & multiple-choice quiz",
+    blurb: "Year 1–2. Short questions with hints; keep going until you get each one right.",
+    href: (id) => `/quiz/${id}`,
+  },
   "in-class-quick-check": {
     title: "In-class Quick Check",
     blurb: "1–3 minutes. You answer first; get a citation-backed check.",

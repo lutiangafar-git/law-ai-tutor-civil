@@ -3,6 +3,8 @@ import path from "path";
 import matter from "gray-matter";
 import type { SourceTopic, StudentYear, UserGroup, YearLevelTag } from "./types";
 import { SUBJECT } from "./subject";
+import { QUIZ_SECTION_HEADING, parseQuizSection } from "./quiz";
+import { compareSyllabusRef } from "./topicOrder";
 
 /** Shown wherever a reviewer name would appear, for topics marked `status: demo`. */
 export const DEMO_REVIEW_LABEL = "Demo content: pending lawyer review";
@@ -108,6 +110,7 @@ function parseTopicFile(filePath: string): SourceTopic | null {
     title: String(data.title ?? ""),
     subject: String(data.subject ?? ""),
     yearLevels,
+    syllabusRef: String(data.syllabusRef ?? "").trim(),
     syllabusWeek:
       data.syllabusWeek !== undefined ? Number(data.syllabusWeek) : undefined,
     citation: String(data.citation ?? ""),
@@ -116,6 +119,7 @@ function parseTopicFile(filePath: string): SourceTopic | null {
     lastReviewed: demo ? "" : String(data.lastReviewed ?? ""),
     isDemo: demo,
     sourceText: extractSection(content, "Source text"),
+    quiz: parseQuizSection(extractSection(content, QUIZ_SECTION_HEADING)),
     keyPoints: extractBullets(keyPointsSection),
     recitationScenario: fieldAfterLabel(recitationSection, "Scenario"),
     recitationModelAnswer: fieldAfterLabel(recitationSection, "Model answer"),
@@ -134,9 +138,12 @@ export function loadAllReviewedTopics(): SourceTopic[] {
     .filter((name) => name.endsWith(".md") && !name.startsWith("_"))
     .map((name) => parseTopicFile(path.join(dir, name)))
     .filter((topic): topic is SourceTopic => topic !== null)
+    // Order of the 2027 Bar syllabus outline; then subject area, then title.
     .sort(
       (a, b) =>
-        subjectRank(a.subject) - subjectRank(b.subject) || a.title.localeCompare(b.title),
+        compareSyllabusRef(a.syllabusRef, b.syllabusRef) ||
+        subjectRank(a.subject) - subjectRank(b.subject) ||
+        a.title.localeCompare(b.title),
     );
 }
 
@@ -200,5 +207,6 @@ export function toClientTopicSummary(topic: SourceTopic) {
     lastReviewed: topic.lastReviewed,
     yearLevels: topic.yearLevels,
     isDemo: topic.isDemo,
+    syllabusRef: topic.syllabusRef,
   };
 }

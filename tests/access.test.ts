@@ -66,7 +66,7 @@ describe("usage rules by group — class time and outside class", () => {
       expect(isPausedForClass(group, mondayEvening, now)).toBe(false);
 
       if (group === "year-1-2") {
-        expect(allowed).toEqual(["recitation-drill", "problem-drill"]);
+        expect(allowed).toEqual(["objective-quiz", "recitation-drill", "problem-drill"]);
         expect(allowed).not.toContain("in-class-quick-check");
       } else if (group === "year-3-4") {
         expect(allowed).toContain("in-class-quick-check");

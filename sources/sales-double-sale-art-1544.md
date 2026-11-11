@@ -2,6 +2,7 @@
 topicId: sales-double-sale-art-1544
 title: "Civil Code, Arts. 1544 and 1874: Double sale and selling land through an agent"
 subject: Sales
+syllabusRef: "IX.A.6"
 yearLevels: [year-2, year-4, bar]
 status: demo
 keyTerms: ["double sale", "good faith", "Registry of Property", "possession", "oldest title", "authority in writing"]
@@ -43,3 +44,34 @@ Model answer:
 - Legal basis: Under Art. 1874 of the Civil Code, a sale of land through an agent is void unless the agent's authority is in writing. The double-sale rule of Art. 1544 applies only when the same property has been validly sold to different buyers.
 - Application: When Y sold the land to B1, her only authority was X's overseas call, which is not in writing, so the sale to B1 is void. Since the first sale is void, there is no double sale and Art. 1544 does not decide the case. When Y sold to B2, she already had X's written authority sent by e-mail, so the sale to B2 is valid. Paying the price in installments does not make the sale invalid.
 - Conclusion: B2, as the buyer under the only valid sale, has the better right over the land.
+
+# Objective and multiple-choice quiz (Year 1-2)
+Q (multiple choice): In a double sale of a MOVABLE, who becomes the owner under Art. 1544?
+A) The buyer who paid first
+B) The buyer who first took possession in good faith
+C) The buyer with the oldest title
+D) The buyer who registered first
+Correct: B
+Hint: Art. 1544 has one rule for movables and a different order for immovables.
+Hint: For movables, the rule is about possession.
+Why: Under Art. 1544, ownership of a movable sold twice goes to the buyer who first took possession in good faith.
+
+Q (multiple choice): A sale of land through an agent whose authority is NOT in writing is:
+A) valid
+B) voidable
+C) unenforceable
+D) void
+Correct: D
+Hint: Look at Art. 1874.
+Hint: Art. 1874 ends with the words "otherwise, the sale shall be …".
+Why: Art. 1874 says that when land is sold through an agent, the agent's authority must be in writing; otherwise, the sale is void.
+
+Q (objective): For immovables, which public office's records decide a double sale first: the buyer who in good faith first recorded the sale in the ______ of Property?
+Accept: registry | registry of property
+Hint: It is where sales of land are recorded.
+Why: Under Art. 1544, for immovables the first buyer to record the sale in good faith in the Registry of Property owns the land.
+
+Q (objective): In every rule of Art. 1544, the buyer who wins must have acted in good ______.
+Accept: faith | good faith
+Hint: A buyer who knew of the earlier sale cannot win.
+Why: Each priority rule in Art. 1544 requires good faith.

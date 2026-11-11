@@ -2,6 +2,7 @@
 topicId: agency-revocation-art-1920-1927
 title: "Civil Code, Arts. 1868, 1920 and 1927: Revoking an agency, and when it cannot be revoked"
 subject: Agency
+syllabusRef: "IX.C.3"
 yearLevels: [year-2, year-4, bar]
 status: demo
 keyTerms: ["agency", "revoke", "revocation", "at will", "agency coupled with an interest", "bilateral contract", "common benefit"]
@@ -44,3 +45,34 @@ Model answer:
 - Legal basis: As a rule, the principal may revoke an agency at will (Art. 1920). But under Art. 1927, an agency cannot be revoked if it is the means of fulfilling an obligation already contracted. An agency created for the benefit of both principal and agent is not revocable at will.
 - Application: The sale was agreed as the means of paying the P400,000 Marites already owed Jun. Jun's interest therefore goes beyond his 3% commission: the agency secures payment of an existing debt, so it benefits him as well as Marites. A better offer from her cousin does not change the nature of the agency.
 - Conclusion: The agency is coupled with an interest and falls under Art. 1927, so Marites's letter does not validly revoke it.
+
+# Objective and multiple-choice quiz (Year 1-2)
+Q (multiple choice): As a general rule under Art. 1920, the principal may revoke an agency:
+A) only with the agent's consent
+B) only through a court
+C) at will
+D) only after one year
+Correct: C
+Hint: The general rule is very favorable to the principal.
+Hint: Art. 1920 uses two words for this freedom.
+Why: Art. 1920 lets the principal revoke the agency at will, expressly or impliedly.
+
+Q (multiple choice): Which agency CANNOT be revoked at will under Art. 1927?
+A) One where the agent earns a commission
+B) One that is the means of fulfilling an obligation already contracted
+C) One given orally
+D) One given to a relative
+Correct: B
+Hint: A commission alone is not enough to make an agency irrevocable.
+Hint: Art. 1927 mentions a bilateral contract and an obligation already contracted.
+Why: Art. 1927 makes an agency irrevocable if a bilateral contract depends on it or it is the means of fulfilling an obligation already contracted.
+
+Q (objective): What is the common name for an agency created for the benefit of both the principal and the agent?
+Accept: agency coupled with an interest | coupled with an interest | agency coupled with interest
+Hint: The agent has his own stake in it, beyond the commission.
+Why: An agency coupled with an interest is not revocable at will.
+
+Q (objective): Under Art. 1868, the agent acts in representation or on behalf of another person, called the ______.
+Accept: principal
+Hint: It is the person who gives the authority.
+Why: In agency, the agent acts for the principal, with the principal's consent or authority.

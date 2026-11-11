@@ -25,6 +25,7 @@ export const DEFAULT_STATE: StoredUserState = {
   diagnosticTopicIds: [],
   activeDrill: null,
   problemScores: [],
+  quizResults: [],
   recitationScores: [],
   rateLimit: { windowStart: 0, count: 0 },
 };
@@ -45,6 +46,7 @@ export function loadState(): StoredUserState {
       classSchedule: parsed.classSchedule ?? { blocks: [] },
       problemScores: parsed.problemScores ?? [],
       recitationScores: parsed.recitationScores ?? [],
+      quizResults: parsed.quizResults ?? [],
       diagnosticTopicIds: parsed.diagnosticTopicIds ?? [],
       rateLimit: parsed.rateLimit ?? { windowStart: 0, count: 0 },
     };
@@ -114,6 +116,11 @@ export function saveActiveDrill(drill: DrillProgress | null): StoredUserState {
 
 export function clearActiveDrill(): StoredUserState {
   return updateState({ activeDrill: null });
+}
+
+export function addQuizResult(record: StoredUserState["quizResults"][number]): StoredUserState {
+  const state = loadState();
+  return updateState({ quizResults: [...state.quizResults, record].slice(-200) });
 }
 
 export function addProblemScore(record: ProblemScoreRecord): StoredUserState {

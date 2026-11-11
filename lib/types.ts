@@ -5,6 +5,7 @@ export type UserGroup =
   | "bar-repeater";
 
 export type Feature =
+  | "objective-quiz"
   | "recitation-drill"
   | "in-class-quick-check"
   | "problem-drill";
@@ -48,6 +49,8 @@ export interface SourceMeta {
   subject: string;
   yearLevels: YearLevelTag[];
   syllabusWeek?: number;
+  /** Place in the 2027 Bar syllabus outline, e.g. "VIII.A.7" (see /lib/topicOrder.ts). */
+  syllabusRef: string;
   citation: string;
   link: string;
   reviewedBy: string;
@@ -58,6 +61,8 @@ export interface SourceMeta {
 
 export interface SourceTopic extends SourceMeta {
   sourceText: string;
+  /** Year 1–2 objective and multiple-choice items (see /lib/quiz.ts). */
+  quiz: import("./quiz").QuizItem[];
   keyPoints: string[];
   recitationScenario: string;
   recitationModelAnswer: string;
@@ -160,6 +165,8 @@ export interface StoredUserState {
   diagnosticTopicIds: string[];
   activeDrill: DrillProgress | null;
   problemScores: ProblemScoreRecord[];
+  /** Finished Year 1–2 objective quizzes. */
+  quizResults: { topicId: string; firstTry: number; total: number; finishedAt: string }[];
   recitationScores: {
     topicId: string;
     stepScores: number[];

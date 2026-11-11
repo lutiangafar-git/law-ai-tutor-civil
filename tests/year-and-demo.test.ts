@@ -203,12 +203,11 @@ describe("saving the student's year", () => {
 });
 
 describe("topic order", () => {
-  it("follows the law school order: Persons, then Sales, then Succession", async () => {
+  it("without syllabus references, topics follow the subject-area order in lib/subject.ts", async () => {
     const { loadAllReviewedTopics } = await loadWith(civilLawFiles);
-    expect(loadAllReviewedTopics().map((t) => t.subject)).toEqual([
-      "Persons and Family Relations",
-      "Sales",
-      "Succession",
-    ]);
+    const { SUBJECT } = await import("@/lib/subject");
+    const got = loadAllReviewedTopics().map((t) => t.subject);
+    const ranks = got.map((s) => SUBJECT.areas.indexOf(s));
+    expect([...ranks].sort((a, b) => a - b)).toEqual(ranks);
   });
 });

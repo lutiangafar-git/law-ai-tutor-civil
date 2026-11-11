@@ -206,6 +206,14 @@ export async function POST(request: Request) {
       );
     }
 
+    // The objective quiz is checked by /api/quiz without any AI call.
+    if (feature === "objective-quiz") {
+      return NextResponse.json(
+        { feedback: TUTOR_UNAVAILABLE_MESSAGE },
+        { status: 400 },
+      );
+    }
+
     const topic = getTopicById(topicId, userGroup);
     if (!topic) {
       return NextResponse.json(
@@ -248,6 +256,7 @@ export async function POST(request: Request) {
     }
 
     const limits: Record<Feature, number> = {
+      "objective-quiz": 200,
       "in-class-quick-check": 1000,
       "recitation-drill": 2000,
       "problem-drill": 4000,

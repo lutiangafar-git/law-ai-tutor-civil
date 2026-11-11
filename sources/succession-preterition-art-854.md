@@ -2,6 +2,7 @@
 topicId: succession-preterition-art-854
 title: "Civil Code, Art. 854: Preterition of compulsory heirs"
 subject: Succession
+syllabusRef: "VII.B.2"
 yearLevels: [year-2, year-3, year-4, bar]
 status: demo
 keyTerms: ["preterition", "compulsory heirs", "direct line", "institution of heir", "devises and legacies", "inofficious", "intestate succession"]
@@ -45,3 +46,34 @@ Model answer:
 - Legal basis: Under Art. 854 of the Civil Code, the preterition or omission of one, some, or all of the compulsory heirs in the direct line annuls the institution of heir; devises and legacies remain valid insofar as they are not inofficious.
 - Application: Teddy and Bobbie are legitimate children, compulsory heirs in the direct line, and the will totally omits them. That is preterition, so the institution of Rebreb is annulled. There are no devises or legacies to preserve, so the whole estate is distributed by intestacy. Grace's omission is not itself preterition because a spouse is not in the direct line, but she inherits in intestacy together with the legitimate children. Rebreb still inherits, but as an illegitimate child in intestacy, not as sole heir. The legitimate children exclude Caloy's father Cesar and his sisters Alex and Gabbie.
 - Conclusion: The will's institution of Rebreb is void. The estate goes by intestate succession to Teddy, Bobbie, Grace and Rebreb; Cesar, Alex and Gabbie receive nothing.
+
+# Objective and multiple-choice quiz (Year 1-2)
+Q (multiple choice): Under Art. 854, the preterition of a compulsory heir in the direct line:
+A) annuls the whole will
+B) annuls the institution of heir, but devises and legacies stay valid if not inofficious
+C) has no effect if the heir is a child
+D) only reduces the legacies
+Correct: B
+Hint: Art. 854 separates the institution of heir from devises and legacies.
+Hint: Devises and legacies are saved "insofar as they are not inofficious".
+Why: Art. 854 says preterition annuls the institution of heir; devises and legacies remain valid insofar as they are not inofficious.
+
+Q (multiple choice): Preterition under Art. 854 applies to the omission of compulsory heirs in the:
+A) collateral line
+B) direct line
+C) line of the surviving spouse only
+D) line of illegitimate siblings
+Correct: B
+Hint: Think of children and parents, not brothers and sisters.
+Hint: The article says "in the direct line".
+Why: Art. 854 covers compulsory heirs in the direct line, whether living when the will was made or born after the testator's death.
+
+Q (objective): What is the term for the total omission of a compulsory heir in the direct line from a will?
+Accept: preterition | pretermission
+Hint: It is the subject of Art. 854.
+Why: Art. 854 calls this omission preterition.
+
+Q (objective): Preterition annuls the institution of ______. (One word.)
+Accept: heir | heirs | heir or heirs
+Hint: It is the person the testator named to inherit.
+Why: Under Art. 854, preterition annuls the institution of heir.

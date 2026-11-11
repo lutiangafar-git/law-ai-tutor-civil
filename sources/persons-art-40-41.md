@@ -2,6 +2,7 @@
 topicId: persons-art-40-41
 title: "Civil Code, Arts. 40–41: When a conceived child is considered born"
 subject: Persons and Family Relations
+syllabusRef: "II.A.1"
 yearLevels: [year-1, year-4, bar]
 status: demo
 keyTerms: ["civil personality", "conceived child", "intra-uterine life", "complete delivery", "twenty-four hours"]
@@ -41,3 +42,34 @@ Model answer:
 - Legal basis: Under Art. 40 of the Civil Code, a conceived child is considered born for purposes favorable to it only if it is later born under the conditions of Art. 41. Under Art. 41, a foetus with an intra-uterine life of less than seven months is not deemed born if it dies within twenty-four hours after its complete delivery.
 - Application: Angela had an intra-uterine life of only six months and died 20 hours after birth, which is within the 24-hour period. She is therefore not deemed born, never acquired civil personality, and could not become a donee. The provisional personality of a conceived child did not attach because the condition in Art. 41 was not met.
 - Conclusion: The donation did not take effect, so the P1 Million must be returned to Ricky.
+
+# Objective and multiple-choice quiz (Year 1-2)
+Q (multiple choice): Under Art. 40 of the Civil Code, what determines a natural person's personality?
+A) Conception
+B) Birth
+C) Registration of the birth certificate
+D) Baptism
+Correct: B
+Hint: Read the first five words of Art. 40.
+Hint: Conception matters only for effects favorable to the child.
+Why: Art. 40 says birth determines personality; the conceived child is treated as born only for purposes favorable to it.
+
+Q (multiple choice): A foetus with an intra-uterine life of only six months is completely delivered alive but dies 10 hours later. Is it considered born for civil purposes?
+A) Yes, because it was delivered alive
+B) Yes, because it lived for some hours
+C) No, because it died within 24 hours after complete delivery
+D) No, because a foetus is never considered born
+Correct: C
+Hint: Art. 41 has a special rule for an intra-uterine life of less than seven months.
+Hint: Check how long such a child must survive after complete delivery.
+Why: Under Art. 41, if the intra-uterine life was less than seven months, the child is not deemed born if it dies within 24 hours after complete delivery.
+
+Q (objective): For civil purposes, a foetus is considered born if it is alive at the time it is completely delivered from the mother's ______.
+Accept: womb | mother's womb | mothers womb
+Hint: Art. 41 uses this word for where the foetus is delivered from.
+Why: Art. 41 says the foetus is considered born if it is alive when completely delivered from the mother's womb.
+
+Q (objective): Under Art. 41, below how many months of intra-uterine life must the child survive 24 hours after complete delivery to be considered born? (Give the number.)
+Accept: 7 | seven | seven months | 7 months
+Hint: It is a little less than a full nine-month pregnancy.
+Why: Art. 41 applies the 24-hour rule when the intra-uterine life was less than seven months.

@@ -18,6 +18,12 @@ import {
 import { findProfile, yearQuery } from "@/lib/profiles";
 import type { Feature, UserGroup } from "@/lib/types";
 import { SUBJECT } from "@/lib/subject";
+import {
+  finishedTopicIds,
+  isSequentialGroup,
+  nextInSyllabus,
+  pickRandomTopic,
+} from "@/lib/topicOrder";
 
 type TopicSummary = {
   topicId: string;
@@ -25,6 +31,7 @@ type TopicSummary = {
   subject: string;
   lastReviewed: string;
   isDemo?: boolean;
+  syllabusRef?: string;
 };
 
 function HomeInner() {
@@ -37,6 +44,7 @@ function HomeInner() {
   const [showDiagnostic, setShowDiagnostic] = useState(false);
   const [diagnosticTopics, setDiagnosticTopics] = useState<TopicSummary[]>([]);
   const [profileLabel, setProfileLabel] = useState("");
+  const [finished, setFinished] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const state = loadState();
@@ -52,6 +60,7 @@ function HomeInner() {
 
     if (state.activeDrill) {
       const map: Record<Feature, string> = {
+        "objective-quiz": `/quiz/${state.activeDrill.topicId}`,
         "recitation-drill": `/recitation/${state.activeDrill.topicId}`,
         "in-class-quick-check": `/quick-check/${state.activeDrill.topicId}`,
         "problem-drill": `/problem/${state.activeDrill.topicId}`,
@@ -62,8 +71,15 @@ function HomeInner() {
     fetch(`/api/topics?group=${state.userGroup}${yearQuery(state.studentYear)}`)
       .then((r) => r.json())
       .then((data: { topics: TopicSummary[] }) => {
-        setTopics(data.topics ?? []);
-        if (data.topics?.[0]) setSelectedTopic(data.topics[0].topicId);
+        const list = data.topics ?? [];
+        setTopics(list);
+        const done = finishedTopicIds(state);
+        setFinished(done);
+        // Year 1–2: next unfinished topic in syllabus order. Others: a random topic.
+        const start = isSequentialGroup(state.userGroup)
+          ? (nextInSyllabus(list, done) ?? list[0])
+          : pickRandomTopic(list, null);
+        if (start) setSelectedTopic(start.topicId);
 
         const isRepeater = state.userGroup === "bar-repeater";
         const isFirstTime = state.userGroup === "bar-first-time";
@@ -84,6 +100,14 @@ function HomeInner() {
   }, []);
 
   const selectedIsDemo = topics.find((t) => t.topicId === selectedTopic)?.isDemo ?? false;
+  const sequential = isSequentialGroup(group);
+  const nextTopic = sequential ? nextInSyllabus(topics, finished) : null;
+  const finishedCount = topics.filter((t) => finished.has(t.topicId)).length;
+
+  function randomTopic() {
+    const pick = pickRandomTopic(topics, selectedTopic);
+    if (pick) setSelectedTopic(pick.topicId);
+  }
 
   const subjects = useMemo(() => {
     return Array.from(new Set(topics.map((t) => t.subject)));
@@ -180,6 +204,33 @@ function HomeInner() {
                 <p className="text-sm text-muted">
                   {subjects.length === 1 ? "Subject" : "Subjects"}: {subjects.join(" · ")}
                 </p>
+                {sequential ? (
+                  <p className="rounded-md border border-line bg-white/70 p-3 text-sm">
+                    Year 1–2 topics follow the 2027 Bar syllabus in order. {finishedCount} of {topics.length}{" "}
+                    finished (quiz + problem drill).{" "}
+                    {nextTopic ? (
+                      <>
+                        Next up: <strong>{nextTopic.title}</strong>
+                        {nextTopic.syllabusRef ? ` (syllabus ${nextTopic.syllabusRef})` : ""}.
+                      </>
+                    ) : (
+                      <>You have finished every topic. Pick any topic to review.</>
+                    )}
+                  </p>
+                ) : (
+                  <div className="flex flex-wrap items-center gap-3">
+                    <p className="text-sm text-muted">
+                      Topics are picked at random to test your general knowledge.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={randomTopic}
+                      className="rounded-md border border-accent px-3 py-2 text-sm font-medium text-accent"
+                    >
+                      Random topic
+                    </button>
+                  </div>
+                )}
                 <select
                   className="w-full rounded-md border border-line bg-white px-3 py-3"
                   value={selectedTopic}
@@ -191,6 +242,7 @@ function HomeInner() {
                         .filter((topic) => topic.subject === subject)
                         .map((topic) => (
                           <option key={topic.topicId} value={topic.topicId}>
+                            {sequential && finished.has(topic.topicId) ? "✓ " : ""}
                             {topic.title}
                             {topic.isDemo ? " (demo)" : ""}
                           </option>

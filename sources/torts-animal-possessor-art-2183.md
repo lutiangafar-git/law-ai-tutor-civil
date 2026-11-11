@@ -2,6 +2,7 @@
 topicId: torts-animal-possessor-art-2183
 title: "Civil Code, Arts. 2176 and 2183: Liability of the possessor of an animal"
 subject: Torts and Quasi-Delicts
+syllabusRef: "XI.A.4"
 yearLevels: [year-2, year-4, bar]
 status: demo
 keyTerms: ["quasi-delict", "possessor of an animal", "force majeure", "fault of the person who has suffered damage", "escape"]
@@ -39,3 +40,34 @@ Model answer:
 - Legal basis: Under Art. 2183, the possessor of an animal is responsible for the damage it causes, even if it escapes or is lost. That responsibility ceases only when the damage comes from force majeure or from the fault of the person who suffered the damage.
 - Application: The dog never left Lito's fenced yard. Mara was bitten only because she reached over the fence to touch it, despite the warning sign and Lito's earlier warnings. Her injury came from her own fault, which is one of the two grounds that end the possessor's liability.
 - Conclusion: Because the damage came from Mara's own fault, Lito is not liable under Art. 2183.
+
+# Objective and multiple-choice quiz (Year 1-2)
+Q (multiple choice): Under Art. 2183, the possessor of an animal is liable for the damage it causes:
+A) only if the animal was vicious
+B) even if the animal escapes or is lost
+C) only if the possessor was negligent
+D) only if the animal was registered
+Correct: B
+Hint: Read the end of the first sentence of Art. 2183.
+Hint: The liability continues "although it may escape or be lost".
+Why: Art. 2183 makes the possessor responsible even if the animal escapes or is lost.
+
+Q (multiple choice): Which ends the possessor's liability under Art. 2183?
+A) The possessor was at work
+B) The animal was usually gentle
+C) The damage came from the fault of the person who suffered it
+D) The possessor had insurance
+Correct: C
+Hint: Art. 2183 lists only two grounds.
+Hint: One is force majeure; the other concerns the injured person.
+Why: Under Art. 2183, liability ceases only if the damage came from force majeure or from the fault of the person who suffered the damage.
+
+Q (objective): Besides the injured person's own fault, name the other ground that ends the possessor's liability under Art. 2183. (Two words.)
+Accept: force majeure | fortuitous event
+Hint: A typhoon is a classic example.
+Why: Art. 2183 frees the possessor when the damage came from force majeure.
+
+Q (objective): Damage caused by fault or negligence, with no pre-existing contract between the parties, is called a ______ under Art. 2176.
+Accept: quasi-delict | quasi delict | culpa aquiliana
+Hint: It is one of the five sources of obligations in Art. 1157.
+Why: Art. 2176 calls such fault or negligence a quasi-delict.

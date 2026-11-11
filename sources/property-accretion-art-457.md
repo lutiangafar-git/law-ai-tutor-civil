@@ -2,6 +2,7 @@
 topicId: property-accretion-art-457
 title: "Civil Code, Arts. 440 and 457: Accession and alluvion (accretion along rivers)"
 subject: Property
+syllabusRef: "V.C"
 yearLevels: [year-2, year-4, bar]
 status: demo
 keyTerms: ["accession", "accretion", "alluvion", "riparian owner", "current of the waters", "gradually"]
@@ -41,3 +42,34 @@ Model answer:
 - Legal basis: Under Art. 440, ownership gives the right by accession to everything incorporated or attached to the property naturally. Under Art. 457, owners of land adjoining the banks of rivers own the accretion they gradually receive from the effects of the current of the waters.
 - Application: Inday's lot adjoins the bank of the Cagayan River. The strip formed gradually, over fifteen years, from soil deposited by the river's current. All the requisites of alluvion are present: a gradual deposit, caused by the current, on land adjoining the bank. The law gives such accretion to the riparian owner, not to the public.
 - Conclusion: As riparian owner, Inday owns the strip by accession under Arts. 440 and 457, and the municipality's claim fails.
+
+# Objective and multiple-choice quiz (Year 1-2)
+Q (multiple choice): Under Art. 457, accretion along a river bank belongs to:
+A) the State
+B) the municipality
+C) the owner of the land adjoining the bank
+D) whoever occupies it first
+Correct: C
+Hint: Think of who the "riparian owner" is.
+Hint: Art. 457 begins "To the owners of lands adjoining the banks of rivers …".
+Why: Art. 457 gives the accretion to the owners of lands adjoining the river banks.
+
+Q (multiple choice): Which is a requisite of accretion under Art. 457?
+A) The deposit is sudden
+B) The deposit is gradual and caused by the current of the waters
+C) The deposit is made by a reclamation project
+D) The land is registered
+Correct: B
+Hint: Art. 457 uses the word "gradually".
+Hint: The cause must be the river itself, not human works.
+Why: Art. 457 covers accretion gradually received from the effects of the current of the waters.
+
+Q (objective): What is the right that gives an owner everything produced by, or naturally attached to, his property (Art. 440)?
+Accept: accession | right of accession | right by accession
+Hint: It is the title of the Civil Code chapter that includes Art. 440.
+Why: Art. 440 gives the owner the right by accession to everything produced by or attached to the property.
+
+Q (objective): What is the other name for accretion formed gradually along a river bank? (It starts with "a".)
+Accept: alluvion | alluvium
+Hint: It comes from the Latin word for "washed against".
+Why: Gradual accretion along river banks is called alluvion (Art. 457).

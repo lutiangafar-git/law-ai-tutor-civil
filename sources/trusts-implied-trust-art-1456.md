@@ -2,6 +2,7 @@
 topicId: trusts-implied-trust-art-1456
 title: "Civil Code, Arts. 1441, 1456 and 1144: Implied trust and reconveyance"
 subject: Trusts
+syllabusRef: "VIII.A.7"
 yearLevels: [year-2, year-4, bar]
 status: demo
 keyTerms: ["implied trust", "constructive trust", "express trust", "reconveyance", "prescription", "quieting of title", "actual possession"]
@@ -44,3 +45,34 @@ Model answer:
 - Legal basis: Under Art. 1456, a person who acquires property through mistake or fraud holds it as trustee of an implied trust for the person from whom it came. An action for reconveyance on an implied trust generally prescribes in ten years from registration of the title (Art. 1144). But when the plaintiff is in actual, continuous possession of the property, prescription does not run, because the action is in the nature of a suit to quiet title.
 - Application: By falsely claiming to be the sole heir, Lorna obtained title to Nestor's half and holds it in implied trust for him. The ten years would ordinarily run from the 2011 title. However, Nestor has lived on the property continuously since 2010, so prescription never began to run against him.
 - Conclusion: Because Nestor is in possession, his action is imprescriptible, and Lorna's defence of prescription fails.
+
+# Objective and multiple-choice quiz (Year 1-2)
+Q (multiple choice): Under Art. 1441, implied trusts come into being:
+A) by the intention of the trustor
+B) by operation of law
+C) only by a written deed
+D) only by court order
+Correct: B
+Hint: Art. 1441 contrasts express trusts with implied trusts.
+Hint: Express trusts come from intention; implied trusts do not.
+Why: Art. 1441 says implied trusts come into being by operation of law.
+
+Q (multiple choice): A person who acquires property through mistake or fraud is, under Art. 1456, considered:
+A) the absolute owner
+B) a trustee of an implied trust for the person from whom the property came
+C) a co-owner
+D) a possessor in good faith
+Correct: B
+Hint: Art. 1456 uses the words "by force of law".
+Hint: The person holds the property for someone else.
+Why: Art. 1456 makes such a person a trustee of an implied trust for the benefit of the person from whom the property comes.
+
+Q (objective): Within how many years must an action upon an obligation created by law be brought under Art. 1144? (Give the number.)
+Accept: 10 | ten | ten years | 10 years
+Hint: It is the same period as an action upon a written contract.
+Why: Art. 1144 sets ten years for actions upon a written contract, an obligation created by law, or a judgment.
+
+Q (objective): A trust created by the intention of the trustor or of the parties is called an ______ trust. (One word.)
+Accept: express | express trust
+Hint: It is the opposite of an implied trust.
+Why: Art. 1441 says express trusts are created by the intention of the trustor or of the parties.
