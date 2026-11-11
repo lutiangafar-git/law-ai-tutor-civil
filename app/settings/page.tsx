@@ -14,6 +14,7 @@ import {
   setUserGroup,
   updateState,
 } from "@/lib/storage";
+import { PROFILE_OPTIONS, findProfileKey, type ProfileOption } from "@/lib/profiles";
 import type { ClassBlock, UserGroup } from "@/lib/types";
 
 const DAY_OPTIONS = [
@@ -26,15 +27,10 @@ const DAY_OPTIONS = [
   { value: 0, label: "Sunday" },
 ];
 
-const GROUP_OPTIONS: { id: UserGroup; label: string }[] = [
-  { id: "year-1-2", label: "Year 1–2 student" },
-  { id: "year-3-4", label: "Year 3–4 student" },
-  { id: "bar-first-time", label: "Bar reviewee (first-time)" },
-  { id: "bar-repeater", label: "Bar reviewee (repeater)" },
-];
 
 function SettingsInner() {
   const [group, setGroup] = useState<UserGroup | null>(null);
+  const [profileKey, setProfileKey] = useState<string | null>(null);
   const [blocks, setBlocks] = useState<ClassBlock[]>([]);
   const [day, setDay] = useState(1);
   const [start, setStart] = useState("6:00 PM");
@@ -44,13 +40,15 @@ function SettingsInner() {
   useEffect(() => {
     const state = loadState();
     setGroup(state.userGroup);
+    setProfileKey(findProfileKey(state.userGroup, state.studentYear));
     setBlocks(state.classSchedule.blocks);
   }, []);
 
-  function saveGroup(next: UserGroup) {
-    const updated = setUserGroup(next);
+  function saveGroup(option: ProfileOption) {
+    const updated = setUserGroup(option.group, option.year);
     updateState({ usageNoticeSeen: false });
-    setGroup(next);
+    setGroup(option.group);
+    setProfileKey(option.key);
     setBlocks(updated.classSchedule.blocks);
     setMessage("Group updated. You’ll see the usage notice again.");
     window.location.href = "/onboarding?notice=1";
@@ -105,16 +103,16 @@ function SettingsInner() {
       <div className="space-y-3">
         <h2 className="font-display text-xl">Your group</h2>
         <div className="grid gap-2">
-          {GROUP_OPTIONS.map((opt) => (
+          {PROFILE_OPTIONS.map((opt) => (
             <label
-              key={opt.id}
+              key={opt.key}
               className="flex items-center gap-3 rounded-md border border-line bg-white/70 px-3 py-3"
             >
               <input
                 type="radio"
                 name="group"
-                checked={group === opt.id}
-                onChange={() => saveGroup(opt.id)}
+                checked={profileKey === opt.key}
+                onChange={() => saveGroup(opt)}
               />
               <span>{opt.label}</span>
             </label>

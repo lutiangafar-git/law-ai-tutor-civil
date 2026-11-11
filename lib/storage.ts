@@ -9,6 +9,7 @@ import type {
   DrillProgress,
   ProblemScoreRecord,
   StoredUserState,
+  StudentYear,
   UserGroup,
 } from "./types";
 
@@ -16,6 +17,7 @@ const STORAGE_KEY = "law-tutor-v1";
 
 export const DEFAULT_STATE: StoredUserState = {
   userGroup: null,
+  studentYear: null,
   classSchedule: { blocks: [] },
   usageNoticeSeen: false,
   diagnosticOffered: false,
@@ -65,7 +67,10 @@ export function updateState(
   return next;
 }
 
-export function setUserGroup(group: UserGroup): StoredUserState {
+export function setUserGroup(
+  group: UserGroup,
+  year: StudentYear | null = null,
+): StoredUserState {
   const prev = loadState();
   const becomingStudent = isStudentGroup(group);
   const wasStudent = isStudentGroup(prev.userGroup);
@@ -81,6 +86,8 @@ export function setUserGroup(group: UserGroup): StoredUserState {
 
   return updateState({
     userGroup: group,
+    // Bar reviewees have no school year.
+    studentYear: becomingStudent ? year : null,
     usageNoticeSeen: false,
     diagnosticOffered:
       group === "bar-repeater" ? false : prev.diagnosticOffered,

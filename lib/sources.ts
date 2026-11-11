@@ -1,9 +1,14 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import type { SourceTopic, UserGroup, YearLevelTag } from "./types";
+import type { SourceTopic, StudentYear, UserGroup, YearLevelTag } from "./types";
 
-const SOURCES_DIR = path.join(process.cwd(), "sources");
+/** Shown wherever a reviewer name would appear, for topics marked `status: demo`. */
+export const DEMO_REVIEW_LABEL = "Demo content: pending lawyer review";
+
+function sourcesDir(): string {
+  return path.join(process.cwd(), "sources");
+}
 
 function asStringArray(value: unknown): string[] {
   if (Array.isArray(value)) return value.map(String);
@@ -60,11 +65,21 @@ function isReviewed(data: Record<string, unknown>): boolean {
   return Boolean(reviewedBy && lastReviewed);
 }
 
+/**
+ * Demo topics (`status: demo`) are shown with a "pending lawyer review" banner.
+ * A topic that is neither reviewed nor demo stays hidden (spec criterion 8).
+ */
+function isDemo(data: Record<string, unknown>): boolean {
+  return String(data.status ?? "").trim().toLowerCase() === "demo";
+}
+
 function parseTopicFile(filePath: string): SourceTopic | null {
   const raw = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(raw);
 
-  if (!isReviewed(data)) return null;
+  const reviewed = isReviewed(data);
+  const demo = !reviewed && isDemo(data);
+  if (!reviewed && !demo) return null;
 
   const yearLevels = asStringArray(data.yearLevels) as YearLevelTag[];
   const keyPointsSection =
@@ -88,8 +103,9 @@ function parseTopicFile(filePath: string): SourceTopic | null {
       data.syllabusWeek !== undefined ? Number(data.syllabusWeek) : undefined,
     citation: String(data.citation ?? ""),
     link: String(data.link ?? ""),
-    reviewedBy: String(data.reviewedBy ?? ""),
-    lastReviewed: String(data.lastReviewed ?? ""),
+    reviewedBy: demo ? DEMO_REVIEW_LABEL : String(data.reviewedBy ?? ""),
+    lastReviewed: demo ? "" : String(data.lastReviewed ?? ""),
+    isDemo: demo,
     sourceText: extractSection(content, "Source text"),
     keyPoints: extractBullets(keyPointsSection),
     recitationScenario: fieldAfterLabel(recitationSection, "Scenario"),
@@ -101,24 +117,45 @@ function parseTopicFile(filePath: string): SourceTopic | null {
 }
 
 export function loadAllReviewedTopics(): SourceTopic[] {
-  if (!fs.existsSync(SOURCES_DIR)) return [];
+  const dir = sourcesDir();
+  if (!fs.existsSync(dir)) return [];
 
   return fs
-    .readdirSync(SOURCES_DIR)
+    .readdirSync(dir)
     .filter((name) => name.endsWith(".md") && !name.startsWith("_"))
-    .map((name) => parseTopicFile(path.join(SOURCES_DIR, name)))
+    .map((name) => parseTopicFile(path.join(dir, name)))
     .filter((topic): topic is SourceTopic => topic !== null)
     .sort((a, b) => a.title.localeCompare(b.title));
 }
 
-function groupToYearTags(group: UserGroup): YearLevelTag[] {
-  if (group === "year-1-2") return ["year-1-2"];
-  if (group === "year-3-4") return ["year-3-4"];
+/**
+ * Which topic tags a user sees.
+ * - A student with a known year sees that year's topics (plus old pair-tagged files).
+ * - A student without a saved year sees both years of their pair.
+ * - Bar reviewees see topics tagged `bar`.
+ */
+export function groupToYearTags(
+  group: UserGroup,
+  year?: StudentYear | null,
+): YearLevelTag[] {
+  if (group === "year-1-2") {
+    if (year === 1) return ["year-1", "year-1-2"];
+    if (year === 2) return ["year-2", "year-1-2"];
+    return ["year-1", "year-2", "year-1-2"];
+  }
+  if (group === "year-3-4") {
+    if (year === 3) return ["year-3", "year-3-4"];
+    if (year === 4) return ["year-4", "year-3-4"];
+    return ["year-3", "year-4", "year-3-4"];
+  }
   return ["bar"];
 }
 
-export function getTopicsForGroup(group: UserGroup): SourceTopic[] {
-  const tags = groupToYearTags(group);
+export function getTopicsForGroup(
+  group: UserGroup,
+  year?: StudentYear | null,
+): SourceTopic[] {
+  const tags = groupToYearTags(group, year);
   return loadAllReviewedTopics().filter((topic) =>
     topic.yearLevels.some((y) => tags.includes(y)),
   );
@@ -127,9 +164,16 @@ export function getTopicsForGroup(group: UserGroup): SourceTopic[] {
 export function getTopicById(
   topicId: string,
   group?: UserGroup,
+  year?: StudentYear | null,
 ): SourceTopic | null {
-  const topics = group ? getTopicsForGroup(group) : loadAllReviewedTopics();
+  const topics = group ? getTopicsForGroup(group, year) : loadAllReviewedTopics();
   return topics.find((t) => t.topicId === topicId) ?? null;
+}
+
+/** Parses a `year` query value; anything other than 1–4 means "not given". */
+export function parseStudentYear(value: unknown): StudentYear | null {
+  const n = Number(value);
+  return n === 1 || n === 2 || n === 3 || n === 4 ? n : null;
 }
 
 /** Safe payload for the client: no model answers until the drill reveals them. */
@@ -143,5 +187,6 @@ export function toClientTopicSummary(topic: SourceTopic) {
     reviewedBy: topic.reviewedBy,
     lastReviewed: topic.lastReviewed,
     yearLevels: topic.yearLevels,
+    isDemo: topic.isDemo,
   };
 }

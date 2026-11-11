@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { DemoBanner } from "@/components/DemoBanner";
+import { yearQuery } from "@/lib/profiles";
 import { useParams } from "next/navigation";
 import { AnswerBox } from "@/components/AnswerBox";
 import { ClassPauseBanner } from "@/components/ClassPauseBanner";
@@ -27,6 +29,7 @@ function RecitationInner() {
   const [group, setGroup] = useState<UserGroup | null>(null);
   const [paused, setPaused] = useState(false);
   const [title, setTitle] = useState(topicId);
+  const [isDemo, setIsDemo] = useState(false);
   const [scenario, setScenario] = useState("");
   const [step, setStep] = useState(1);
   const [attemptCount, setAttemptCount] = useState(0);
@@ -55,11 +58,12 @@ function RecitationInner() {
         ? state.activeDrill
         : null;
 
-    fetch(`/api/topics?group=${state.userGroup}&topicId=${topicId}&includeScenario=1`)
+    fetch(`/api/topics?group=${state.userGroup}${yearQuery(state.studentYear)}&topicId=${topicId}&includeScenario=1`)
       .then((r) => r.json())
       .then((data) => {
         if (data.topic) {
           setTitle(data.topic.title);
+          setIsDemo(Boolean(data.topic.isDemo));
           setScenario(data.topic.recitationScenario ?? "");
         }
       });
@@ -211,6 +215,7 @@ function RecitationInner() {
       <div>
         <p className="text-sm text-muted">Recitation drill</p>
         <h1 className="font-display text-2xl sm:text-3xl">{title}</h1>
+        {isDemo && <DemoBanner />}
         <p className="mt-1 text-sm text-muted">
           Step {Math.min(step, 5)} of 5 — {RECITATION_STEPS[Math.min(step, 5) - 1]}
         </p>

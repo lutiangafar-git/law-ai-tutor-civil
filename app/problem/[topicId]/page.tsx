@@ -1,6 +1,8 @@
 "use client";
 
 import { Suspense, useEffect, useState } from "react";
+import { DemoBanner } from "@/components/DemoBanner";
+import { yearQuery } from "@/lib/profiles";
 import { useParams, useSearchParams } from "next/navigation";
 import { AnswerBox } from "@/components/AnswerBox";
 import { ClassPauseBanner } from "@/components/ClassPauseBanner";
@@ -34,6 +36,7 @@ function ProblemInner() {
   const [group, setGroup] = useState<UserGroup | null>(null);
   const [paused, setPaused] = useState(false);
   const [title, setTitle] = useState(topicId);
+  const [isDemo, setIsDemo] = useState(false);
   const [problem, setProblem] = useState("");
   const [phase, setPhase] = useState<
     "answering" | "scored" | "coaching" | "retry" | "complete"
@@ -58,12 +61,13 @@ function ProblemInner() {
     }
 
     fetch(
-      `/api/topics?group=${state.userGroup}&topicId=${topicId}&includeProblem=1`,
+      `/api/topics?group=${state.userGroup}${yearQuery(state.studentYear)}&topicId=${topicId}&includeProblem=1`,
     )
       .then((r) => r.json())
       .then((data) => {
         if (data.topic) {
           setTitle(data.topic.title);
+          setIsDemo(Boolean(data.topic.isDemo));
           setProblem(data.topic.problem ?? "");
         }
       });
@@ -228,6 +232,7 @@ function ProblemInner() {
           Problem drill{isDiagnostic ? " · Diagnostic" : ""}
         </p>
         <h1 className="font-display text-2xl sm:text-3xl">{title}</h1>
+        {isDemo && <DemoBanner />}
       </div>
 
       {problem && (

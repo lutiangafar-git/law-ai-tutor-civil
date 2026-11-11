@@ -9,7 +9,18 @@ export type Feature =
   | "in-class-quick-check"
   | "problem-drill";
 
-export type YearLevelTag = "year-1-2" | "year-3-4" | "bar";
+/** Law school year (1–4). Usage rules still group years in pairs (see /lib/access.ts). */
+export type StudentYear = 1 | 2 | 3 | 4;
+
+/** Who a topic file is for. Single years are preferred; pair tags are kept for older files. */
+export type YearLevelTag =
+  | "year-1"
+  | "year-2"
+  | "year-3"
+  | "year-4"
+  | "year-1-2"
+  | "year-3-4"
+  | "bar";
 
 export type Verdict = "correct" | "partly correct" | "not yet";
 
@@ -41,6 +52,8 @@ export interface SourceMeta {
   link: string;
   reviewedBy: string;
   lastReviewed: string;
+  /** True for demo topics that a lawyer has not yet signed off (`status: demo`). */
+  isDemo: boolean;
 }
 
 export interface SourceTopic extends SourceMeta {
@@ -115,6 +128,8 @@ export interface ProblemScoreRecord {
 
 export interface StoredUserState {
   userGroup: UserGroup | null;
+  /** Exact law school year for students; null for bar reviewees. */
+  studentYear: StudentYear | null;
   classSchedule: ClassSchedule;
   usageNoticeSeen: boolean;
   diagnosticOffered: boolean;

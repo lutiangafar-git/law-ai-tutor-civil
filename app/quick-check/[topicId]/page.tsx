@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { DemoBanner } from "@/components/DemoBanner";
+import { yearQuery } from "@/lib/profiles";
 import { useParams, useRouter } from "next/navigation";
 import { AnswerBox } from "@/components/AnswerBox";
 import { GroupGuard } from "@/components/GroupGuard";
@@ -22,6 +24,7 @@ function QuickCheckInner() {
   const [group, setGroup] = useState<UserGroup | null>(null);
   const [allowed, setAllowed] = useState(false);
   const [title, setTitle] = useState(topicId);
+  const [isDemo, setIsDemo] = useState(false);
   const [question, setQuestion] = useState(
     "Type your own answer first. Feedback appears only after you send it.",
   );
@@ -58,10 +61,13 @@ function QuickCheckInner() {
         ? state.activeDrill
         : null;
 
-    fetch(`/api/topics?group=${state.userGroup}&topicId=${topicId}`)
+    fetch(`/api/topics?group=${state.userGroup}${yearQuery(state.studentYear)}&topicId=${topicId}`)
       .then((r) => r.json())
       .then((data) => {
-        if (data.topic) setTitle(data.topic.title);
+        if (data.topic) {
+          setTitle(data.topic.title);
+          setIsDemo(Boolean(data.topic.isDemo));
+        }
       });
 
     if (existing) {
@@ -171,6 +177,7 @@ function QuickCheckInner() {
       <div>
         <p className="text-sm text-muted">In-class Quick Check · 1–3 minutes</p>
         <h1 className="font-display text-2xl sm:text-3xl">{title}</h1>
+        {isDemo && <DemoBanner />}
         <p className="mt-1 text-sm text-muted">
           Exchange {Math.min(exchangeCount + (done ? 0 : 1), 2)} of 2 · you answer
           first · not a script to read aloud

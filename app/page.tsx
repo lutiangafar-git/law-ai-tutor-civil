@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ClassPauseBanner } from "@/components/ClassPauseBanner";
+import { DemoBanner } from "@/components/DemoBanner";
 import { FeatureCard } from "@/components/FeatureCard";
 import { GroupGuard } from "@/components/GroupGuard";
 import {
@@ -14,6 +15,7 @@ import {
   markDiagnosticOffered,
   markDiagnosticCompleted,
 } from "@/lib/storage";
+import { yearQuery } from "@/lib/profiles";
 import type { Feature, UserGroup } from "@/lib/types";
 
 type TopicSummary = {
@@ -21,6 +23,7 @@ type TopicSummary = {
   title: string;
   subject: string;
   lastReviewed: string;
+  isDemo?: boolean;
 };
 
 function HomeInner() {
@@ -53,7 +56,7 @@ function HomeInner() {
       setResumeHref(map[state.activeDrill.feature]);
     }
 
-    fetch(`/api/topics?group=${state.userGroup}`)
+    fetch(`/api/topics?group=${state.userGroup}${yearQuery(state.studentYear)}`)
       .then((r) => r.json())
       .then((data: { topics: TopicSummary[] }) => {
         setTopics(data.topics ?? []);
@@ -72,6 +75,8 @@ function HomeInner() {
       })
       .catch(() => setTopics([]));
   }, []);
+
+  const selectedIsDemo = topics.find((t) => t.topicId === selectedTopic)?.isDemo ?? false;
 
   const subjects = useMemo(() => {
     return Array.from(new Set(topics.map((t) => t.subject)));
@@ -152,28 +157,33 @@ function HomeInner() {
             <h2 className="font-display text-xl">Choose a topic</h2>
             {topics.length === 0 ? (
               <p className="rounded-md border border-line bg-white/70 p-4 text-sm text-muted">
-                No reviewed topics are available for your group yet. A law-trained
-                reviewer must fill <code>reviewedBy</code> and{" "}
-                <code>lastReviewed</code> in a source file before it appears.
+                No topics are available for your year yet. Topics appear once a
+                law-trained reviewer signs off their source file.
               </p>
             ) : (
               <>
-                {subjects.map((subject) => (
-                  <p key={subject} className="text-sm text-muted">
-                    Subject: {subject}
-                  </p>
-                ))}
+                <p className="text-sm text-muted">
+                  {subjects.length === 1 ? "Subject" : "Subjects"}: {subjects.join(" · ")}
+                </p>
                 <select
                   className="w-full rounded-md border border-line bg-white px-3 py-3"
                   value={selectedTopic}
                   onChange={(e) => setSelectedTopic(e.target.value)}
                 >
-                  {topics.map((topic) => (
-                    <option key={topic.topicId} value={topic.topicId}>
-                      {topic.title}
-                    </option>
+                  {subjects.map((subject) => (
+                    <optgroup key={subject} label={subject}>
+                      {topics
+                        .filter((topic) => topic.subject === subject)
+                        .map((topic) => (
+                          <option key={topic.topicId} value={topic.topicId}>
+                            {topic.title}
+                            {topic.isDemo ? " (demo)" : ""}
+                          </option>
+                        ))}
+                    </optgroup>
                   ))}
                 </select>
+                {selectedIsDemo && <DemoBanner />}
               </>
             )}
           </div>

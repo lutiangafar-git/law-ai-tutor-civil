@@ -8,30 +8,8 @@ import {
   markUsageNoticeSeen,
   setUserGroup,
 } from "@/lib/storage";
+import { PROFILE_OPTIONS, type ProfileOption } from "@/lib/profiles";
 import type { UserGroup } from "@/lib/types";
-
-const GROUPS: { id: UserGroup; label: string; blurb: string }[] = [
-  {
-    id: "year-1-2",
-    label: "Year 1–2 student",
-    blurb: "Practice after class for future recitations and exams.",
-  },
-  {
-    id: "year-3-4",
-    label: "Year 3–4 student",
-    blurb: "Quick Check in class; drills outside class for exams.",
-  },
-  {
-    id: "bar-first-time",
-    label: "Bar reviewee (first-time)",
-    blurb: "Practice anytime. Optional diagnostic available.",
-  },
-  {
-    id: "bar-repeater",
-    label: "Bar reviewee (repeater)",
-    blurb: "Practice anytime. A short diagnostic finds weak spots first.",
-  },
-];
 
 export function OnboardingClient() {
   const router = useRouter();
@@ -54,10 +32,10 @@ export function OnboardingClient() {
     }
   }, [router, searchParams]);
 
-  function chooseGroup(id: UserGroup) {
-    setUserGroup(id);
-    setGroup(id);
-    setNotice(getUsageNotice(id));
+  function chooseGroup(option: ProfileOption) {
+    setUserGroup(option.group, option.year);
+    setGroup(option.group);
+    setNotice(getUsageNotice(option.group));
     setStep("notice");
   }
 
@@ -98,11 +76,11 @@ export function OnboardingClient() {
         </p>
       </div>
       <ul className="space-y-3">
-        {GROUPS.map((item) => (
-          <li key={item.id}>
+        {PROFILE_OPTIONS.map((item) => (
+          <li key={item.key}>
             <button
               type="button"
-              onClick={() => chooseGroup(item.id)}
+              onClick={() => chooseGroup(item)}
               className="w-full rounded-lg border border-line bg-white/80 px-4 py-4 text-left transition hover:border-accent hover:bg-accent-soft/40"
             >
               <span className="block font-medium text-ink">{item.label}</span>
