@@ -39,10 +39,13 @@ Model answer: Nena. Under Art. 457, accretion gradually received from the curren
 # Problem drill: exam or bar-style problem
 Problem: (Original bar-style problem. A similar issue was asked in the 2017 Bar Examination, Civil Law.) Inday owns a titled farm lot along the Cagayan River. Over fifteen years, soil carried by the river's current slowly built up along her riverbank, adding about 500 square metres of dry land. The municipality now fences the new strip, claiming that it is part of the riverbank and therefore belongs to the public. Inday insists the strip is hers. Who owns the strip? Explain.
 Model answer:
-- Answer: Inday owns the 500-square-metre strip.
-- Legal basis: Under Art. 440, ownership gives the right by accession to everything incorporated or attached to the property naturally. Under Art. 457, owners of land adjoining the banks of rivers own the accretion they gradually receive from the effects of the current of the waters.
-- Application: Inday's lot adjoins the bank of the Cagayan River. The strip formed gradually, over fifteen years, from soil deposited by the river's current. All the requisites of alluvion are present: a gradual deposit, caused by the current, on land adjoining the bank. The law gives such accretion to the riparian owner, not to the public.
-- Conclusion: As riparian owner, Inday owns the strip by accession under Arts. 440 and 457, and the municipality's claim fails.
+(Answer) Inday owns the 500-square-metre strip.
+
+(Legal basis) Under Art. 440, ownership gives the right by accession to everything incorporated or attached to the property naturally. Under Art. 457, owners of land adjoining the banks of rivers own the accretion they gradually receive from the effects of the current of the waters.
+
+(Application) Inday's lot adjoins the bank of the Cagayan River. The strip formed gradually, over fifteen years, from soil deposited by the river's current. All the requisites of alluvion are present: a gradual deposit, caused by the current, on land adjoining the bank. The law gives such accretion to the riparian owner, not to the public.
+
+(Conclusion) As riparian owner, Inday owns the strip by accession under Arts. 440 and 457, and the municipality's claim fails.
 
 # Objective and multiple-choice quiz (Year 1-2)
 Q (multiple choice): Under Art. 457, accretion along a river bank belongs to:

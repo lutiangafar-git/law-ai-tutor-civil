@@ -41,10 +41,13 @@ Model answer: Oscar. A guitar is movable property, so under Art. 1544 ownership 
 # Problem drill: exam or bar-style problem
 Problem: (2010 Bar Examination, Civil Law, Question XVI) X was the owner of an unregistered parcel of land in Cabanatuan City. As she was abroad, she advised her sister Y via overseas call to sell the land and sign a contract of sale on her behalf. Y thus sold the land to B1 on March 31, 2001 and executed a deed of absolute sale on behalf of X. B1 fully paid the purchase price. B2, unaware of the sale of the land to B1, signified to Y his interest to buy it but asked Y for her authority from X. Without informing X that she had sold the land to B1, Y sought X for a written authority to sell. X e-mailed Y an authority to sell the land. Y thereafter sold the land on May 1, 2001 to B2 on monthly installment basis for two years, the first installment to be paid at the end of May 2001. Who between B1 and B2 has a better right over the land? Explain.
 Model answer:
-- Answer: B2 has the better right over the land.
-- Legal basis: Under Art. 1874 of the Civil Code, a sale of land through an agent is void unless the agent's authority is in writing. The double-sale rule of Art. 1544 applies only when the same property has been validly sold to different buyers.
-- Application: When Y sold the land to B1, her only authority was X's overseas call, which is not in writing, so the sale to B1 is void. Since the first sale is void, there is no double sale and Art. 1544 does not decide the case. When Y sold to B2, she already had X's written authority sent by e-mail, so the sale to B2 is valid. Paying the price in installments does not make the sale invalid.
-- Conclusion: B2, as the buyer under the only valid sale, has the better right over the land.
+(Answer) B2 has the better right over the land.
+
+(Legal basis) Under Art. 1874 of the Civil Code, a sale of land through an agent is void unless the agent's authority is in writing. The double-sale rule of Art. 1544 applies only when the same property has been validly sold to different buyers.
+
+(Application) When Y sold the land to B1, her only authority was X's overseas call, which is not in writing, so the sale to B1 is void. Since the first sale is void, there is no double sale and Art. 1544 does not decide the case. When Y sold to B2, she already had X's written authority sent by e-mail, so the sale to B2 is valid. Paying the price in installments does not make the sale invalid.
+
+(Conclusion) B2, as the buyer under the only valid sale, has the better right over the land.
 
 # Objective and multiple-choice quiz (Year 1-2)
 Q (multiple choice): In a double sale of a MOVABLE, who becomes the owner under Art. 1544?

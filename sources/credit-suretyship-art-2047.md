@@ -44,10 +44,13 @@ Model answer: No. Lito did not bind himself solidarily; he promised to pay only 
 # Problem drill: exam or bar-style problem
 Problem: (Original bar-style problem. A similar issue was asked in the 2017 Bar Examination, Civil Law.) Bayani Lending Corp. lent P2 Million to Tess, payable in one year. Tess's brother Ramon signed a one-page document titled "Guaranty Undertaking" in which he "binds himself jointly and severally with Tess for the full payment of the loan." When Tess failed to pay on maturity, Bayani Lending sued Ramon alone, without first going after Tess. Ramon moved to dismiss, arguing that as a guarantor he has the benefit of excussion, as the title of the document shows. Should the motion be granted? Explain.
 Model answer:
-- Answer: No. Ramon is a surety, so Bayani Lending may sue him without first proceeding against Tess.
-- Legal basis: Under Art. 2047, a person who binds himself solidarily with the principal debtor is a surety, and the rules on solidary obligations apply. The creditor may proceed against any solidary debtor (Art. 1216). The benefit of excussion (Art. 2058) is not available when the guarantor has bound himself solidarily with the debtor (Art. 2059(2)).
-- Application: The document's title says "guaranty", but its terms control: Ramon bound himself "jointly and severally", that is, solidarily, with Tess. His undertaking is a suretyship. As a surety he has no benefit of excussion, so Bayani Lending may go after him directly.
-- Conclusion: The motion to dismiss should be denied; Ramon is liable as a surety upon Tess's default.
+(Answer) No. Ramon is a surety, so Bayani Lending may sue him without first proceeding against Tess.
+
+(Legal basis) Under Art. 2047, a person who binds himself solidarily with the principal debtor is a surety, and the rules on solidary obligations apply. The creditor may proceed against any solidary debtor (Art. 1216). The benefit of excussion (Art. 2058) is not available when the guarantor has bound himself solidarily with the debtor (Art. 2059(2)).
+
+(Application) The document's title says "guaranty", but its terms control: Ramon bound himself "jointly and severally", that is, solidarily, with Tess. His undertaking is a suretyship. As a surety he has no benefit of excussion, so Bayani Lending may go after him directly.
+
+(Conclusion) The motion to dismiss should be denied; Ramon is liable as a surety upon Tess's default.
 
 # Objective and multiple-choice quiz (Year 1-2)
 Q (multiple choice): A person who binds himself SOLIDARILY with the principal debtor is a:

@@ -97,6 +97,7 @@ npm run dev                     # open http://localhost:3000
 | Variable | Where it lives | Used by |
 |---|---|---|
 | `ANTHROPIC_API_KEY` | `.env.local` on your computer (git-ignored) and Vercel → Settings → Environment Variables | `app/api/tutor/route.ts` only, on the server |
+| `REVIEWER_CODE` | Same places. At least 8 characters; leave unset to switch the reviewer page off | `/review` and `app/api/review/*`, on the server |
 
 There are no secrets in the code or the Git history. `.env*.local` is git-ignored, `.env.example` is an empty
 template, and CI runs a **Gitleaks** scan over the full history on every push. The key is never sent to the browser.
@@ -131,6 +132,22 @@ docs/           validation, PRD, architecture, reflection, demo script
 Copy `sources/_TEMPLATE.md`, fill in every section, and set `yearLevels` to match the year plan in `lib/subject.ts` (e.g. `[year-2, year-4, bar]`).
 While it is unreviewed, add `status: demo`. A law-trained reviewer then fills `reviewedBy` and `lastReviewed`
 and deletes `status: demo`. A file with neither is hidden. `npm test` checks that every topic file is complete.
+
+### Drafting a topic from a new Supreme Court decision (`/review`)
+For lawyer reviewers only, behind the `REVIEWER_CODE` passcode (the page is not linked anywhere and is hidden from search engines).
+1. Paste the link to the decision on LawPhil (`lawphil.net`) or the SC E-Library (`elibrary.judiciary.gov.ph`). No other sites are fetched.
+2. The app reads the G.R. number, date, division and ponente, and says whether the decision is within the
+   Bar cut-off in `lib/barExam.ts` (decisions after the cut-off are kept for the next Bar).
+3. Claude drafts one topic from the main opinion only, in the template's format, with new facts.
+4. Code checks the draft: every quoted line must be word for word in the decision (or the Code text in
+   *Source text*); every case must carry its **title, G.R. number and date**; the subject, year levels,
+   syllabus year and quiz are complete; and the problem does not copy the decision's facts.
+5. The reviewer edits the draft on the page, re-checks it, and downloads the `.md` file (blocked while any
+   "Must fix" item remains). It is still `status: draft`, so it shows nowhere until added to `sources/` as
+   `status: demo` or with `reviewedBy` and `lastReviewed` filled in.
+
+Model answers are written like a Bar answer in Examplify: four plain paragraphs starting
+`(Answer)`, `(Legal basis)`, `(Application)` and `(Conclusion)`.
 
 ## Known limitations (v1)
 - Content is eleven demo topics in Civil Law; lawyer sign-off is pending.

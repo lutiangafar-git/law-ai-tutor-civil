@@ -39,10 +39,13 @@ Model answer: Yes. Ana's obligation is a juridical (legally enforceable) necessi
 # Problem drill: exam or bar-style problem
 Problem: (Practice problem) Carlo sold his laptop to Dana for 30,000 pesos. Dana paid in full, but Carlo refuses to hand over the laptop because he changed his mind. Is Carlo under an obligation? If so, what is its object and what is its source?
 Model answer:
-- Answer: Yes. Carlo is under an obligation to give (deliver) the laptop to Dana, and it arises from their contract of sale.
-- Legal basis: Article 1156 of the Civil Code defines an obligation as a juridical necessity to give, to do or not to do. Article 1157 lists contracts as a source of obligations.
-- Application: The sale made Carlo's delivery of the laptop a juridical, legally enforceable necessity, not a matter of his choice. Delivering a thing is a prestation "to give". The obligation comes from the contract of sale. Changing his mind does not remove a juridical necessity.
-- Conclusion: Carlo must deliver the laptop to Dana, and Dana can demand that he do so.
+(Answer) Yes. Carlo is under an obligation to give (deliver) the laptop to Dana, and it arises from their contract of sale.
+
+(Legal basis) Article 1156 of the Civil Code defines an obligation as a juridical necessity to give, to do or not to do. Article 1157 lists contracts as a source of obligations.
+
+(Application) The sale made Carlo's delivery of the laptop a juridical, legally enforceable necessity, not a matter of his choice. Delivering a thing is a prestation "to give". The obligation comes from the contract of sale. Changing his mind does not remove a juridical necessity.
+
+(Conclusion) Carlo must deliver the laptop to Dana, and Dana can demand that he do so.
 
 # Objective and multiple-choice quiz (Year 1-2)
 Q (multiple choice): Under Art. 1156, an obligation is a juridical necessity to:

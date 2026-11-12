@@ -54,7 +54,7 @@ export const SUBJECT: SubjectConfig = {
     ],
     3: ["Succession"],
   },
-  demoSourceNote: "the Civil Code and the Family Code",
+  demoSourceNote: "the Civil Code, the Family Code and Supreme Court decisions",
 };
 
 /** Areas a student in this year sees. Year 4 sees every area. */

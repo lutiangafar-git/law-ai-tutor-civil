@@ -43,10 +43,13 @@ Model answer: Yes. Gio is a compulsory heir in the direct line who was totally o
 # Problem drill: exam or bar-style problem
 Problem: (Adapted from the 2024 Bar Examination, Civil Law, Question 10) Caloy died with a net estate of PHP 240 million, survived by his father Cesar, his spouse Grace, his legitimate children Teddy and Bobbie, his illegitimate child Rebreb, and his sisters Alex and Gabbie. In his will, Caloy instituted Rebreb as his sole heir and gave nothing to anyone else. Is the institution of Rebreb as sole heir valid? Who will inherit Caloy's estate? Explain.
 Model answer:
-- Answer: No. The institution of Rebreb as sole heir is annulled because of preterition, and Caloy's estate passes by intestate succession to Teddy, Bobbie, Grace and Rebreb.
-- Legal basis: Under Art. 854 of the Civil Code, the preterition or omission of one, some, or all of the compulsory heirs in the direct line annuls the institution of heir; devises and legacies remain valid insofar as they are not inofficious.
-- Application: Teddy and Bobbie are legitimate children, compulsory heirs in the direct line, and the will totally omits them. That is preterition, so the institution of Rebreb is annulled. There are no devises or legacies to preserve, so the whole estate is distributed by intestacy. Grace's omission is not itself preterition because a spouse is not in the direct line, but she inherits in intestacy together with the legitimate children. Rebreb still inherits, but as an illegitimate child in intestacy, not as sole heir. The legitimate children exclude Caloy's father Cesar and his sisters Alex and Gabbie.
-- Conclusion: The will's institution of Rebreb is void. The estate goes by intestate succession to Teddy, Bobbie, Grace and Rebreb; Cesar, Alex and Gabbie receive nothing.
+(Answer) No. The institution of Rebreb as sole heir is annulled because of preterition, and Caloy's estate passes by intestate succession to Teddy, Bobbie, Grace and Rebreb.
+
+(Legal basis) Under Art. 854 of the Civil Code, the preterition or omission of one, some, or all of the compulsory heirs in the direct line annuls the institution of heir; devises and legacies remain valid insofar as they are not inofficious.
+
+(Application) Teddy and Bobbie are legitimate children, compulsory heirs in the direct line, and the will totally omits them. That is preterition, so the institution of Rebreb is annulled. There are no devises or legacies to preserve, so the whole estate is distributed by intestacy. Grace's omission is not itself preterition because a spouse is not in the direct line, but she inherits in intestacy together with the legitimate children. Rebreb still inherits, but as an illegitimate child in intestacy, not as sole heir. The legitimate children exclude Caloy's father Cesar and his sisters Alex and Gabbie.
+
+(Conclusion) The will's institution of Rebreb is void. The estate goes by intestate succession to Teddy, Bobbie, Grace and Rebreb; Cesar, Alex and Gabbie receive nothing.
 
 # Objective and multiple-choice quiz (Year 1-2)
 Q (multiple choice): Under Art. 854, the preterition of a compulsory heir in the direct line:

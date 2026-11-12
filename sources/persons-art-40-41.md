@@ -39,10 +39,13 @@ Model answer: Yes. Lia's intra-uterine life was eight months, so under Art. 41 s
 # Problem drill: exam or bar-style problem
 Problem: (2012 Bar Examination, Civil Law, Question I.b) Ricky donated P1 Million to the unborn child of his pregnant girlfriend, which she accepted. After six (6) months of pregnancy, the fetus was born and baptized as Angela. However, Angela died 20 hours after birth. Ricky sought to recover the P1 Million. Is Ricky entitled to recover? Explain.
 Model answer:
-- Answer: Yes. Ricky may recover the P1 Million because the donation never took effect.
-- Legal basis: Under Art. 40 of the Civil Code, a conceived child is considered born for purposes favorable to it only if it is later born under the conditions of Art. 41. Under Art. 41, a foetus with an intra-uterine life of less than seven months is not deemed born if it dies within twenty-four hours after its complete delivery.
-- Application: Angela had an intra-uterine life of only six months and died 20 hours after birth, which is within the 24-hour period. She is therefore not deemed born, never acquired civil personality, and could not become a donee. The provisional personality of a conceived child did not attach because the condition in Art. 41 was not met.
-- Conclusion: The donation did not take effect, so the P1 Million must be returned to Ricky.
+(Answer) Yes. Ricky may recover the P1 Million because the donation never took effect.
+
+(Legal basis) Under Art. 40 of the Civil Code, a conceived child is considered born for purposes favorable to it only if it is later born under the conditions of Art. 41. Under Art. 41, a foetus with an intra-uterine life of less than seven months is not deemed born if it dies within twenty-four hours after its complete delivery.
+
+(Application) Angela had an intra-uterine life of only six months and died 20 hours after birth, which is within the 24-hour period. She is therefore not deemed born, never acquired civil personality, and could not become a donee. The provisional personality of a conceived child did not attach because the condition in Art. 41 was not met.
+
+(Conclusion) The donation did not take effect, so the P1 Million must be returned to Ricky.
 
 # Objective and multiple-choice quiz (Year 1-2)
 Q (multiple choice): Under Art. 40 of the Civil Code, what determines a natural person's personality?

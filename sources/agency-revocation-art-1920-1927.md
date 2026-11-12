@@ -42,10 +42,13 @@ Model answer: Yes. Under Art. 1920 the principal may revoke the agency at will. 
 # Problem drill: exam or bar-style problem
 Problem: (Original bar-style problem. A similar issue was asked in the 2015 Bar Examination, Civil Law.) Marites owes her friend Jun, an accountant, P400,000 for bookkeeping services he rendered last year. To settle the debt, Marites signs a Special Power of Attorney authorising Jun to sell her condominium unit for not less than P5 Million, and they agree in writing that Jun will keep P400,000 from the proceeds as payment of the debt, plus a 3% commission. Two weeks later, Marites's cousin offers to buy the unit for P5.5 Million. Marites sends Jun a letter revoking the Special Power of Attorney and asks him to return it. Is the revocation effective? Explain.
 Model answer:
-- Answer: No. Marites cannot revoke Jun's authority on her own.
-- Legal basis: As a rule, the principal may revoke an agency at will (Art. 1920). But under Art. 1927, an agency cannot be revoked if it is the means of fulfilling an obligation already contracted. An agency created for the benefit of both principal and agent is not revocable at will.
-- Application: The sale was agreed as the means of paying the P400,000 Marites already owed Jun. Jun's interest therefore goes beyond his 3% commission: the agency secures payment of an existing debt, so it benefits him as well as Marites. A better offer from her cousin does not change the nature of the agency.
-- Conclusion: The agency is coupled with an interest and falls under Art. 1927, so Marites's letter does not validly revoke it.
+(Answer) No. Marites cannot revoke Jun's authority on her own.
+
+(Legal basis) As a rule, the principal may revoke an agency at will (Art. 1920). But under Art. 1927, an agency cannot be revoked if it is the means of fulfilling an obligation already contracted. An agency created for the benefit of both principal and agent is not revocable at will.
+
+(Application) The sale was agreed as the means of paying the P400,000 Marites already owed Jun. Jun's interest therefore goes beyond his 3% commission: the agency secures payment of an existing debt, so it benefits him as well as Marites. A better offer from her cousin does not change the nature of the agency.
+
+(Conclusion) The agency is coupled with an interest and falls under Art. 1927, so Marites's letter does not validly revoke it.
 
 # Objective and multiple-choice quiz (Year 1-2)
 Q (multiple choice): As a general rule under Art. 1920, the principal may revoke an agency:

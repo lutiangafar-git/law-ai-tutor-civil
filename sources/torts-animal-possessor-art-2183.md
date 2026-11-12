@@ -37,10 +37,13 @@ Model answer: Yes. Under Art. 2183 the possessor of an animal is liable for the 
 # Problem drill: exam or bar-style problem
 Problem: (Original bar-style problem. A similar issue was asked in the 2010 Bar Examination, Civil Law.) Lito keeps his Rottweiler inside a fenced yard with a large "Beware of Dog" sign on the gate. Mara, an adult neighbour, wanted to take a photo of the dog. Despite the sign and Lito's earlier warnings, she reached over the fence to pat its head, and the dog bit her hand. Mara sues Lito for damages, arguing that the possessor of an animal is liable for any damage it causes. Is Lito liable? Explain.
 Model answer:
-- Answer: No. Lito is not liable for Mara's injury.
-- Legal basis: Under Art. 2183, the possessor of an animal is responsible for the damage it causes, even if it escapes or is lost. That responsibility ceases only when the damage comes from force majeure or from the fault of the person who suffered the damage.
-- Application: The dog never left Lito's fenced yard. Mara was bitten only because she reached over the fence to touch it, despite the warning sign and Lito's earlier warnings. Her injury came from her own fault, which is one of the two grounds that end the possessor's liability.
-- Conclusion: Because the damage came from Mara's own fault, Lito is not liable under Art. 2183.
+(Answer) No. Lito is not liable for Mara's injury.
+
+(Legal basis) Under Art. 2183, the possessor of an animal is responsible for the damage it causes, even if it escapes or is lost. That responsibility ceases only when the damage comes from force majeure or from the fault of the person who suffered the damage.
+
+(Application) The dog never left Lito's fenced yard. Mara was bitten only because she reached over the fence to touch it, despite the warning sign and Lito's earlier warnings. Her injury came from her own fault, which is one of the two grounds that end the possessor's liability.
+
+(Conclusion) Because the damage came from Mara's own fault, Lito is not liable under Art. 2183.
 
 # Objective and multiple-choice quiz (Year 1-2)
 Q (multiple choice): Under Art. 2183, the possessor of an animal is liable for the damage it causes:

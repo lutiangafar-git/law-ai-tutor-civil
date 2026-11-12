@@ -42,10 +42,13 @@ Model answer: Yes. Eli acquired title through mistake, so he holds the lot under
 # Problem drill: exam or bar-style problem
 Problem: (Original bar-style problem. A similar issue was asked in the 2024 Bar Examination, Civil Law.) Siblings Lorna and Nestor inherited a house and lot from their mother in 2010. Nestor has lived in the house continuously since then. In 2011, Lorna executed an affidavit falsely stating that she was the sole heir, and a title was issued in her name alone. In 2025, Lorna sent Nestor a letter asking him to leave. Nestor then sued Lorna for reconveyance of his one-half share. Lorna argues that the action is barred because more than ten years have passed since the title was issued in 2011. Is Lorna correct? Explain.
 Model answer:
-- Answer: No. Nestor's action has not prescribed.
-- Legal basis: Under Art. 1456, a person who acquires property through mistake or fraud holds it as trustee of an implied trust for the person from whom it came. An action for reconveyance on an implied trust generally prescribes in ten years from registration of the title (Art. 1144). But when the plaintiff is in actual, continuous possession of the property, prescription does not run, because the action is in the nature of a suit to quiet title.
-- Application: By falsely claiming to be the sole heir, Lorna obtained title to Nestor's half and holds it in implied trust for him. The ten years would ordinarily run from the 2011 title. However, Nestor has lived on the property continuously since 2010, so prescription never began to run against him.
-- Conclusion: Because Nestor is in possession, his action is imprescriptible, and Lorna's defence of prescription fails.
+(Answer) No. Nestor's action has not prescribed.
+
+(Legal basis) Under Art. 1456, a person who acquires property through mistake or fraud holds it as trustee of an implied trust for the person from whom it came. An action for reconveyance on an implied trust generally prescribes in ten years from registration of the title (Art. 1144). But when the plaintiff is in actual, continuous possession of the property, prescription does not run, because the action is in the nature of a suit to quiet title.
+
+(Application) By falsely claiming to be the sole heir, Lorna obtained title to Nestor's half and holds it in implied trust for him. The ten years would ordinarily run from the 2011 title. However, Nestor has lived on the property continuously since 2010, so prescription never began to run against him.
+
+(Conclusion) Because Nestor is in possession, his action is imprescriptible, and Lorna's defence of prescription fails.
 
 # Objective and multiple-choice quiz (Year 1-2)
 Q (multiple choice): Under Art. 1441, implied trusts come into being:

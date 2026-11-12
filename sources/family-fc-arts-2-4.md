@@ -47,10 +47,13 @@ Model answer: Yes. A marriage license was issued, so the formal requisite is pre
 # Problem drill: exam or bar-style problem
 Problem: (2016 Bar Examination, Civil Law, Question XIX(a)) Brad and Angelina had a secret marriage before a pastor whose office is located in Arroceros Street, City of Manila. They paid money to the pastor who took care of all the documentation. When Angelina wanted to go to the U.S., she found out that there was no marriage license issued to them before their marriage. Since their marriage was solemnized in 1995 after the effectivity of the Family Code, Angelina filed a petition for judicial declaration of nullity on the strength of a certification by the Civil Registrar of Manila that, after a diligent and exhaustive search, the alleged marriage license indicated in the marriage certificate does not appear in the records and cannot be found. Decide the case and explain.
 Model answer:
-- Answer: The petition should be granted. The marriage of Brad and Angelina is void ab initio.
-- Legal basis: A valid marriage license is a formal requisite of marriage (Art. 3 (2), Family Code). The absence of any formal requisite renders the marriage void ab initio (Art. 4). A civil registrar's certification of due search and inability to find the license can prove its absence (Republic v. Court of Appeals and Castro, G.R. No. 103047, September 2, 1994).
-- Application: The marriage was celebrated in 1995, so the Family Code governs. The Civil Registrar of Manila, the official custodian of license records, certified after a diligent and exhaustive search that the license does not exist. This shows a total absence of the license, not a mere irregularity. No facts show an exemption from the license requirement, such as five years of cohabitation without legal impediment (Art. 34).
-- Conclusion: The court should declare the marriage void ab initio for lack of a marriage license.
+(Answer) The petition should be granted. The marriage of Brad and Angelina is void ab initio.
+
+(Legal basis) A valid marriage license is a formal requisite of marriage (Art. 3 (2), Family Code). The absence of any formal requisite renders the marriage void ab initio (Art. 4). A civil registrar's certification of due search and inability to find the license can prove its absence (Republic v. Court of Appeals and Castro, G.R. No. 103047, September 2, 1994).
+
+(Application) The marriage was celebrated in 1995, so the Family Code governs. The Civil Registrar of Manila, the official custodian of license records, certified after a diligent and exhaustive search that the license does not exist. This shows a total absence of the license, not a mere irregularity. No facts show an exemption from the license requirement, such as five years of cohabitation without legal impediment (Art. 34).
+
+(Conclusion) The court should declare the marriage void ab initio for lack of a marriage license.
 
 # Objective and multiple-choice quiz (Year 1-2)
 Q (multiple choice): Which of these is an ESSENTIAL requisite of marriage under Art. 2 of the Family Code?
