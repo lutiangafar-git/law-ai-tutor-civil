@@ -44,7 +44,9 @@ export function quotedPassages(markdown: string): string[] {
     // fall back to the whole text
   }
   body = body.replace(/<!--[\s\S]*?-->/g, " ");
-  const re = /["“]([^"“”\n]{20,})["”]/g;
+  // Pair every quotation mark in order (short quotes too), then keep only the long ones,
+  // so text between two short quotes is never mistaken for a quote.
+  const re = /["“]([^"“”\n]*)["”]/g;
   let m: RegExpExecArray | null;
   while ((m = re.exec(body))) {
     if (m[1].trim().split(/\s+/).length >= 6) out.push(m[1].trim());
@@ -62,7 +64,8 @@ const CASE_CITE_TAIL =
  */
 export function casesMissingCitation(markdown: string): string[] {
   const missing: string[] = [];
-  const re = /([A-Z][\wñÑ.'\-]*(?:\s+[A-Z][\wñÑ.'\-]*){0,4})\s+v(?:s)?\.\s+([A-Z][\wñÑ.'\-]*(?:\s+(?:[A-Z][\wñÑ.'\-]*|of|the|and))*)/g;
+  // Party names may contain "/" and "&" (e.g. "Elric Auxiliary Services Corporation/Sacred Heart Gas Station").
+  const re = /([A-Z][\wñÑ.'\-]*(?:\s+[A-Z][\wñÑ.'\-]*){0,4})\s+v(?:s)?\.\s+([A-Z][\wñÑ.'\-/&]*(?:\s+(?:[A-Z][\wñÑ.'\-/&]*|of|the|and|&))*)/g;
   let m: RegExpExecArray | null;
   while ((m = re.exec(markdown))) {
     const tail = markdown.slice(m.index + m[0].length);

@@ -97,8 +97,10 @@ const MONTHS = [
   "july", "august", "september", "october", "november", "december",
 ];
 
+const MONTH_NAMES = MONTHS.map((m) => m[0].toUpperCase() + m.slice(1));
+
 export function toISODate(date: string): string | null {
-  const m = /^([A-Za-z]+)\.?\s+(\d{1,2}),\s*(\d{4})$/.exec(date.trim());
+  const m = /^([A-Za-z]+)\.?\s+(\d{1,2}),?\s+(\d{4})$/.exec(date.trim().replace(/,(\S)/, ", $1"));
   if (!m) return null;
   const month = MONTHS.findIndex((name) => name.startsWith(m[1].toLowerCase().slice(0, 3)));
   if (month < 0) return null;
@@ -191,4 +193,68 @@ export async function fetchDecision(rawUrl: string): Promise<{ url: string; text
     return { url: check.url.toString(), text, meta: extractDecisionMeta(text) };
   }
   throw new Error("Too many redirects.");
+}
+
+export interface ReviewerDetails {
+  /** e.g. "Soto v. Reyes-Soto" */
+  caseTitle?: string;
+  /** e.g. "G.R. No. 249759" or just "249759" */
+  grNumber?: string;
+  /** e.g. "April 22, 2026" */
+  date?: string;
+}
+
+const clean = (value: unknown, max: number) =>
+  String(value ?? "")
+    .replace(/[\r\n\t"\\]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, max);
+
+/**
+ * The reviewer may type the case title, G.R. number and date. What they type wins;
+ * anything left blank is read from the decision. Returns problems with what was typed.
+ */
+export function applyReviewerDetails(
+  meta: DecisionMeta,
+  details: ReviewerDetails,
+): { meta: DecisionMeta & { title: string | null }; problems: string[] } {
+  const problems: string[] = [];
+  const out = { ...meta, title: null as string | null };
+
+  const title = clean(details.caseTitle, 200);
+  if (title) {
+    if (!/\sv(?:s)?\.\s/.test(title)) problems.push('Write the case title as "Petitioner v. Respondent", e.g. "Soto v. Reyes-Soto".');
+    out.title = title;
+  }
+
+  const gr = clean(details.grNumber, 60);
+  if (gr) {
+    const digits = /^(?:G\.?\s*R\.?\s*Nos?\.?\s*)?([0-9][0-9\s,&\-and]*[0-9]|[0-9])$/i.exec(gr)?.[1];
+    if (!digits) problems.push('Write the G.R. number like "G.R. No. 249759".');
+    else out.grNumber = `G.R. No. ${digits.replace(/\s+/g, " ")}`;
+  }
+
+  const date = clean(details.date, 40);
+  if (date) {
+    const iso = toISODate(date);
+    if (!iso) problems.push('Write the date like "April 22, 2026".');
+    else {
+      // Written out in full the way the Court writes it, e.g. "April 22, 2026".
+      const [y, mo, d] = iso.split("-").map(Number);
+      out.date = `${MONTH_NAMES[mo - 1]} ${d}, ${y}`;
+      out.dateISO = iso;
+    }
+  }
+  return { meta: out, problems };
+}
+
+/** Pasted or uploaded decision text: tidy spacing, keep paragraphs. */
+export function tidyDecisionText(text: string): string {
+  return text
+    .replace(/\r\n?/g, "\n")
+    .split("\n")
+    .map((line) => line.replace(/[ \t\u00a0]+/g, " ").trim())
+    .filter(Boolean)
+    .join("\n");
 }

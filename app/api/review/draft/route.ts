@@ -1,7 +1,13 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
 import { checkDraft, yearLevelsFor } from "@/lib/draftCheck";
-import { cutoffStatus, fetchDecision } from "@/lib/decisions";
+import {
+  applyReviewerDetails,
+  cutoffStatus,
+  extractDecisionMeta,
+  fetchDecision,
+  tidyDecisionText,
+} from "@/lib/decisions";
 import { logTutorEvent } from "@/lib/monitoring";
 import {
   buildDecisionDraftSystemPrompt,
@@ -16,9 +22,20 @@ export const runtime = "nodejs";
 export const maxDuration = 180;
 
 const DRAFT_MODEL = "claude-sonnet-5-5";
+const MAX_TEXT_CHARS = 600_000;
+
+type Body = {
+  code?: string;
+  /** A LawPhil or SC E-Library link, or */
+  url?: string;
+  /** the decision's text, pasted or read from an uploaded file. */
+  text?: string;
+  areaHint?: string;
+  details?: { caseTitle?: string; grNumber?: string; date?: string };
+};
 
 export async function POST(request: Request) {
-  const body = (await request.json().catch(() => ({}))) as { code?: string; url?: string; areaHint?: string };
+  const body = (await request.json().catch(() => ({}))) as Body;
 
   const auth = checkReviewerCode(body.code);
   if (auth !== "ok") {
@@ -26,24 +43,46 @@ export async function POST(request: Request) {
     return NextResponse.json({ error }, { status });
   }
 
-  let decision: Awaited<ReturnType<typeof fetchDecision>>;
-  try {
-    decision = await fetchDecision(String(body.url ?? ""));
-  } catch (err) {
-    const message = err instanceof Error && err.name !== "AbortError" ? err.message : "The site took too long to answer.";
-    return NextResponse.json({ error: message }, { status: 400 });
+  let text: string;
+  let sourceUrl = "";
+  const pasted = String(body.text ?? "").trim();
+  if (pasted) {
+    text = tidyDecisionText(pasted.slice(0, MAX_TEXT_CHARS));
+  } else {
+    try {
+      const fetched = await fetchDecision(String(body.url ?? ""));
+      text = fetched.text;
+      sourceUrl = fetched.url;
+    } catch (err) {
+      const message =
+        err instanceof Error && err.name !== "AbortError" ? err.message : "The site took too long to answer.";
+      return NextResponse.json({ error: message }, { status: 400 });
+    }
   }
-  const { meta, text } = decision;
-  const cutoff = cutoffStatus(meta.dateISO);
 
+  const { meta, problems } = applyReviewerDetails(extractDecisionMeta(text), body.details ?? {});
+  const cutoff = cutoffStatus(meta.dateISO);
+  if (problems.length > 0) {
+    return NextResponse.json({ error: problems.join(" "), meta, cutoff }, { status: 400 });
+  }
   if (meta.kind === "separate-opinion") {
     return NextResponse.json(
-      { error: "This page is a separate opinion. Use the main decision page instead.", meta, cutoff },
+      { error: "This is a separate opinion. Use the main decision instead.", meta, cutoff },
       { status: 400 },
     );
   }
   if (text.length < 2000) {
-    return NextResponse.json({ error: "That page has too little text to be a decision.", meta, cutoff }, { status: 400 });
+    return NextResponse.json({ error: "That is too little text to be a decision.", meta, cutoff }, { status: 400 });
+  }
+  if (!meta.grNumber || !meta.date) {
+    return NextResponse.json(
+      {
+        error: "The G.R. number or date could not be read from the decision. Type them in the boxes and try again.",
+        meta,
+        cutoff,
+      },
+      { status: 400 },
+    );
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -60,11 +99,22 @@ export async function POST(request: Request) {
       messages: [
         {
           role: "user",
-          content: buildDecisionDraftUserPrompt({ url: decision.url, meta, text, areaHint: body.areaHint }),
+          content: buildDecisionDraftUserPrompt({
+            url: sourceUrl || "(uploaded or pasted by the reviewer)",
+            meta,
+            text,
+            areaHint: body.areaHint,
+          }),
         },
       ],
     });
-    logTutorEvent({ event: "tutor_call", feature: "decision-draft", model: DRAFT_MODEL, ms: Date.now() - started, outcome: message.stop_reason ?? "unknown" });
+    logTutorEvent({
+      event: "tutor_call",
+      feature: "decision-draft",
+      model: DRAFT_MODEL,
+      ms: Date.now() - started,
+      outcome: message.stop_reason ?? "unknown",
+    });
     if (message.stop_reason === "refusal" || message.stop_reason === "max_tokens") {
       return NextResponse.json({ error: "The draft could not be finished. Try again." }, { status: 502 });
     }
@@ -78,7 +128,11 @@ export async function POST(request: Request) {
 
   if (draftText.trim() === "NOT_IN_SCOPE") {
     return NextResponse.json(
-      { error: `This decision does not apply a ${SUBJECT.subjectName} doctrine. Try it in the other subject apps.`, meta, cutoff },
+      {
+        error: `This decision does not apply a ${SUBJECT.subjectName} doctrine. Try it in the other subject apps.`,
+        meta,
+        cutoff,
+      },
       { status: 422 },
     );
   }
@@ -88,5 +142,5 @@ export async function POST(request: Request) {
   const issues = checkDraft(markdown, text, meta);
   if (!cutoff.inCurrentBar) issues.unshift({ level: "warning", message: cutoff.note });
 
-  return NextResponse.json({ markdown, issues, meta, cutoff, decisionText: text, url: decision.url });
+  return NextResponse.json({ markdown, issues, meta, cutoff, decisionText: text, url: sourceUrl });
 }

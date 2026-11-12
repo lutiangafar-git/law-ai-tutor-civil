@@ -86,13 +86,14 @@ Why: ...`;
 
 export function buildDecisionDraftUserPrompt(args: {
   url: string;
-  meta: DecisionMeta;
+  meta: DecisionMeta & { title?: string | null };
   text: string;
   areaHint?: string;
 }): string {
   const { meta } = args;
   const lines = [
     `Decision URL: ${args.url}`,
+    ...(meta.title ? [`Case title (typed by the reviewer; use exactly this title): ${meta.title}`] : []),
     `G.R. number (read by the app): ${meta.grNumber ?? "unknown"}`,
     `Date (read by the app): ${meta.date ?? "unknown"}`,
     `Division: ${meta.division ?? "unknown"}`,
