@@ -23,6 +23,8 @@ export interface DiagnosticItem {
   answer: string;
   keyPoints: string[];
   citation: string;
+  /** The governing codal text, quoted verbatim and checked against LawPhil. */
+  law: string;
 }
 
 /** What the browser may see before answering. */
@@ -64,6 +66,7 @@ export function parseDiagnosticBank(markdown: string): DiagnosticItem[] {
         .map((s) => s.trim())
         .filter(Boolean),
       citation: field("citation"),
+      law: field("law"),
     };
   });
 }
@@ -166,6 +169,9 @@ Key points:
 ${item.keyPoints.map((p) => `- ${p}`).join("\n")}
 
 Citation: ${item.citation}
+
+Governing law (verbatim):
+${item.law}
 
 Return ONLY JSON: {"verdict": "correct" | "partly correct" | "not yet", "feedback": "one or two sentences: what was right and what to improve, citing ${item.citation}"}`;
 }
