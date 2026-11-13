@@ -37,6 +37,9 @@ export default function RootLayout({
               <Link className="hover:text-accent" href="/drills">
                 Drills
               </Link>
+              <Link className="hover:text-accent" href="/bank">
+                Question bank
+              </Link>
               <Link className="hover:text-accent" href="/progress">
                 Progress
               </Link>
