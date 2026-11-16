@@ -9,7 +9,7 @@ import {
   publishTopicFile,
   topicIdOf,
 } from "@/lib/publish";
-import { REVIEWER_MESSAGES, checkReviewerCode } from "@/lib/reviewerAuth";
+import { REVIEWER_MESSAGES, identifyReviewer } from "@/lib/reviewerAuth";
 import { loadAllReviewedTopics } from "@/lib/sources";
 
 export const runtime = "nodejs";
@@ -26,13 +26,14 @@ export async function POST(request: Request) {
     confirmed?: boolean;
     details?: { caseTitle?: string; grNumber?: string; date?: string };
   };
-  const auth = checkReviewerCode(body.code);
+  const { check: auth, name: namedReviewer } = identifyReviewer(body.code);
   if (auth !== "ok") {
     const { status, error } = REVIEWER_MESSAGES[auth];
     return NextResponse.json({ error }, { status });
   }
 
-  const reviewer = cleanReviewerName(body.reviewerName);
+  // A named passcode (REVIEWER_CODES) fixes the reviewer's name; the shared passcode uses the typed name.
+  const reviewer = namedReviewer ?? cleanReviewerName(body.reviewerName);
   if (reviewer.length < 3) return NextResponse.json({ error: "Type your name as reviewer." }, { status: 400 });
   if (body.confirmed !== true) {
     return NextResponse.json({ error: "Tick the box to confirm you checked the law." }, { status: 400 });

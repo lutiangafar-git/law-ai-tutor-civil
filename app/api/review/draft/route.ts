@@ -14,7 +14,7 @@ import {
   buildDecisionDraftUserPrompt,
   enforceDraftHeader,
 } from "@/lib/prompts/decisionDraft";
-import { REVIEWER_MESSAGES, checkReviewerCode } from "@/lib/reviewerAuth";
+import { REVIEWER_MESSAGES, identifyReviewer } from "@/lib/reviewerAuth";
 import { SUBJECT } from "@/lib/subject";
 
 export const runtime = "nodejs";
@@ -37,7 +37,7 @@ type Body = {
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => ({}))) as Body;
 
-  const auth = checkReviewerCode(body.code);
+  const { check: auth, name: reviewer } = identifyReviewer(body.code);
   if (auth !== "ok") {
     const { status, error } = REVIEWER_MESSAGES[auth];
     return NextResponse.json({ error }, { status });
@@ -142,5 +142,5 @@ export async function POST(request: Request) {
   const issues = checkDraft(markdown, text, meta);
   if (!cutoff.inCurrentBar) issues.unshift({ level: "warning", message: cutoff.note });
 
-  return NextResponse.json({ markdown, issues, meta, cutoff, decisionText: text, url: sourceUrl });
+  return NextResponse.json({ markdown, issues, meta, cutoff, decisionText: text, url: sourceUrl, reviewer });
 }

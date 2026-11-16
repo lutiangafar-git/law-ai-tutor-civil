@@ -45,8 +45,12 @@ export default function ReviewPage() {
   const [cutoff, setCutoff] = useState<Cutoff | null>(null);
   const [copied, setCopied] = useState(false);
   const [reviewerName, setReviewerName] = useState("");
+  // Set when the passcode is a named one (REVIEWER_CODES): the name is fixed by the server.
+  const [namedReviewer, setNamedReviewer] = useState<string | null>(null);
   const [confirmed, setConfirmed] = useState(false);
-  const [published, setPublished] = useState<{ path: string; commitUrl: string; dateISO: string } | null>(null);
+  const [published, setPublished] = useState<{ path: string; commitUrl: string; dateISO: string; reviewer: string } | null>(
+    null,
+  );
   const [approvedFallback, setApprovedFallback] = useState("");
   const resultRef = useRef<HTMLDivElement>(null);
 
@@ -109,6 +113,7 @@ export default function ReviewPage() {
       setIssues(data.issues ?? []);
       setMeta(data.meta);
       setCutoff(data.cutoff);
+      setNamedReviewer(data.reviewer ?? null);
       setReady(true);
       setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth" }), 50);
     } catch (err) {
@@ -127,6 +132,7 @@ export default function ReviewPage() {
     try {
       const data = await post("/api/review/check", { code, markdown, decisionText, details });
       setIssues(data.issues ?? []);
+      setNamedReviewer(data.reviewer ?? null);
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -146,7 +152,7 @@ export default function ReviewPage() {
         confirmed,
         details,
       });
-      setPublished({ path: data.path, commitUrl: data.commitUrl, dateISO: data.dateISO });
+      setPublished({ path: data.path, commitUrl: data.commitUrl, dateISO: data.dateISO, reviewer: data.reviewer });
       setMarkdown(data.approvedMarkdown);
     } catch (err) {
       const e = err as Error & { data?: { issues?: Issue[]; approvedMarkdown?: string } };
@@ -213,7 +219,10 @@ export default function ReviewPage() {
       <section className="space-y-4">
         <label className="block space-y-1">
           <span className="text-sm font-medium">Reviewer passcode</span>
-          <input type="password" autoComplete="off" value={code} onChange={(e) => setCode(e.target.value)} className={input} />
+          <input type="password" autoComplete="off" value={code} onChange={(e) => {
+              setCode(e.target.value);
+              setNamedReviewer(null);
+            }} className={input} />
         </label>
 
         <div className="space-y-2">
@@ -372,15 +381,22 @@ export default function ReviewPage() {
           {!published ? (
             <div className="space-y-3 rounded-md border border-line bg-white/70 px-4 py-4">
               <h2 className="font-display text-xl">Approve and publish</h2>
-              <label className="block space-y-1">
-                <span className="text-sm font-medium">Your name as reviewer</span>
-                <input
-                  value={reviewerName}
-                  onChange={(e) => setReviewerName(e.target.value)}
-                  placeholder="Atty. Juan Dela Cruz"
-                  className={input}
-                />
-              </label>
+              {namedReviewer ? (
+                <p className="text-sm">
+                  Signed in as <span className="font-medium">{namedReviewer}</span> (your personal passcode). Your name
+                  is recorded on the approval.
+                </p>
+              ) : (
+                <label className="block space-y-1">
+                  <span className="text-sm font-medium">Your name as reviewer</span>
+                  <input
+                    value={reviewerName}
+                    onChange={(e) => setReviewerName(e.target.value)}
+                    placeholder="Atty. Juan Dela Cruz"
+                    className={input}
+                  />
+                </label>
+              )}
               <label className="flex items-start gap-2 text-sm">
                 <input type="checkbox" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)} className="mt-1" />
                 <span>
@@ -391,7 +407,7 @@ export default function ReviewPage() {
               <button
                 type="button"
                 onClick={publish}
-                disabled={errors.length > 0 || !confirmed || reviewerName.trim().length < 3 || busy !== ""}
+                disabled={errors.length > 0 || !confirmed || (!namedReviewer && reviewerName.trim().length < 3) || busy !== ""}
                 title={errors.length > 0 ? "Fix the 'Must fix' items first" : ""}
                 className="rounded-md bg-accent px-4 py-2 text-white disabled:opacity-50"
               >
@@ -414,7 +430,7 @@ export default function ReviewPage() {
           ) : (
             <div className="space-y-1 rounded-md border border-accent bg-white px-4 py-4 text-sm" role="status">
               <p className="font-medium text-accent">
-                Published. Approved by {reviewerName} on {published.dateISO}.
+                Published. Approved by {published.reviewer} on {published.dateISO}.
               </p>
               <p>It will be live for students in about two minutes ({published.path}).</p>
               {published.commitUrl && (

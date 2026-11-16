@@ -97,7 +97,8 @@ npm run dev                     # open http://localhost:3000
 | Variable | Where it lives | Used by |
 |---|---|---|
 | `ANTHROPIC_API_KEY` | `.env.local` on your computer (git-ignored) and Vercel → Settings → Environment Variables | `app/api/tutor/route.ts` only, on the server |
-| `REVIEWER_CODE` | Same places. At least 8 characters; leave unset to switch the reviewer page off | `/review` and `app/api/review/*`, on the server |
+| `REVIEWER_CODES` | Same places. One named passcode per reviewer: `Name: passcode` entries separated by `;` or new lines, e.g. `Gafar Lutian: first-passcode; Atty. Maria Cruz: second-passcode`. Each passcode at least 8 characters. The approval records that reviewer's name; add or remove a reviewer by editing this one setting | `/review` and `app/api/review/*`, on the server |
+| `REVIEWER_CODE` | Same places. Optional shared passcode (at least 8 characters); whoever uses it types a name. Leave both unset to switch the reviewer page off | same |
 | `GITHUB_TOKEN` | Vercel only. A fine-grained GitHub token for this one repository with *Contents: read and write* | `app/api/review/publish` (Approve and publish) |
 | `GITHUB_REPO` | Vercel only, e.g. `lutiangafar-git/law-ai-tutor-civil` | same |
 
@@ -136,7 +137,7 @@ While it is unreviewed, add `status: demo`. A law-trained reviewer then fills `r
 and deletes `status: demo`. A file with neither is hidden. `npm test` checks that every topic file is complete.
 
 ### Drafting a topic from a new Supreme Court decision (`/review`)
-For lawyer reviewers only, behind the `REVIEWER_CODE` passcode (the page is not linked anywhere and is hidden from search engines).
+For lawyer reviewers only, behind a reviewer passcode: a personal one from `REVIEWER_CODES` (the page then shows "Signed in as …" and records that name on the approval) or the shared `REVIEWER_CODE`. The page is not linked anywhere and is hidden from search engines.
 1. Give the decision: a LawPhil (`lawphil.net`) or SC E-Library (`elibrary.judiciary.gov.ph`) link, an uploaded
    PDF / HTML / text file, or pasted text. Only those two sites are ever fetched.
 2. Optionally type the case title, G.R. number and date; anything left blank is read from the decision. The app

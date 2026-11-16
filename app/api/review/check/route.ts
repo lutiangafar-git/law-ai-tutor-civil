@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { checkDraft } from "@/lib/draftCheck";
 import { applyReviewerDetails, cutoffStatus, extractDecisionMeta } from "@/lib/decisions";
-import { REVIEWER_MESSAGES, checkReviewerCode } from "@/lib/reviewerAuth";
+import { REVIEWER_MESSAGES, identifyReviewer } from "@/lib/reviewerAuth";
 
 export const runtime = "nodejs";
 
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     decisionText?: string;
     details?: { caseTitle?: string; grNumber?: string; date?: string };
   };
-  const auth = checkReviewerCode(body.code);
+  const { check: auth, name: reviewer } = identifyReviewer(body.code);
   if (auth !== "ok") {
     const { status, error } = REVIEWER_MESSAGES[auth];
     return NextResponse.json({ error }, { status });
@@ -28,5 +28,5 @@ export async function POST(request: Request) {
   const cutoff = cutoffStatus(meta.dateISO);
   const issues = checkDraft(markdown, decisionText, meta);
   if (!cutoff.inCurrentBar) issues.unshift({ level: "warning", message: cutoff.note });
-  return NextResponse.json({ issues });
+  return NextResponse.json({ issues, reviewer });
 }
