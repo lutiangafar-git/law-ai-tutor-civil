@@ -3,7 +3,7 @@
 [![CI](https://github.com/lutiangafar-git/law-ai-tutor-civil/actions/workflows/test.yml/badge.svg)](https://github.com/lutiangafar-git/law-ai-tutor-civil/actions/workflows/test.yml)
 
 **Live app:** https://law-ai-tutor-civil.vercel.app
-**Demo video (2 min):** _link added at submission_
+**Demo video (1 min 30 s, captioned):** https://drive.google.com/file/d/1x7nKPsLsQpRLD8ye8azwUEPDbLhDlwnX/view?usp=sharing
 **Course:** Week 4 Graded Mini Project 4.2, AI-Powered Web Application
 
 An AI tutor for **Philippine law students and bar reviewees** in **Civil Law** that makes you **answer first**, then scores your
