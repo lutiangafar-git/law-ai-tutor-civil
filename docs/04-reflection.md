@@ -1,53 +1,46 @@
 # Reflection: Building Law AI Tutor
 
-**Gafar Lutian · Week 4 Graded Mini Project 4.2 · November 2026**
+**Gafar Lutian · Week 4 Graded Mini Project 4.2 · 16 November 2026**
 
 ## What I built
-Law AI Tutor is a live web app (https://law-ai-tutor-civil.vercel.app) that helps Philippine law students and bar
-reviewees practice Civil Law by answering first. It scores bar-style answers on Answer, Legal basis,
-Application and Conclusion, coaches the weakest part, and uses only reviewed source files. It pauses itself
-for Year 1–2 students during class, which matches the direction schools like UP Law are taking on AI.
+Law AI Tutor is a live web app that helps Philippine law students and bar reviewees practise by answering first. It
+scores bar-style answers on Answer, Legal basis, Application and Conclusion (ALAC), coaches the weakest part, and uses
+only reviewed source files. It now runs as eight subject apps aligned to the 2027 Bar syllabus.
+Live: https://law-ai-tutor-civil.vercel.app
 
 ## Key learnings
-1. **Validation changed what I built.** My research started with three markets (students, reviewees and
-   lawyers). The skeptical-VC step showed that this was "three companies", and the biggest risk was student
-   behavior, not technology. So v1 is one subject (Civil Law), text only, with no lawyers and no accounts,
-   and Experiment 1 tests whether reviewees will pay before I build more.
-2. **The spec is the product.** Writing usage rules as a table and as "Given / When / Then" criteria made
-   them easy for the AI coding tools to build and easy to test. When the code and the spec disagreed, I
-   fixed the code, not the spec, unless the spec itself was wrong. Then I logged the change.
-3. **Grounding is a design choice, not a prompt trick.** Keeping legal content in separate files that only
-   a reviewer signs off, and sending the model only one topic's file, is what lets the tutor say "that's
-   outside the reviewed materials" instead of inventing a case. I tested this live: asked for a G.R. number
-   that wasn't in the sources, it declined.
-4. **Let the AI judge, but let code count.** Bar-coach feedback samples showed AI scores can be inconsistent; one
-   gave 25/25 to an essay answering a different question. So the tutor now only labels each ALAC part (correct,
-   incorrect, not stated), and a fixed 5-point rubric in code turns the labels into the score, with one test per row.
-5. **AI-assisted coding still needs a human in the loop.** Cursor and Claude Code wrote most of the code,
-   but I had to review each change, run the tests, and check the app in a browser. That is how the
-   duplicate-problem bug and the wrong subject order were found, which the tests alone had missed.
+1. **Validation changed what I built.** The skeptical-VC step showed that three markets meant "three companies", so v1
+   focused on one subject, text only, with no accounts.
+2. **The spec is the product.** Rules written as tables and Given/When/Then criteria were easy for AI coding tools to
+   build and easy to test.
+3. **Grounding is a design choice.** Sending the model only one reviewed topic file lets it say "outside the reviewed
+   materials" instead of inventing a case.
+4. **Let the AI judge, but let code count.** The AI labels each ALAC part; a fixed 5-point rubric in code gives the score.
+5. **A human stays in the loop.** People must review the question databank (at least 400 questions per topic) and
+   catch where the AI over- or under-emphasises a point, or gives wrong, inaccurate or incomplete answers. For example,
+   the AI used the ALAC method even for objective and multiple-choice questions, which forced students to invent facts
+   to finish the exercise. Regular reviews of the databank and regular audit tests are needed until the system stabilises.
 
 ## Challenges
-- **No reviewed content at launch.** My own rule hides any topic a lawyer hasn't signed off, so the first
-  deployment had an empty topic list. I added "demo" topics drawn from past bar questions, with a visible
-  "pending lawyer review" banner, so the app works without pretending the content is verified.
-- **Legal accuracy of sources.** A suggested answer in the bar Q&A compilation treated the spouse as
-  preterited, but Art. 854 only covers heirs in the direct line. That reminded me why every topic needs
-  lawyer review, and why I flagged it for the reviewer instead of copying it.
-- **Time zones.** Class hours had to be checked in Manila time even though Vercel's servers run on UTC.
-- **Learning the toolchain** (Git, GitHub Actions, Vercel, environment variables) as a non-developer. Small
-  commits, and asking the AI to explain each step in plain English, made it manageable.
-- **Copyright.** I used public law text and Supreme Court bar questions, but wrote my own model answers
-  rather than copying a reviewer's suggested answers into a public repository.
+- No lawyer-reviewed content at launch, so demo topics carry a "pending lawyer review" banner.
+- Learning Git, GitHub Actions, Vercel and environment variables as a non-developer.
+- Copyright: original model answers only; third-party reviewers are not copied into the public repo.
+- Making the apps feel like a real tutor: the tone is still mechanical and standardised.
+
+## What testers told me
+Three people tried the app in November 2026.
+- **Liked:** fast, easy to navigate, interesting and fun, and well aligned to the Philippine law syllabus and bar review.
+- **To improve:** some features load slowly, occasional glitches, smoother navigation between modules, and a help chat
+  for "how do I use this?" questions.
+- **My response:** speed and stability first, because a slow or glitchy drill breaks a student's focus; then a help
+  guide for finding my way around the app.
 
 ## What I would improve in v2
-1. **Lawyer sign-off and the accuracy gate:** 30 reviewed sessions with zero fabricated citations before any pilot.
-2. **Server-side usage limit** (today the 30-per-hour limit is per device).
-3. **Clearer drill screens (UI-1, UI-2):** separate question and feedback cards, and reviewer-approved key terms highlighted.
-4. **More topics** per Civil Law subject, then other bar subjects, using the same source-file format.
-5. **Run Experiment 1** with 30–50 bar reviewees and measure completion, paid conversion and unaided mock scores.
-6. Later: voice recitation practice, and an optional account so progress follows the student from Year 1 to the bar.
+Lawyer sign-off with zero fabricated citations before any pilot; faster loading and fewer glitches; a built-in help
+guide for navigation (app help only, not legal answers); a server-side usage limit; and a paid-pilot experiment with
+30–50 bar reviewees.
 
 ## If I did it again
-I would load real, signed-off content before the first deployment, and set up the README and CI on day one
-rather than at the end. Both are cheap early and stressful late.
+I would load signed-off content and set up the README and CI on day one, and get testers in the first week, not the
+last. I would also spend much more time on the specs and the PRD, so there is less iteration, although iterating was a
+good way to test and learn.
